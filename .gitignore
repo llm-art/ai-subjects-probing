@@ -216,3 +216,10 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# downloaded artwork images (re-fetchable via download_images.py)
+data/images/
+data/download_log.json
+
+# raw probe outputs (per-image reports in results/reports/ are tracked)
+results/raw/

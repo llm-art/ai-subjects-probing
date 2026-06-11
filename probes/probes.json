@@ -1,0 +1,131 @@
+{
+  "version": "1.2",
+  "locked": "2026-06-11",
+  "notes": "Probe battery for AI subject-identification probing. Each probe runs in a SEPARATE session/conversation per image per model. Probe C questions are asked individually and sequentially within one session, never as a list. Probe A is a logged covariate, not scored. Probe B-enriched runs only after B-plain, in a separate session. global_system_instruction is sent as the system message of every session.",
+  "global_system_instruction": "You are looking at a single image. Answer only from what is visible in the image and your own internal knowledge. Do not use web search, retrieval, external tools, or any internet resources to answer.",
+  "subjects": {
+    "mythology": [
+      "Prometheus chained by Vulcan",
+      "Aeneas rescues his father Anchises from the burning Troy",
+      "Abduction of Amphitrite by Poseidon",
+      "The wedding of Peleus and Thetis",
+      "The Competition of Apollo and Pan and the judgment of Midas",
+      "Marriage of Cupid and Psyche",
+      "The Triumph of Bacchus",
+      "Apollo in Vulcan's forge revealing Venus' love-affair with Mars",
+      "The Triumph of Mars: an Allegory of War",
+      "The meeting of Nausicaa and Ulysses",
+      "The meeting of Dido and Aeneas",
+      "The sacrifice of Iphigenia",
+      "The goddess Pallas Athena and the horse Pegasus",
+      "Dido's sacrifice to Juno",
+      "Sacrifice to Venus in a temple"
+    ],
+    "old_testament": [
+      "The finding of Moses: Pharaoh's daughter discovers the child floating on the river",
+      "The sacrifice of Isaac (Abraham and Isaac)",
+      "Potiphar's wife catches Joseph by his robe; Joseph escapes",
+      "Balaam strikes his ass; the ass lies down and starts to speak",
+      "Isaac blesses Jacob disguised in Esau's clothes",
+      "Samson breaks the pillars; the temple of Dagon collapses",
+      "The drunkenness of Noah",
+      "Feast of Esther",
+      "Belshazzar's Feast",
+      "Bathsheba receives a letter from David",
+      "The Gathering of Manna",
+      "Hagar, Ishmael and the Angel in the Wilderness",
+      "The Prodigal Son chased from the brothel (Luke 15:13)",
+      "Jephtha welcomed by his daughter (Judges 11:29-40)",
+      "Judah's love-affair with Tamar; he gives her his signet-ring and staff"
+    ]
+  },
+  "probes": {
+    "A_recognition": {
+      "role": "logged covariate only — record verbatim, do not score; use to flag potential training-data contamination and to interpret B results",
+      "prompt": "What artwork is this? If you can, name the artist, title, approximate date, and collection. If you don't recognise the specific work, say so explicitly."
+    },
+    "B_plain": {
+      "role": "core task — open subject identification, no context",
+      "prompt": "What is depicted in this image?"
+    },
+    "B_framed": {
+      "role": "open identification with cultural framing — separate session",
+      "prompt": "This is a European oil painting. What scene or subject is depicted? Name the episode and the figures if you can."
+    },
+    "B_forced_choice_mythology": {
+      "role": "closed identification from mythology list — separate session; contrast with B_plain isolates open-ended retrieval as the bottleneck",
+      "prompt": "This painting depicts one of the following subjects. Which one is it?\n— Prometheus chained by Vulcan\n— Aeneas rescues his father Anchises from the burning Troy\n— Abduction of Amphitrite by Poseidon\n— The wedding of Peleus and Thetis\n— The Competition of Apollo and Pan and the judgment of Midas\n— Marriage of Cupid and Psyche\n— The Triumph of Bacchus\n— Apollo in Vulcan's forge revealing Venus' love-affair with Mars\n— The Triumph of Mars: an Allegory of War\n— The meeting of Nausicaa and Ulysses\n— The meeting of Dido and Aeneas\n— The sacrifice of Iphigenia\n— The goddess Pallas Athena and the horse Pegasus\n— Dido's sacrifice to Juno\n— Sacrifice to Venus in a temple\nAnswer with the subject only."
+    },
+    "B_forced_choice_old_testament": {
+      "role": "closed identification from Old Testament list — separate session",
+      "prompt": "This painting depicts one of the following subjects. Which one is it?\n— The finding of Moses: Pharaoh's daughter discovers the child floating on the river\n— The sacrifice of Isaac (Abraham and Isaac)\n— Potiphar's wife catches Joseph by his robe; Joseph escapes\n— Balaam strikes his ass; the ass lies down and starts to speak\n— Isaac blesses Jacob disguised in Esau's clothes\n— Samson breaks the pillars; the temple of Dagon collapses\n— The drunkenness of Noah\n— Feast of Esther\n— Belshazzar's Feast\n— Bathsheba receives a letter from David\n— The Gathering of Manna\n— Hagar, Ishmael and the Angel in the Wilderness\n— The Prodigal Son chased from the brothel (Luke 15:13)\n— Jephtha welcomed by his daughter (Judges 11:29-40)\n— Judah's love-affair with Tamar; he gives her his signet-ring and staff\nAnswer with the subject only."
+    },
+    "B_enriched": {
+      "role": "intervention test — run only after B_plain, in a separate session; B_plain vs B_enriched difference estimates how much knowledge access matters vs visual pattern matching",
+      "prompt_template": "The following subjects are typically depicted in European painting as described:\n{subject_descriptions}\nGiven this information, what subject is depicted in the image?",
+      "subject_descriptions_status": "INCOMPLETE — one-sentence visual description required for all subjects before running; mythology has 3/15, old_testament has 0/15",
+      "subject_descriptions": {
+        "Aeneas rescues his father Anchises from the burning Troy": "a young man carries an elderly man on his back while escaping a burning city, accompanied by a small boy and other family members fleeing.",
+        "The sacrifice of Iphigenia": "a young woman is led to an altar by priests while her father Agamemnon looks away in grief; often a deer appears as a divine substitution.",
+        "The meeting of Dido and Aeneas": "a queen receives a traveller in a regal setting, with attendants; a harbour or ships may be visible.",
+        "Prometheus chained by Vulcan": "TODO",
+        "Abduction of Amphitrite by Poseidon": "TODO",
+        "The wedding of Peleus and Thetis": "TODO",
+        "The Competition of Apollo and Pan and the judgment of Midas": "TODO",
+        "Marriage of Cupid and Psyche": "TODO",
+        "The Triumph of Bacchus": "TODO",
+        "Apollo in Vulcan's forge revealing Venus' love-affair with Mars": "TODO",
+        "The Triumph of Mars: an Allegory of War": "TODO",
+        "The meeting of Nausicaa and Ulysses": "TODO",
+        "The goddess Pallas Athena and the horse Pegasus": "TODO",
+        "Dido's sacrifice to Juno": "TODO",
+        "Sacrifice to Venus in a temple": "TODO",
+        "The finding of Moses: Pharaoh's daughter discovers the child floating on the river": "TODO",
+        "The sacrifice of Isaac (Abraham and Isaac)": "TODO",
+        "Potiphar's wife catches Joseph by his robe; Joseph escapes": "TODO",
+        "Balaam strikes his ass; the ass lies down and starts to speak": "TODO",
+        "Isaac blesses Jacob disguised in Esau's clothes": "TODO",
+        "Samson breaks the pillars; the temple of Dagon collapses": "TODO",
+        "The drunkenness of Noah": "TODO",
+        "Feast of Esther": "TODO",
+        "Belshazzar's Feast": "TODO",
+        "Bathsheba receives a letter from David": "TODO",
+        "The Gathering of Manna": "TODO",
+        "Hagar, Ishmael and the Angel in the Wilderness": "TODO",
+        "The Prodigal Son chased from the brothel (Luke 15:13)": "TODO",
+        "Jephtha welcomed by his daughter (Judges 11:29-40)": "TODO",
+        "Judah's love-affair with Tamar; he gives her his signet-ring and staff": "TODO"
+      }
+    }
+  },
+  "probe_C_checklists": {
+    "_notes": "Closed verification questions per image. Ask individually and sequentially in one session. Expert-scored (semantic match), not exact-match. Lock the checklist with the domain expert BEFORE running.",
+    "aeneas-anchises-troy": [
+      {
+        "element": "Pietas motif",
+        "question": "Is there a figure carrying another person on their back? Describe the two figures.",
+        "correct": "Yes — young adult male carrying older male"
+      },
+      {
+        "element": "Child present",
+        "question": "Is there a child accompanying the central group? Where is the child positioned relative to the carrying figure?",
+        "correct": "Yes — small child beside/holding hand of carrier"
+      },
+      {
+        "element": "Burning setting",
+        "question": "What is happening in the background? Is there fire, smoke, or destruction visible?",
+        "correct": "Yes — burning city, smoke, ruins"
+      },
+      {
+        "element": "Classical architecture",
+        "question": "Describe the architectural setting visible in the image.",
+        "correct": "Arches, columns, stone — classical/ancient city"
+      },
+      {
+        "element": "Small dog",
+        "question": "Is there an animal in the image? If so, describe it and its position.",
+        "correct": "Small dog, lower right — iconographically non-obvious; reporting it is strong evidence of genuine visual processing"
+      }
+    ]
+  }
+}
