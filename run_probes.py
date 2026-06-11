@@ -49,6 +49,7 @@ import hashlib
 import io
 import json
 import os
+import re
 import sys
 import threading
 import time
@@ -389,6 +390,33 @@ def run_probe(probes, provider, spec, row, probe, image_b64, image_meta):
 
 # ---------------------------------------------------------------- reports
 
+_DOWNLOAD_LOG = None
+
+
+def iiif_base(image_id, row):
+    """IIIF Image API service base for an image. Prefer the canonical resolved
+    URL from download_log.json (handles e.g. RKD's /iiif/ -> /iiif/2/ redirect);
+    fall back to the TSV iiif_url minus /info.json."""
+    global _DOWNLOAD_LOG
+    if _DOWNLOAD_LOG is None:
+        log_path = ROOT / "data" / "download_log.json"
+        try:
+            with open(log_path, encoding="utf-8") as f:
+                _DOWNLOAD_LOG = json.load(f)
+        except (OSError, json.JSONDecodeError):
+            _DOWNLOAD_LOG = {}
+    entry = _DOWNLOAD_LOG.get(image_id, {})
+    for d in entry.get("downloads", []):
+        url = d.get("resolved_url", "")
+        m = re.match(r"(.+?)/[^/]+/[^/]+/\d+/default\.\w+$", url)
+        if m:
+            return m.group(1)
+    url = (row.get("iiif_url") or "").strip()
+    if url and url != "MANUAL_REQUIRED":
+        return re.sub(r"/info\.json$", "", url)
+    return None
+
+
 def block(text):
     """Render verbatim text as a markdown blockquote (keeps reports readable
     even when responses contain markdown of their own)."""
@@ -416,6 +444,18 @@ def write_report(image_id, manifest_by_id):
     lines = [
         f"# Probe report — `{image_id}`",
         "",
+    ]
+    base = iiif_base(image_id, row)
+    if base:
+        lines += [
+            f"[![{image_id}]({base}/full/!800,800/0/default.jpg)]"
+            f"({base}/full/max/0/default.jpg)",
+            "",
+            f"_Image served from IIIF (click for full resolution) — "
+            f"[info.json]({base}/info.json)_",
+            "",
+        ]
+    lines += [
         f"- **Ground-truth subject:** {row['subject']}",
         f"- **Category:** {row['category']}" + (f" · **Tier:** {row['tier']}" if row.get("tier") else ""),
         f"- **Institution:** {row.get('institution', '')}",

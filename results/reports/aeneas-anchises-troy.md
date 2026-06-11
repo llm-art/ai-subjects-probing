@@ -1,5 +1,9 @@
 # Probe report — `aeneas-anchises-troy`
 
+[![aeneas-anchises-troy](https://media.rkd.nl/iiif/2/9223046/full/!800,800/0/default.jpg)](https://media.rkd.nl/iiif/2/9223046/full/max/0/default.jpg)
+
+_Image served from IIIF (click for full resolution) — [info.json](https://media.rkd.nl/iiif/2/9223046/info.json)_
+
 - **Ground-truth subject:** Aeneas rescues his father Anchises from the burning Troy
 - **Category:** mythology · **Tier:** A
 - **Institution:** rkd
