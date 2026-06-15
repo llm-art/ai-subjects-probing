@@ -82,7 +82,7 @@ PROBE_TITLES = {
     "C": "Probe C — Closed verification checklist (expert-scored, semantic match)",
 }
 
-GEN_PARAMS = {"temperature": 0.0, "max_tokens": 2048}
+GEN_PARAMS = {"temperature": 0.0, "max_tokens": 8192}
 
 RETRY_STATUSES = {429, 500, 502, 503, 504, 529}
 MAX_RETRIES = 5
