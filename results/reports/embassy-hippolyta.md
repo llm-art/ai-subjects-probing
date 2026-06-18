@@ -12,28 +12,29 @@ _Image served from IIIF (click for full resolution) — [info.json](https://iiif
 - **Probe battery version:** 1.2
 - **System instruction (all sessions):** You are looking at a single image. Answer only from what is visible in the image and your own internal knowledge. Do not use web search, retrieval, external tools, or any internet resources to answer.
 
-_Each probe ran in a separate stateless session. Probe A is a logged covariate — record only, never score. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
+_Each probe ran in a separate stateless session. Probe A returns structured JSON and is scored per element (artist/title/date/collection) by an LLM judge against institutional ground truth; the collection element is low-confidence. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
 
 ## Model: `gemini:gemini-2.5-pro`
 
-### Probe A — Recognition (logged covariate — record only, do not score)
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
 
-_Run: 2026-06-18T07:59:04+00:00_
+_Run: 2026-06-18T13:45:58+00:00_
 
 **Prompt:**
 
-> What artwork is this? If you can, name the artist, title, approximate date, and collection. If you don't recognise the specific work, say so explicitly.
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
 
 **Response (verbatim):**
 
-> Based on the style and subject matter visible in the image, this is a photograph of a fresco by the Italian artist **Pisanello** (Antonio di Puccio Pisano).
-> 
-> *   **Artist:** Pisanello
-> *   **Title:** This is a scene from the *Chivalric Cycle* (or *Arthurian Cycle*), often referred to as the *Tournament of Louvezerp*.
-> *   **Approximate Date:** c. 1447–48
-> *   **Collection:** The fresco is located in the Sala del Pisanello in the Palazzo Ducale (Ducal Palace) in Mantua, Italy.
-> 
-> The artwork is a prime example of the International Gothic style, characterized by its courtly elegance, decorative detail, and interest in chivalric themes. The image provided is a black-and-white reproduction of the original fresco.
+> ```json
+> {
+>   "recognized": true,
+>   "artist": "Antonio Pisanello",
+>   "title": "The Tournament of Louvezerp",
+>   "date": "c. 1447-1448",
+>   "collection": "Palazzo Ducale, Mantua"
+> }
+> ```
 
 ### Probe B-plain — Open identification, no context
 
@@ -116,4 +117,90 @@ _Run: 2026-06-18T08:00:04+00:00_
 **Response (verbatim):**
 
 > The Competition of Apollo and Pan and the judgment of Midas
+
+## Model: `gemini:gemini-3.5-flash`
+
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
+
+_Run: 2026-06-18T13:50:23+00:00_
+
+**Prompt:**
+
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
+
+**Response (verbatim):**
+
+> {
+>   "recognized": true,
+>   "artist": "Apollonio di Giovanni",
+>   "title": "Penthesilea before Priam",
+>   "date": "c. 1450-1460",
+>   "collection": null
+> }
+
+### Probe B-plain — Open identification, no context
+
+_Run: 2026-06-18T13:15:09+00:00_
+
+**Prompt:**
+
+> What is depicted in this image?
+
+**Response (verbatim):**
+
+> Based on the style and iconography, this image depicts a 15th-century Italian Renaissance painting (likely a *cassone* or chest panel, often associated with the Florentine workshop of Apollonio di Giovanni). 
+> 
+> The scene represents a classical or mythological narrative, most likely **Penthesilea, Queen of the Amazons, presenting herself before King Priam of Troy** (or a similar subject, such as the warrior maiden Camilla before King Latinus).
+> 
+> ### Key Elements Depicted:
+> * **The Ruler (Left):** An elderly, bearded king (representing King Priam of Troy) sits on an elevated throne under an ornate loggia. He wears a tall, pointed Eastern-style hat (typical of Renaissance depictions of Byzantine or Trojan royalty) and holds a scepter.
+> * **The Scribe (Foreground Left):** A notary or scribe sits at a desk below the throne, writing on a scroll to record the alliance or treaty, with a greyhound standing nearby.
+> * **The Amazon Procession (Right):** A group of female warriors on horseback emerges from a wooded landscape. The leading figure, Queen Penthesilea, rides a dark horse and wears armor with an elaborate, crested helmet. She gestures toward the king, offering her army's aid in the Trojan War.
+
+### Probe B-framed — Open identification, cultural framing
+
+_Run: 2026-06-18T13:15:30+00:00_
+
+**Prompt:**
+
+> This is a European oil painting. What scene or subject is depicted? Name the episode and the figures if you can.
+
+**Response (verbatim):**
+
+> Based on the iconography and style of this 15th-century Italian Renaissance painting (likely a Florentine *cassone* or *spalliera* panel), the scene depicted is **Penthesilea, Queen of the Amazons, presenting herself before King Priam of Troy** (often titled *The Arrival of Penthesilea at Troy* or *Penthesilea before King Priam*).
+> 
+> ### Key Figures and Elements:
+> * **King Priam of Troy:** The elderly, wise king with the long white beard, seated on the high throne under the loggia on the left, holding a scepter.
+> * **Penthesilea:** The Queen of the Amazons, depicted on the dark horse in the center. She wears armor and a helmet with a prominent dragon/winged crest as she offers her alliance to Troy.
+> * **The Amazons:** Her retinue of female warriors on horseback behind her, also wearing helmets and armor.
+> * **The Scribe/Notary:** Seated at the desk in the lower left, recording the alliance or treaty between the Trojans and the Amazons. 
+> * **The Greyhound:** A classic symbol of courtly nobility and fidelity standing near the desk.
+
+### Probe B-forced-choice — Closed identification
+
+_Run: 2026-06-18T13:15:46+00:00_
+
+**Prompt:**
+
+> This painting depicts one of the following subjects. Which one is it?
+> — Prometheus chained by Vulcan
+> — Aeneas rescues his father Anchises from the burning Troy
+> — Abduction of Amphitrite by Poseidon
+> — The wedding of Peleus and Thetis
+> — The Competition of Apollo and Pan and the judgment of Midas
+> — Marriage of Cupid and Psyche
+> — The Triumph of Bacchus
+> — Apollo in Vulcan's forge revealing Venus' love-affair with Mars
+> — The Triumph of Mars: an Allegory of War
+> — The meeting of Nausicaa and Ulysses
+> — The meeting of Dido and Aeneas
+> — The sacrifice of Iphigenia
+> — The goddess Pallas Athena and the horse Pegasus
+> — Dido's sacrifice to Juno
+> — Sacrifice to Venus in a temple
+> Answer with the subject only.
+
+**Response (verbatim):**
+
+> The meeting of Dido and Aeneas
 

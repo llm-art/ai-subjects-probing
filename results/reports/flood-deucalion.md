@@ -12,28 +12,29 @@ _Image served from IIIF (click for full resolution) — [info.json](https://iiif
 - **Probe battery version:** 1.2
 - **System instruction (all sessions):** You are looking at a single image. Answer only from what is visible in the image and your own internal knowledge. Do not use web search, retrieval, external tools, or any internet resources to answer.
 
-_Each probe ran in a separate stateless session. Probe A is a logged covariate — record only, never score. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
+_Each probe ran in a separate stateless session. Probe A returns structured JSON and is scored per element (artist/title/date/collection) by an LLM judge against institutional ground truth; the collection element is low-confidence. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
 
 ## Model: `gemini:gemini-2.5-pro`
 
-### Probe A — Recognition (logged covariate — record only, do not score)
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
 
-_Run: 2026-06-18T08:02:07+00:00_
+_Run: 2026-06-18T13:46:22+00:00_
 
 **Prompt:**
 
-> What artwork is this? If you can, name the artist, title, approximate date, and collection. If you don't recognise the specific work, say so explicitly.
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
 
 **Response (verbatim):**
 
-> Based on the visual evidence in the image and my internal knowledge, this is a photograph of the following artwork:
-> 
-> **Artist:** Gabriel-François Doyen
-> **Title:** *The Flood* (French: *Le Déluge*)
-> **Approximate Date:** 1766
-> **Collection:** Musée du Louvre, Paris
-> 
-> The painting depicts the mythological flood sent by the gods to punish humanity, a theme found in various cultures, including the Greek myth of Deucalion and Pyrrha. The scene is filled with dramatic chaos and despair as people struggle futilely against the rising waters. The dynamic, emotional, and complex composition is characteristic of late Baroque or early Neoclassical history painting. This work was Doyen's reception piece for the French Royal Academy of Painting and Sculpture (Académie Royale de Peinture et de Sculpture).
+> ```json
+> {
+>   "recognized": true,
+>   "artist": "José Aparicio Inglada",
+>   "title": "The Flood (El Diluvio)",
+>   "date": "1827",
+>   "collection": "Real Academia de Bellas Artes de San Fernando"
+> }
+> ```
 
 ### Probe B-plain — Open identification, no context
 
@@ -128,4 +129,87 @@ _Run: 2026-06-18T08:03:02+00:00_
 > Therefore, the subject depicted is best described as an allegory for the consequences of war.
 > 
 > **The Triumph of Mars: an Allegory of War**
+
+## Model: `gemini:gemini-3.5-flash`
+
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
+
+_Run: 2026-06-18T13:50:47+00:00_
+
+**Prompt:**
+
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
+
+**Response (verbatim):**
+
+> {
+>   "recognized": true,
+>   "artist": "Jean-Baptiste Marie Pierre",
+>   "title": "The Flood of Deucalion",
+>   "date": "1746",
+>   "collection": "Musée des Beaux-Arts de Nancy"
+> }
+
+### Probe B-plain — Open identification, no context
+
+_Run: 2026-06-18T13:16:41+00:00_
+
+**Prompt:**
+
+> What is depicted in this image?
+
+**Response (verbatim):**
+
+> Based on the image and the text visible at the bottom, this is a photograph of a classical painting depicting **the Flood from Greek Mythology** (specifically, the **Flood of Deucalion** or the flood marking the end of one of the mythological Ages of Man, such as the Iron or Bronze Age). 
+> 
+> ### Key Elements Depicted:
+> * **The Deluge/Flood:** A catastrophic flood is shown engulfing the landscape, with water rising around a rocky outcrop where people have gathered to seek refuge.
+> * **Human Suffering and Struggle:** Numerous figures—men, women, and children—are depicted in states of panic, despair, and desperation. Some are climbing rocks, others are clinging to a tree in the center, mothers are holding their infants, and some figures lie lifeless or exhausted.
+> * **Divine Wrath/Wind Deity:** In the upper-left corner, a powerful winged figure emerges from dark storm clouds, representing a deity of wind or storm (such as Boreas, the North Wind, or Zeus/Jupiter unleashing the tempest) driving the cataclysm.
+> * **Caption:** The printed label at the bottom reads: *"A SCENE FROM GREEK MYTHOLOGY: THE FLOOD OF THE AGE OF..."* and on the far right, *"...ACADEMY OF FINE [ARTS]"*, indicating the painting's subject and its association with an art academy collection.
+
+### Probe B-framed — Open identification, cultural framing
+
+_Run: 2026-06-18T13:16:51+00:00_
+
+**Prompt:**
+
+> This is a European oil painting. What scene or subject is depicted? Name the episode and the figures if you can.
+
+**Response (verbatim):**
+
+> Based on the visual details and classical iconography, this painting depicts **The Great Flood (The Deluge)** from Greek mythology, specifically the **Flood of Deucalion** (or the flood that ended the Iron Age, as described in Ovid's *Metamorphoses*). 
+> 
+> ### Key Figures and Elements Depicted:
+> * **Notus (The South Wind):** The winged figure in the upper left corner emerging from the dark storm clouds. In Ovid's account, Jupiter releases Notus—the wet, dark-winged wind god—to squeeze the heavy clouds and unleash torrential, unending rain upon the earth.
+> * **The Doomed Mortals / Survivors:** The crowd of men, women, and children in the center and foreground represent humanity desperately trying to escape the rising waters. They are shown climbing onto rocks, clinging to trees, holding onto loved ones, and drowning as the flood engulfs the land. 
+> * **Deucalion and Pyrrha (Contextual):** In this myth, Deucalion and his wife Pyrrha are the only virtuous survivors of the flood, saved by constructing a chest/ark, while the rest of corrupt humanity (depicted here) perishes.
+
+### Probe B-forced-choice — Closed identification
+
+_Run: 2026-06-18T13:17:07+00:00_
+
+**Prompt:**
+
+> This painting depicts one of the following subjects. Which one is it?
+> — Prometheus chained by Vulcan
+> — Aeneas rescues his father Anchises from the burning Troy
+> — Abduction of Amphitrite by Poseidon
+> — The wedding of Peleus and Thetis
+> — The Competition of Apollo and Pan and the judgment of Midas
+> — Marriage of Cupid and Psyche
+> — The Triumph of Bacchus
+> — Apollo in Vulcan's forge revealing Venus' love-affair with Mars
+> — The Triumph of Mars: an Allegory of War
+> — The meeting of Nausicaa and Ulysses
+> — The meeting of Dido and Aeneas
+> — The sacrifice of Iphigenia
+> — The goddess Pallas Athena and the horse Pegasus
+> — Dido's sacrifice to Juno
+> — Sacrifice to Venus in a temple
+> Answer with the subject only.
+
+**Response (verbatim):**
+
+> The painting depicts **The Flood of the Age of Bronze** (also known as *The Flood of the Age of Deucalion*), as indicated by the inscription at the bottom of the image.
 

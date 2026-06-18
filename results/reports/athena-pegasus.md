@@ -12,26 +12,29 @@ _Image served from IIIF (click for full resolution) — [info.json](https://medi
 - **Probe battery version:** 1.2
 - **System instruction (all sessions):** You are looking at a single image. Answer only from what is visible in the image and your own internal knowledge. Do not use web search, retrieval, external tools, or any internet resources to answer.
 
-_Each probe ran in a separate stateless session. Probe A is a logged covariate — record only, never score. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
+_Each probe ran in a separate stateless session. Probe A returns structured JSON and is scored per element (artist/title/date/collection) by an LLM judge against institutional ground truth; the collection element is low-confidence. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
 
 ## Model: `gemini:gemini-2.5-pro`
 
-### Probe A — Recognition (logged covariate — record only, do not score)
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
 
-_Run: 2026-06-15T07:44:40+00:00_
+_Run: 2026-06-18T13:44:33+00:00_
 
 **Prompt:**
 
-> What artwork is this? If you can, name the artist, title, approximate date, and collection. If you don't recognise the specific work, say so explicitly.
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
 
 **Response (verbatim):**
 
-> Based on the visual evidence in the image and my internal knowledge, here is information about the artwork:
-> 
-> *   **Artist:** Peter Thys (also spelled Pieter Thijs). His signature and the date are visible in the lower-left corner of the painting.
-> *   **Title:** The painting depicts the Roman goddess Minerva (identifiable by her helmet, armor, spear, and the owl at her feet) with the winged horse Pegasus. A suitable title is **Minerva and Pegasus**.
-> *   **Approximate Date:** The date **1644** is inscribed next to the artist's signature.
-> *   **Collection:** The collection where this painting is housed cannot be determined from the image alone. The number "62" in the corner is likely an inventory or auction lot number.
+> ```json
+> {
+>   "recognized": true,
+>   "artist": "Cornelis Schut I",
+>   "title": "Minerva with Pegasus",
+>   "date": "1644",
+>   "collection": null
+> }
+> ```
 
 ### Probe B-plain — Open identification, no context
 
@@ -85,6 +88,97 @@ _Run: 2026-06-15T07:45:09+00:00_
 ### Probe B-forced-choice — Closed identification
 
 _Run: 2026-06-15T07:45:26+00:00_
+
+**Prompt:**
+
+> This painting depicts one of the following subjects. Which one is it?
+> — Prometheus chained by Vulcan
+> — Aeneas rescues his father Anchises from the burning Troy
+> — Abduction of Amphitrite by Poseidon
+> — The wedding of Peleus and Thetis
+> — The Competition of Apollo and Pan and the judgment of Midas
+> — Marriage of Cupid and Psyche
+> — The Triumph of Bacchus
+> — Apollo in Vulcan's forge revealing Venus' love-affair with Mars
+> — The Triumph of Mars: an Allegory of War
+> — The meeting of Nausicaa and Ulysses
+> — The meeting of Dido and Aeneas
+> — The sacrifice of Iphigenia
+> — The goddess Pallas Athena and the horse Pegasus
+> — Dido's sacrifice to Juno
+> — Sacrifice to Venus in a temple
+> Answer with the subject only.
+
+**Response (verbatim):**
+
+> The goddess Pallas Athena and the horse Pegasus
+
+## Model: `gemini:gemini-3.5-flash`
+
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
+
+_Run: 2026-06-18T13:48:41+00:00_
+
+**Prompt:**
+
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
+
+**Response (verbatim):**
+
+> {
+>   "recognized": true,
+>   "artist": "Theodoor van Thulden",
+>   "title": "Minerva and Pegasus",
+>   "date": "1654",
+>   "collection": "Royal Museum of Fine Arts Antwerp"
+> }
+
+### Probe B-plain — Open identification, no context
+
+_Run: 2026-06-18T13:10:27+00:00_
+
+**Prompt:**
+
+> What is depicted in this image?
+
+**Response (verbatim):**
+
+> This painting is titled ***Minerva Bridling Pegasus*** (also known as *Minerva and Pegasus*), created in 1654 by the Flemish Baroque painter **Theodoor van Thulden** (whose signature and date are visible in the bottom-left corner). 
+> 
+> The artwork depicts a scene from classical mythology rich in allegorical symbolism:
+> 
+> * **Minerva (Athena):** The Roman goddess of wisdom, war, and the arts stands in the center. She is depicted as a strong, elegant warrior wearing a classical helmet with a large red plume, a dark breastplate, a flowing red cloak, and a long skirt. She is shown taming or guiding the mythical winged horse, **Pegasus**, by holding his golden bridle. This act traditionally symbolizes the taming of wild impulses, passion, or poetic inspiration through wisdom and reason.
+> * **Pegasus:** The magnificent white winged horse stands on the left, looking towards Minerva with one hoof raised.
+> * **The Putto and Shield:** To the right, a young boy (putto or attendant) struggles to hold up Minerva's large, ornate golden shield (the *Aegis*), which features the sculpted face of Medusa. 
+> * **The Owl:** In the bottom-right corner, Minerva's sacred owl—the symbol of wisdom and vigilance—is perched on the ground near some leafy plants.
+> * **The Spear:** A tall spear stands upright behind Minerva, pointing toward the sky.
+> 
+> The painting is rendered in a classic Baroque style, characterized by dramatic lighting, rich colors (particularly the contrast of the white horse and the vibrant red cloak), and a sense of dynamic movement set against a dark, cloudy sky.
+
+### Probe B-framed — Open identification, cultural framing
+
+_Run: 2026-06-18T13:10:36+00:00_
+
+**Prompt:**
+
+> This is a European oil painting. What scene or subject is depicted? Name the episode and the figures if you can.
+
+**Response (verbatim):**
+
+> This painting depicts the mythological scene of **Minerva (Athena) bridling Pegasus** (often titled *Minerva and Pegasus* or *Minerva Bridling Pegasus*). 
+> 
+> ### Figures and Elements Depicted:
+> * **Minerva (Athena):** The Roman/Greek goddess of wisdom and war, shown in classical armor, a plumed helmet, and a red cloak, placing a golden bridle on the winged horse.
+> * **Pegasus:** The mythical winged white horse, born from the blood of Medusa.
+> * **Putto/Squire:** A young boy behind Minerva who struggles to hold her heavy shield (the Aegis, which traditionally bears the image of Medusa's head).
+> * **The Owl:** Located in the bottom right corner, the owl is the traditional symbol of Minerva, representing wisdom.
+> 
+> ### Artist and Context:
+> This work is by the Flemish Baroque painter **Theodor van Thulden**, signed and dated in the bottom-left corner (*"Theod. Thulden fec. 1654"*). The scene allegorically represents Wisdom (Minerva) guiding and controlling poetic inspiration or fame (Pegasus).
+
+### Probe B-forced-choice — Closed identification
+
+_Run: 2026-06-18T13:10:47+00:00_
 
 **Prompt:**
 

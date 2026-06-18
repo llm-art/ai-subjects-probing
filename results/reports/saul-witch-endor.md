@@ -12,31 +12,29 @@ _Image served from IIIF (click for full resolution) — [info.json](https://iiif
 - **Probe battery version:** 1.2
 - **System instruction (all sessions):** You are looking at a single image. Answer only from what is visible in the image and your own internal knowledge. Do not use web search, retrieval, external tools, or any internet resources to answer.
 
-_Each probe ran in a separate stateless session. Probe A is a logged covariate — record only, never score. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
+_Each probe ran in a separate stateless session. Probe A returns structured JSON and is scored per element (artist/title/date/collection) by an LLM judge against institutional ground truth; the collection element is low-confidence. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
 
 ## Model: `gemini:gemini-2.5-pro`
 
-### Probe A — Recognition (logged covariate — record only, do not score)
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
 
-_Run: 2026-06-18T08:04:21+00:00_
+_Run: 2026-06-18T13:46:55+00:00_
 
 **Prompt:**
 
-> What artwork is this? If you can, name the artist, title, approximate date, and collection. If you don't recognise the specific work, say so explicitly.
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
 
 **Response (verbatim):**
 
-> Based on the visual evidence and my internal knowledge, I can identify this artwork.
-> 
-> **Artist:** Jacopo de' Barbari
-> 
-> **Title:** *Victory and Fame* (also known as *Allegory of Fortune* or *Saul and the Witch of Endor*)
-> 
-> **Approximate Date:** c. 1500 (The date "1500" is partially visible at the bottom center of the image).
-> 
-> **Collection:** This is an engraving, so multiple impressions (prints) exist. They are held in the collections of major museums worldwide, including The British Museum in London, the Rijksmuseum in Amsterdam, and the Metropolitan Museum of Art in New York.
-> 
-> The artwork is a complex allegory. The scene on the left depicts the biblical story of King Saul consulting the Witch of Endor to summon the spirit of the prophet Samuel, as referenced by the Latin text on the banner. The right side of the composition is filled with imagery associated with witchcraft and classical mythology, including witches, satyrs, and figures riding goats, contrasting different forms of prophecy and power.
+> ```json
+> {
+>   "recognized": true,
+>   "artist": "Follower of Hieronymus Bosch",
+>   "title": "The Dream of the Doctor (Allegory of the Transience of Life)",
+>   "date": "c. 1500",
+>   "collection": "The Courtauld, London"
+> }
+> ```
 
 ### Probe B-plain — Open identification, no context
 
@@ -118,6 +116,100 @@ _Run: 2026-06-18T08:05:06+00:00_
 ### Probe B-forced-choice — Closed identification
 
 _Run: 2026-06-18T08:05:32+00:00_
+
+**Prompt:**
+
+> This painting depicts one of the following subjects. Which one is it?
+> — The finding of Moses: Pharaoh's daughter discovers the child floating on the river
+> — The sacrifice of Isaac (Abraham and Isaac)
+> — Potiphar's wife catches Joseph by his robe; Joseph escapes
+> — Balaam strikes his ass; the ass lies down and starts to speak
+> — Isaac blesses Jacob disguised in Esau's clothes
+> — Samson breaks the pillars; the temple of Dagon collapses
+> — The drunkenness of Noah
+> — Feast of Esther
+> — Belshazzar's Feast
+> — Bathsheba receives a letter from David
+> — The Gathering of Manna
+> — Hagar, Ishmael and the Angel in the Wilderness
+> — The Prodigal Son chased from the brothel (Luke 15:13)
+> — Jephtha welcomed by his daughter (Judges 11:29-40)
+> — Judah's love-affair with Tamar; he gives her his signet-ring and staff
+> Answer with the subject only.
+
+**Response (verbatim):**
+
+> The Prodigal Son chased from the brothel (Luke 15:13)
+
+## Model: `gemini:gemini-3.5-flash`
+
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
+
+_Run: 2026-06-18T13:51:12+00:00_
+
+**Prompt:**
+
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
+
+**Response (verbatim):**
+
+> ```json
+> {
+>   "recognized": true,
+>   "artist": "Jan de Beer",
+>   "title": "The Sorceress",
+>   "date": "1506",
+>   "collection": "British Museum"
+> }
+> ```
+
+### Probe B-plain — Open identification, no context
+
+_Run: 2026-06-18T13:19:22+00:00_
+
+**Prompt:**
+
+> What is depicted in this image?
+
+**Response (verbatim):**
+
+> This image depicts the painting ***The Witch of Endor*** (also known as *Saul and the Witch of Endor*), created in **1526** by the Dutch Northern Renaissance artist **Jacob Cornelisz. van Oostsanen**. 
+> 
+> ### Key Depicted Elements:
+> * **The Witch of Endor:** Seated in the center-left inside a protective magic circle, holding a wand, with an owl (a traditional symbol of night and witchcraft) at her feet.
+> * **The Conjuring of Samuel:** To the right of the center, the ghost of the prophet Samuel rises from a tomb marked with the inscription *"Sepulchrum Samuelis"*.
+> * **King Saul:** On the far left, King Saul is shown arriving with his companions to consult the witch. In the background through the archway, Saul's army and his tragic battle against the Philistines are depicted.
+> * **Witchcraft and Sabbat Imagery:** The right side of the composition is filled with early Renaissance depictions of witchcraft, including:
+>   * A young satyr holding open a book of magic spells.
+>   * Women preparing ingredients, milking a goat, and brewing potions.
+>   * Witches flying through the night sky on goats and beasts in the upper right.
+> * **Artist's Monogram and Date:** At the bottom center, a small tablet displays the date **1526** along with the artist's monogram.
+
+### Probe B-framed — Open identification, cultural framing
+
+_Run: 2026-06-18T13:19:35+00:00_
+
+**Prompt:**
+
+> This is a European oil painting. What scene or subject is depicted? Name the episode and the figures if you can.
+
+**Response (verbatim):**
+
+> This painting is **"The Witch of Endor"** (also known as *Saul and the Witch of Endor*), painted in **1526** by the Dutch Renaissance artist **Jacob Cornelisz van Oostsanen**. 
+> 
+> ### **Subject and Episode**
+> The painting depicts the biblical story from the **First Book of Samuel (Chapter 28)**, in which King Saul of Israel, on the eve of his final battle against the Philistines, seeks out a medium (the Witch of Endor) to conjure the spirit of the deceased prophet Samuel for advice.
+> 
+> ### **Key Figures and Details**
+> * **The Witch of Endor:** Seated in the center-left within a protective magic circle, holding a wand and directing the necromantic ritual.
+> * **King Saul:** Shown on the far left, disguised in civilian clothing, accompanied by two of his soldiers as he approaches the witch's dwelling.
+> * **The Ghost of Samuel:** Rising from his grave in the middle-right background, next to a stone tablet inscribed with *"Sepulchrum Samuelis"* (Tomb of Samuel).
+> * **Witches and Demons:** The scene is filled with fantastical, eerie details of 16th-century witchcraft lore, including witches preparing potions, a satyr holding a spellbook, an owl (symbol of night and magic), and various demonic creatures. 
+> * **Hecate/Diana:** In the upper right, a nude female figure rides through the air, representing Hecate or Diana, classical goddesses associated with witchcraft and the underworld.
+
+### Probe B-forced-choice — Closed identification
+
+_Run: 2026-06-18T13:19:45+00:00_
 
 **Prompt:**
 

@@ -12,28 +12,29 @@ _Image served from IIIF (click for full resolution) — [info.json](https://iiif
 - **Probe battery version:** 1.2
 - **System instruction (all sessions):** You are looking at a single image. Answer only from what is visible in the image and your own internal knowledge. Do not use web search, retrieval, external tools, or any internet resources to answer.
 
-_Each probe ran in a separate stateless session. Probe A is a logged covariate — record only, never score. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
+_Each probe ran in a separate stateless session. Probe A returns structured JSON and is scored per element (artist/title/date/collection) by an LLM judge against institutional ground truth; the collection element is low-confidence. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
 
 ## Model: `gemini:gemini-2.5-pro`
 
-### Probe A — Recognition (logged covariate — record only, do not score)
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
 
-_Run: 2026-06-18T08:03:38+00:00_
+_Run: 2026-06-18T13:46:47+00:00_
 
 **Prompt:**
 
-> What artwork is this? If you can, name the artist, title, approximate date, and collection. If you don't recognise the specific work, say so explicitly.
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
 
 **Response (verbatim):**
 
-> Based on the visual evidence and my internal knowledge, I can identify this artwork.
-> 
-> **Artist:** Peter Paul Rubens
-> **Title:** *The Meeting of Abraham and Melchizedek*
-> **Approximate Date:** c. 1625–1626
-> **Collection:** Museo Nacional del Prado, Madrid
-> 
-> This painting depicts the Old Testament story from Genesis 14:18-20, where the priest-king Melchizedek offers bread and wine to the patriarch Abraham upon his return from a victorious battle. In the image, Abraham is the figure in armor, kneeling respectfully, while Melchizedek, dressed in elaborate priestly vestments including a mitre, presents the offering. The scene was a popular subject in Baroque art, particularly in the context of the Counter-Reformation, as it was interpreted as a prefiguration of the Christian Eucharist. The dynamic composition, rich textures, and robust figures are characteristic of Rubens's style. This specific painting was one of the large-scale models for the *Triumph of the Eucharist* tapestry series commissioned by the Infanta Isabella Clara Eugenia for the Convent of the Descalzas Reales in Madrid.
+> ```json
+> {
+>   "recognized": true,
+>   "artist": "Peter Paul Rubens",
+>   "title": "The Meeting of Abraham and Melchizedek",
+>   "date": "c. 1626",
+>   "collection": "National Gallery of Art, Washington D.C."
+> }
+> ```
 
 ### Probe B-plain — Open identification, no context
 
@@ -108,4 +109,90 @@ _Run: 2026-06-18T08:04:33+00:00_
 **Response (verbatim):**
 
 > The Gathering of Manna
+
+## Model: `gemini:gemini-3.5-flash`
+
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
+
+_Run: 2026-06-18T13:51:04+00:00_
+
+**Prompt:**
+
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
+
+**Response (verbatim):**
+
+> {
+>   "recognized": true,
+>   "artist": "Gaspar de Crayer",
+>   "title": "The Conversion of Saint Bavo",
+>   "date": "c. 1630-1650",
+>   "collection": "Museum of Fine Arts, Ghent"
+> }
+
+### Probe B-plain — Open identification, no context
+
+_Run: 2026-06-18T13:17:52+00:00_
+
+**Prompt:**
+
+> What is depicted in this image?
+
+**Response (verbatim):**
+
+> Based on the visual details, this image depicts a historical or biblical meeting between a military leader and a high priest, most likely **Alexander the Great before the High Priest of Jerusalem (Jaddua)** or **The Meeting of Abraham and Melchizedek**. 
+> 
+> Key elements visible in the scene include:
+> * **The Kneeling Warrior:** On the left, a commander or king in full classical/medieval armor kneels in reverence, having placed his helmet on the ground before the priest. Behind him is his retinue of soldiers and horses.
+> * **The High Priest / Bishop:** On the right stands a religious figure dressed in elaborate liturgical vestments, including a mitre and an embroidered cope, gesturing toward the kneeling warrior.
+> * **The Altar:** To the far right, there is a classical stone pedestal supporting a large, burning urn or sacrificial vessel, symbolizing a temple or place of sacrifice.
+> * **The Setting:** The encounter takes place outdoors in a hilly, wooded landscape, with a dog in the lower-left foreground.
+
+### Probe B-framed — Open identification, cultural framing
+
+_Run: 2026-06-18T13:18:06+00:00_
+
+**Prompt:**
+
+> This is a European oil painting. What scene or subject is depicted? Name the episode and the figures if you can.
+
+**Response (verbatim):**
+
+> Based on the iconographical details, this painting depicts the Old Testament scene of **The Meeting of Abraham and Melchizedek** (from Genesis 14:18–20). 
+> 
+> ### Key Figures and Scene Details:
+> * **Abraham** is the figure kneeling in the center in full contemporary (17th-century style) plate armor, having laid his helmet on the ground. He has just returned from his military victory over Chedorlaomer to rescue his nephew Lot.
+> * **Melchizedek**, the King of Salem and "priest of God Most High," is depicted on the right. In line with Counter-Reformation Catholic theology, he is represented here as a Christian bishop wearing a mitre and an embroidered cope, offering bread (resembling a Eucharistic host) to Abraham. 
+> * **The Assistants and Altar:** To the right, behind Melchizedek, assistants prepare the wine (represented by the large ornate chalice/ewer on the ground). On the far right, a sacrificial altar features a large burning urn, symbolizing a sacred offering.
+> * **Abraham's Retinue:** On the left, Abraham's soldiers and horses wait in a wooded landscape, accompanied by a dog in the foreground.
+
+### Probe B-forced-choice — Closed identification
+
+_Run: 2026-06-18T13:18:33+00:00_
+
+**Prompt:**
+
+> This painting depicts one of the following subjects. Which one is it?
+> — The finding of Moses: Pharaoh's daughter discovers the child floating on the river
+> — The sacrifice of Isaac (Abraham and Isaac)
+> — Potiphar's wife catches Joseph by his robe; Joseph escapes
+> — Balaam strikes his ass; the ass lies down and starts to speak
+> — Isaac blesses Jacob disguised in Esau's clothes
+> — Samson breaks the pillars; the temple of Dagon collapses
+> — The drunkenness of Noah
+> — Feast of Esther
+> — Belshazzar's Feast
+> — Bathsheba receives a letter from David
+> — The Gathering of Manna
+> — Hagar, Ishmael and the Angel in the Wilderness
+> — The Prodigal Son chased from the brothel (Luke 15:13)
+> — Jephtha welcomed by his daughter (Judges 11:29-40)
+> — Judah's love-affair with Tamar; he gives her his signet-ring and staff
+> Answer with the subject only.
+
+**Response (verbatim):**
+
+> The painting depicts **The meeting of Abraham and Melchizedek** (Melchizedek offering bread and wine to Abraham). 
+> 
+> *(Note: This correct subject is missing from the provided list of options).*
 

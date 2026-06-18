@@ -12,28 +12,29 @@ _Image served from IIIF (click for full resolution) — [info.json](https://medi
 - **Probe battery version:** 1.2
 - **System instruction (all sessions):** You are looking at a single image. Answer only from what is visible in the image and your own internal knowledge. Do not use web search, retrieval, external tools, or any internet resources to answer.
 
-_Each probe ran in a separate stateless session. Probe A is a logged covariate — record only, never score. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
+_Each probe ran in a separate stateless session. Probe A returns structured JSON and is scored per element (artist/title/date/collection) by an LLM judge against institutional ground truth; the collection element is low-confidence. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
 
 ## Model: `gemini:gemini-2.5-pro`
 
-### Probe A — Recognition (logged covariate — record only, do not score)
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
 
-_Run: 2026-06-15T07:43:13+00:00_
+_Run: 2026-06-18T13:44:03+00:00_
 
 **Prompt:**
 
-> What artwork is this? If you can, name the artist, title, approximate date, and collection. If you don't recognise the specific work, say so explicitly.
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
 
 **Response (verbatim):**
 
-> Based on the style and subject matter visible in the image, this is the painting:
-> 
-> *   **Artist:** Cornelis de Vos
-> *   **Title:** *The Triumph of Bacchus*
-> *   **Approximate Date:** c. 1636–1638
-> *   **Collection:** Museo Nacional del Prado, Madrid, Spain
-> 
-> The painting depicts a Bacchanal, a riotous procession in honor of Bacchus, the Roman god of wine and revelry (Dionysus in Greek mythology). The central figure is the corpulent, intoxicated god, supported by his followers on a cart. The scene is filled with satyrs, maenads, and other figures engaged in drinking, dancing, and music-making, characteristic of the exuberant energy of Flemish Baroque painting. This work was part of a large series of mythological paintings commissioned from Peter Paul Rubens and his workshop to decorate the Torre de la Parada, a hunting lodge for King Philip IV of Spain.
+> ```json
+> {
+>   "recognized": true,
+>   "artist": "Cornelis de Vos",
+>   "title": "The Triumph of Bacchus",
+>   "date": "c. 1636",
+>   "collection": "Museo Nacional del Prado, Madrid"
+> }
+> ```
 
 ### Probe B-plain — Open identification, no context
 
@@ -87,6 +88,108 @@ _Run: 2026-06-15T07:43:49+00:00_
 ### Probe B-forced-choice — Closed identification
 
 _Run: 2026-06-15T07:44:07+00:00_
+
+**Prompt:**
+
+> This painting depicts one of the following subjects. Which one is it?
+> — Prometheus chained by Vulcan
+> — Aeneas rescues his father Anchises from the burning Troy
+> — Abduction of Amphitrite by Poseidon
+> — The wedding of Peleus and Thetis
+> — The Competition of Apollo and Pan and the judgment of Midas
+> — Marriage of Cupid and Psyche
+> — The Triumph of Bacchus
+> — Apollo in Vulcan's forge revealing Venus' love-affair with Mars
+> — The Triumph of Mars: an Allegory of War
+> — The meeting of Nausicaa and Ulysses
+> — The meeting of Dido and Aeneas
+> — The sacrifice of Iphigenia
+> — The goddess Pallas Athena and the horse Pegasus
+> — Dido's sacrifice to Juno
+> — Sacrifice to Venus in a temple
+> Answer with the subject only.
+
+**Response (verbatim):**
+
+> The Triumph of Bacchus
+
+## Model: `gemini:gemini-3.5-flash`
+
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
+
+_Run: 2026-06-18T13:48:04+00:00_
+
+**Prompt:**
+
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
+
+**Response (verbatim):**
+
+> {
+>   "recognized": true,
+>   "artist": "Frans Francken the Younger",
+>   "title": "The Triumph of Bacchus",
+>   "date": "c. 1620",
+>   "collection": null
+> }
+
+### Probe B-plain — Open identification, no context
+
+_Run: 2026-06-18T13:09:13+00:00_
+
+**Prompt:**
+
+> What is depicted in this image?
+
+**Response (verbatim):**
+
+> This image depicts a **Bacchanalian procession**, specifically a representation of **The Triumph of Bacchus** (or **The Triumph of Silenus**), a popular theme in Renaissance and Baroque art (this particular painting is in the Dutch Mannerist style, likely by or associated with **Joachim Wtewael**). 
+> 
+> The scene is filled with mythological figures celebrating in a chaotic, drunken revelry:
+> 
+> * **Silenus:** The obese, elderly, and highly intoxicated companion of Bacchus is shown seated on a barrel atop a wooden cart, being supported by satyrs and followers.
+> * **Bacchus (Dionysus):** The youthful, athletic god of wine is depicted walking near the center-left, wearing a crown of vine leaves.
+> * **Satyrs and Maenads:** The procession is filled with dancing, music-playing, and drinking followers. Satyrs (with goat legs) and Maenads (female followers) play tambourines, blow horns, and carry grapes.
+> * **Animals:** 
+>   * A donkey (traditionally ridden by Silenus) is led on the left.
+>   * A monkey sits chained to a barrel on the cart.
+>   * A dog runs in the right foreground.
+>   * A satyr rides a goat on the far right.
+> * **Foreground Details:**
+>   * On the far left, a man in a red tunic performs a handstand.
+>   * In the center foreground, a female satyr lies on the ground nursing a baby satyr.
+>   * Next to her, a young toddler stands and urinates, a common symbolic motif in Dutch art representing the physical effects of excess and wine.
+> * **Background:** A classical landscape featuring a circular temple (*tholos*) and a triumphal arch under a bright, glowing sky.
+
+### Probe B-framed — Open identification, cultural framing
+
+_Run: 2026-06-18T13:09:34+00:00_
+
+**Prompt:**
+
+> This is a European oil painting. What scene or subject is depicted? Name the episode and the figures if you can.
+
+**Response (verbatim):**
+
+> Based on the visual details, this European oil painting depicts a **Bacchic Procession** (often titled **The Triumph of Bacchus** or **The Triumph of Silenus**), a popular mythological subject in Renaissance and Baroque art celebrating wine, fertility, and ecstatic revelry.
+> 
+> ### Key Figures and Elements Depicted:
+> 
+> * **Bacchus (Dionysus):** The youthful, athletic god of wine is shown walking near the center-left, crowned with a wreath of vine leaves and grapes.
+> * **Silenus:** The elderly, obese, and perpetually drunken tutor and companion of Bacchus. He is depicted on the right, precariously balanced on a barrel atop a wooden cart, being supported by a satyr to keep him from falling off.
+> * **Satyrs and Fauns:** Numerous half-man, half-goat forest deities are scattered throughout the crowd. 
+>   * On the bottom right, a young satyr rides a goat.
+>   * In the lower center, a **female satyr (fauness)** lies on the ground nursing a baby satyr.
+> * **Maenads (Bacchantes):** The female followers of Bacchus, shown dancing, playing musical instruments (such as the tambourine on the left), and carrying grapes.
+> * **Urinating Putto/Child:** In the lower-middle foreground, a young child is shown urinating, a common motif in Bacchanalian scenes symbolizing fertility and the natural flow of liquids (akin to wine).
+> * **Silenus's Donkey:** On the left, the donkey traditionally ridden by Silenus is being led through the crowd, carrying a small dark figure (possibly a monkey or a small satyr).
+> * **Acrobat:** On the far left, a reveler performs a handstand, emphasizing the chaotic, carnivalesque atmosphere of the festival.
+> * **Animals:** A monkey sits on a barrel next to Silenus, and a small dog runs in the lower right foreground. 
+> * **Background:** In the distance, a classical circular temple (*tholos*) and an arched bridge evoke an idealized ancient Roman or Greek landscape.
+
+### Probe B-forced-choice — Closed identification
+
+_Run: 2026-06-18T13:09:47+00:00_
 
 **Prompt:**
 

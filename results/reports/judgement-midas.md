@@ -12,32 +12,29 @@ _Image served from IIIF (click for full resolution) — [info.json](https://iiif
 - **Probe battery version:** 1.2
 - **System instruction (all sessions):** You are looking at a single image. Answer only from what is visible in the image and your own internal knowledge. Do not use web search, retrieval, external tools, or any internet resources to answer.
 
-_Each probe ran in a separate stateless session. Probe A is a logged covariate — record only, never score. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
+_Each probe ran in a separate stateless session. Probe A returns structured JSON and is scored per element (artist/title/date/collection) by an LLM judge against institutional ground truth; the collection element is low-confidence. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
 
 ## Model: `gemini:gemini-2.5-pro`
 
-### Probe A — Recognition (logged covariate — record only, do not score)
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
 
-_Run: 2026-06-18T07:59:04+00:00_
+_Run: 2026-06-18T13:45:54+00:00_
 
 **Prompt:**
 
-> What artwork is this? If you can, name the artist, title, approximate date, and collection. If you don't recognise the specific work, say so explicitly.
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
 
 **Response (verbatim):**
 
-> Based on the visual evidence and my internal knowledge, this is a well-known Italian Renaissance painting.
-> 
-> **Artist:** Cima da Conegliano (Giovanni Battista Cima)
-> **Title:** *The Contest of Apollo and Pan* (also known as *The Judgment of Midas*)
-> **Approximate Date:** c. 1505–1510
-> **Collection:** Galleria Nazionale di Parma, Parma, Italy
-> 
-> This circular painting, known as a *tondo*, depicts a story from Greek mythology. The scene shows the aftermath of a musical contest between the god Apollo and the satyr Pan.
-> 
-> *   On the left is **Apollo**, the god of music, identifiable by his idealized youthful beauty and the stringed instrument he holds, a *lira da braccio*, a Renaissance version of the classical lyre.
-> *   On the right is the satyr **Pan**, recognizable by his goat legs, hooves, horns, and the panpipes he holds.
-> *   In the center is **King Midas**, who was a judge in the contest. He foolishly declared Pan the winner. As punishment for his poor judgment and lack of taste, Apollo has given him the ears of a donkey, which are visible sticking out from under his crown. Midas gestures as if explaining his decision, while Apollo looks on.
+> ```json
+> {
+>   "recognized": true,
+>   "artist": "Cima da Conegliano",
+>   "title": "The Judgment of Midas (The Contest between Apollo and Marsyas)",
+>   "date": "c. 1505-1510",
+>   "collection": "Statens Museum for Kunst, Copenhagen"
+> }
+> ```
 
 ### Probe B-plain — Open identification, no context
 
@@ -88,6 +85,91 @@ _Run: 2026-06-18T07:59:44+00:00_
 ### Probe B-forced-choice — Closed identification
 
 _Run: 2026-06-18T08:00:06+00:00_
+
+**Prompt:**
+
+> This painting depicts one of the following subjects. Which one is it?
+> — Prometheus chained by Vulcan
+> — Aeneas rescues his father Anchises from the burning Troy
+> — Abduction of Amphitrite by Poseidon
+> — The wedding of Peleus and Thetis
+> — The Competition of Apollo and Pan and the judgment of Midas
+> — Marriage of Cupid and Psyche
+> — The Triumph of Bacchus
+> — Apollo in Vulcan's forge revealing Venus' love-affair with Mars
+> — The Triumph of Mars: an Allegory of War
+> — The meeting of Nausicaa and Ulysses
+> — The meeting of Dido and Aeneas
+> — The sacrifice of Iphigenia
+> — The goddess Pallas Athena and the horse Pegasus
+> — Dido's sacrifice to Juno
+> — Sacrifice to Venus in a temple
+> Answer with the subject only.
+
+**Response (verbatim):**
+
+> The Competition of Apollo and Pan and the judgment of Midas
+
+## Model: `gemini:gemini-3.5-flash`
+
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
+
+_Run: 2026-06-18T13:50:22+00:00_
+
+**Prompt:**
+
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
+
+**Response (verbatim):**
+
+> {
+>   "recognized": true,
+>   "artist": "Cima da Conegliano",
+>   "title": "The Judgment of Midas",
+>   "date": "c. 1507-1509",
+>   "collection": "Statens Museum for Kunst"
+> }
+
+### Probe B-plain — Open identification, no context
+
+_Run: 2026-06-18T13:14:51+00:00_
+
+**Prompt:**
+
+> What is depicted in this image?
+
+**Response (verbatim):**
+
+> This image depicts the mythological scene of **The Judgment of Midas** (specifically the musical contest between the god Apollo and the satyr Pan), painted in a circular format (tondo) by the Italian Renaissance artist **Cima da Conegliano** (c. 1507–1509). 
+> 
+> The three figures shown are:
+> * **Apollo (left):** The youthful, nude Greek god of music, depicted playing a *lira da braccio* (a Renaissance stringed instrument representing his classical lyre).
+> * **King Midas (center):** Wearing a crown and already sporting the long donkey ears given to him by Apollo as punishment for foolishly judging Pan's rustic music to be superior to Apollo's divine music.
+> * **Pan (right):** The wild god of nature, depicted as a satyr with goat legs and horns, holding his musical pipes.
+
+### Probe B-framed — Open identification, cultural framing
+
+_Run: 2026-06-18T13:14:58+00:00_
+
+**Prompt:**
+
+> This is a European oil painting. What scene or subject is depicted? Name the episode and the figures if you can.
+
+**Response (verbatim):**
+
+> This painting depicts **The Judgment of Midas** (specifically, the musical contest between the gods **Apollo** and **Pan**), a famous episode from Greek mythology (most famously recounted in Ovid's *Metamorphoses*).
+> 
+> ### The Figures Depicted:
+> * **Apollo (left):** The god of music, depicted as a beautiful, idealized youth playing a stringed instrument (specifically a Renaissance *lira da braccio*).
+> * **King Midas (center):** The judge of the contest, wearing a crown. Because he foolishly judged Pan's rustic music to be superior to Apollo's divine music, Apollo punished him by turning his ears into those of a donkey (clearly visible protruding from his crown).
+> * **Pan (right):** The god of the wild and shepherds, depicted as a satyr with goat legs, horns, and holding his musical pipes. 
+> 
+> ### Artist Attribution:
+> This circular painting (tondo) is by the Italian Renaissance master **Cima da Conegliano** (painted c. 1505–1510).
+
+### Probe B-forced-choice — Closed identification
+
+_Run: 2026-06-18T13:15:05+00:00_
 
 **Prompt:**
 

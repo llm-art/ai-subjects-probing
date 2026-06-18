@@ -12,28 +12,29 @@ _Image served from IIIF (click for full resolution) — [info.json](https://medi
 - **Probe battery version:** 1.2
 - **System instruction (all sessions):** You are looking at a single image. Answer only from what is visible in the image and your own internal knowledge. Do not use web search, retrieval, external tools, or any internet resources to answer.
 
-_Each probe ran in a separate stateless session. Probe A is a logged covariate — record only, never score. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
+_Each probe ran in a separate stateless session. Probe A returns structured JSON and is scored per element (artist/title/date/collection) by an LLM judge against institutional ground truth; the collection element is low-confidence. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
 
 ## Model: `gemini:gemini-2.5-pro`
 
-### Probe A — Recognition (logged covariate — record only, do not score)
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
 
-_Run: 2026-06-15T07:44:32+00:00_
+_Run: 2026-06-18T13:44:28+00:00_
 
 **Prompt:**
 
-> What artwork is this? If you can, name the artist, title, approximate date, and collection. If you don't recognise the specific work, say so explicitly.
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
 
 **Response (verbatim):**
 
-> Based on the visual evidence in the image and my internal knowledge, I can identify this artwork.
-> 
-> **Artist:** Pieter Lastman
-> **Title:** The Sacrifice of Iphigenia
-> **Approximate Date:** c. 1630
-> **Collection:** Rijksmuseum, Amsterdam
-> 
-> This black and white image shows a
+> ```json
+> {
+>   "recognized": true,
+>   "artist": "Jan Victors",
+>   "title": "The Sacrifice of Iphigenia",
+>   "date": "c. 1640-1650",
+>   "collection": "Rijksmuseum"
+> }
+> ```
 
 ### Probe B-plain — Open identification, no context
 
@@ -84,6 +85,95 @@ _Run: 2026-06-15T07:45:09+00:00_
 ### Probe B-forced-choice — Closed identification
 
 _Run: 2026-06-15T07:45:30+00:00_
+
+**Prompt:**
+
+> This painting depicts one of the following subjects. Which one is it?
+> — Prometheus chained by Vulcan
+> — Aeneas rescues his father Anchises from the burning Troy
+> — Abduction of Amphitrite by Poseidon
+> — The wedding of Peleus and Thetis
+> — The Competition of Apollo and Pan and the judgment of Midas
+> — Marriage of Cupid and Psyche
+> — The Triumph of Bacchus
+> — Apollo in Vulcan's forge revealing Venus' love-affair with Mars
+> — The Triumph of Mars: an Allegory of War
+> — The meeting of Nausicaa and Ulysses
+> — The meeting of Dido and Aeneas
+> — The sacrifice of Iphigenia
+> — The goddess Pallas Athena and the horse Pegasus
+> — Dido's sacrifice to Juno
+> — Sacrifice to Venus in a temple
+> Answer with the subject only.
+
+**Response (verbatim):**
+
+> The sacrifice of Iphigenia
+
+## Model: `gemini:gemini-3.5-flash`
+
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
+
+_Run: 2026-06-18T13:48:33+00:00_
+
+**Prompt:**
+
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
+
+**Response (verbatim):**
+
+> {
+>   "recognized": true,
+>   "artist": "Pieter Lastman",
+>   "title": "The Sacrifice of Iphigenia",
+>   "date": "1614",
+>   "collection": "Rijksmuseum, Amsterdam"
+> }
+
+### Probe B-plain — Open identification, no context
+
+_Run: 2026-06-18T13:10:10+00:00_
+
+**Prompt:**
+
+> What is depicted in this image?
+
+**Response (verbatim):**
+
+> This image depicts **"The Sacrifice of Iphigenia"**, a famous painting by the Dutch Golden Age artist **Jan Steen** (painted in 1671). 
+> 
+> ### Key Elements of the Scene:
+> * **Iphigenia:** Kneeling in the center in a glowing white dress, prepared to be sacrificed to the goddess Diana (Artemis) so that the Greek fleet can obtain favorable winds to sail to Troy.
+> * **Agamemnon:** Her father, depicted on the right side sitting down, overcome with grief and weeping with his head resting in his hand next to a large open book.
+> * **Diana (Artemis):** Appearing in the upper-left corner in the clouds, bringing a deer (hind) to replace Iphigenia on the altar at the last moment, thereby saving her.
+> * **The Greek Fleet:** Visible in the background on the far left, anchored at the port of Aulis.
+> * **The Altar and Onlookers:** Surrounding the central scene are the high priest, soldiers, and various onlookers witnessing the miraculous intervention.
+
+### Probe B-framed — Open identification, cultural framing
+
+_Run: 2026-06-18T13:10:25+00:00_
+
+**Prompt:**
+
+> This is a European oil painting. What scene or subject is depicted? Name the episode and the figures if you can.
+
+**Response (verbatim):**
+
+> Based on the visual details, this painting depicts the mythological scene of **The Sacrifice of Iphigenia** (specifically the moment of her miraculous rescue at Aulis). 
+> 
+> ### **The Episode**
+> According to Greek mythology, the Greek fleet was stranded at Aulis on their way to Troy because the goddess Artemis (Diana) calmed the winds. To appease her, the high priest Calchas declared that King Agamemnon must sacrifice his eldest daughter, **Iphigenia**. Just as the sacrifice is about to take place, Diana relents, snatches Iphigenia away to safety, and replaces her on the altar with a deer (hind).
+> 
+> ### **Key Figures Depicted**
+> * **Iphigenia:** The young woman kneeling in the center in a white gown, resigned to her fate.
+> * **Diana (Artemis):** Appearing in the upper-left corner in the clouds, identified by the crescent moon on her forehead, accompanied by the hind (deer) she is sending to replace Iphigenia.
+> * **Calchas:** The high priest standing by the altar, preparing to perform the sacrifice.
+> * **Agamemnon:** Iphigenia's father, the King of Mycenae. In classical art tradition (originating from the ancient painter Timanthes), he is depicted hiding his face in deep grief (the seated figure on the right with his hand covering his face).
+> * **Greek Soldiers and Onlookers:** Surrounding the altar, reacting with awe and sorrow to the impending sacrifice and the divine intervention.
+
+### Probe B-forced-choice — Closed identification
+
+_Run: 2026-06-18T13:10:36+00:00_
 
 **Prompt:**
 

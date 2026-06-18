@@ -12,28 +12,29 @@ _Image served from IIIF (click for full resolution) — [info.json](https://medi
 - **Probe battery version:** 1.2
 - **System instruction (all sessions):** You are looking at a single image. Answer only from what is visible in the image and your own internal knowledge. Do not use web search, retrieval, external tools, or any internet resources to answer.
 
-_Each probe ran in a separate stateless session. Probe A is a logged covariate — record only, never score. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
+_Each probe ran in a separate stateless session. Probe A returns structured JSON and is scored per element (artist/title/date/collection) by an LLM judge against institutional ground truth; the collection element is low-confidence. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
 
 ## Model: `gemini:gemini-2.5-pro`
 
-### Probe A — Recognition (logged covariate — record only, do not score)
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
 
-_Run: 2026-06-15T07:46:59+00:00_
+_Run: 2026-06-18T13:44:58+00:00_
 
 **Prompt:**
 
-> What artwork is this? If you can, name the artist, title, approximate date, and collection. If you don't recognise the specific work, say so explicitly.
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
 
 **Response (verbatim):**
 
-> Based on the visual evidence and my internal knowledge, this is a well-known painting from the Dutch Golden Age.
-> 
-> **Artist:** Govert Flinck
-> **Title:** *Isaac Blessing Jacob*
-> **Approximate Date:** c. 1638
-> **Collection:** Rijksmuseum, Amsterdam
-> 
-> The painting depicts the biblical story from the Book of Genesis. The elderly and blind Isaac is in bed, intending to give his blessing to his firstborn son, Esau. However, he is being deceived by his younger son, Jacob (kneeling), who, at the urging of his mother Rebekah (standing at the head of the bed), has disguised himself as Esau to steal the blessing. The quiver of arrows on Jacob's back is a prop in this deception, as Esau was a skillful hunter.
+> ```json
+> {
+>   "recognized": true,
+>   "artist": "Govert Flinck",
+>   "title": "Isaac Blessing Jacob",
+>   "date": "c. 1638",
+>   "collection": "Rijksmuseum"
+> }
+> ```
 
 ### Probe B-plain — Open identification, no context
 
@@ -89,6 +90,92 @@ _Run: 2026-06-15T07:47:30+00:00_
 ### Probe B-forced-choice — Closed identification
 
 _Run: 2026-06-15T07:47:48+00:00_
+
+**Prompt:**
+
+> This painting depicts one of the following subjects. Which one is it?
+> — The finding of Moses: Pharaoh's daughter discovers the child floating on the river
+> — The sacrifice of Isaac (Abraham and Isaac)
+> — Potiphar's wife catches Joseph by his robe; Joseph escapes
+> — Balaam strikes his ass; the ass lies down and starts to speak
+> — Isaac blesses Jacob disguised in Esau's clothes
+> — Samson breaks the pillars; the temple of Dagon collapses
+> — The drunkenness of Noah
+> — Feast of Esther
+> — Belshazzar's Feast
+> — Bathsheba receives a letter from David
+> — The Gathering of Manna
+> — Hagar, Ishmael and the Angel in the Wilderness
+> — The Prodigal Son chased from the brothel (Luke 15:13)
+> — Jephtha welcomed by his daughter (Judges 11:29-40)
+> — Judah's love-affair with Tamar; he gives her his signet-ring and staff
+> Answer with the subject only.
+
+**Response (verbatim):**
+
+> Isaac blesses Jacob disguised in Esau's clothes
+
+## Model: `gemini:gemini-3.5-flash`
+
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
+
+_Run: 2026-06-18T13:49:08+00:00_
+
+**Prompt:**
+
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
+
+**Response (verbatim):**
+
+> {
+>   "recognized": true,
+>   "artist": "Govert Flinck",
+>   "title": "Isaac Blessing Jacob",
+>   "date": "1638",
+>   "collection": "Rijksmuseum, Amsterdam"
+> }
+
+### Probe B-plain — Open identification, no context
+
+_Run: 2026-06-18T13:11:53+00:00_
+
+**Prompt:**
+
+> What is depicted in this image?
+
+**Response (verbatim):**
+
+> This painting depicts the biblical scene of **Isaac Blessing Jacob** (from Genesis 27), painted by the Dutch Golden Age artist **Govert Flinck** in 1638. 
+> 
+> ### Key Elements of the Scene:
+> * **Isaac:** The elderly, blind patriarch is shown lying in bed, reaching out to bless his son.
+> * **Jacob:** Kneeling by the bedside, Jacob is receiving the blessing meant for his older brother, Esau. To deceive his blind father, Jacob is disguised as Esau; he wears a quiver of arrows on his back to mimic Esau's identity as a hunter, and his hands/wrists are covered to feel hairy like his brother's.
+> * **Rebekah:** Jacob's mother stands behind the bed, watching the deception closely and anxiously to ensure their plan succeeds.
+> * **Esau:** In the background on the far left, Esau can be seen peeking through the doorway, returning from his hunt just as the blessing is being stolen.
+
+### Probe B-framed — Open identification, cultural framing
+
+_Run: 2026-06-18T13:12:04+00:00_
+
+**Prompt:**
+
+> This is a European oil painting. What scene or subject is depicted? Name the episode and the figures if you can.
+
+**Response (verbatim):**
+
+> This is a European oil painting depicting the biblical scene of **Isaac Blessing Jacob** (from Genesis 27). 
+> 
+> The painting is by the Dutch Golden Age artist **Gerrit Willemsz. Horst** (c. 1638).
+> 
+> ### The Figures and Scene Depicted:
+> * **Isaac:** The elderly, blind patriarch lying in bed, reaching out to bless his son.
+> * **Jacob:** Kneeling at the bedside to receive the blessing. To deceive his blind father into thinking he is his older brother Esau (a hunter), Jacob wears Esau's clothing and a quiver of arrows on his back.
+> * **Rebekah:** Jacob's mother, standing behind the bed. She orchestrated the deception and watches intently to ensure the plan succeeds.
+> * **Esau:** Jacob's twin brother, who can be seen peeking through the doorway on the far left as he returns from his hunt, unaware that his birthright blessing is being stolen.
+
+### Probe B-forced-choice — Closed identification
+
+_Run: 2026-06-18T13:12:22+00:00_
 
 **Prompt:**
 

@@ -12,29 +12,29 @@ _Image served from IIIF (click for full resolution) — [info.json](https://medi
 - **Probe battery version:** 1.2
 - **System instruction (all sessions):** You are looking at a single image. Answer only from what is visible in the image and your own internal knowledge. Do not use web search, retrieval, external tools, or any internet resources to answer.
 
-_Each probe ran in a separate stateless session. Probe A is a logged covariate — record only, never score. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
+_Each probe ran in a separate stateless session. Probe A returns structured JSON and is scored per element (artist/title/date/collection) by an LLM judge against institutional ground truth; the collection element is low-confidence. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
 
 ## Model: `gemini:gemini-2.5-pro`
 
-### Probe A — Recognition (logged covariate — record only, do not score)
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
 
-_Run: 2026-06-15T07:44:26+00:00_
+_Run: 2026-06-18T13:44:19+00:00_
 
 **Prompt:**
 
-> What artwork is this? If you can, name the artist, title, approximate date, and collection. If you don't recognise the specific work, say so explicitly.
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
 
 **Response (verbatim):**
 
-> Based on the visual evidence and my internal knowledge, this is a famous work of art.
-> 
-> **Artist:** Giovanni Battista Tiepolo (also known as Giambattista Tiepolo)
-> 
-> **Title:** The artwork depicts a scene from Virgil's *Aeneid* and is commonly known as *The Meeting of Aeneas and Dido* or *Aeneas Presented to Dido*. The scene shows the Trojan hero Aeneas, guided by his mother Venus and her son Cupid (seen in the clouds above), arriving in Carthage and being welcomed by its queen, Dido.
-> 
-> **Approximate Date:** c. 1757
-> 
-> **Collection:** This is a fresco and is part of a larger cycle of paintings decorating the walls of the Villa Valmarana "Ai Nani" in Vicenza, Italy.
+> ```json
+> {
+>   "recognized": true,
+>   "artist": "Giovanni Battista Tiepolo",
+>   "title": "The Meeting of Dido and Aeneas",
+>   "date": "c. 1757",
+>   "collection": "Villa Valmarana ai Nani, Vicenza"
+> }
+> ```
 
 ### Probe B-plain — Open identification, no context
 
@@ -83,6 +83,100 @@ _Run: 2026-06-15T07:45:03+00:00_
 ### Probe B-forced-choice — Closed identification
 
 _Run: 2026-06-15T07:45:28+00:00_
+
+**Prompt:**
+
+> This painting depicts one of the following subjects. Which one is it?
+> — Prometheus chained by Vulcan
+> — Aeneas rescues his father Anchises from the burning Troy
+> — Abduction of Amphitrite by Poseidon
+> — The wedding of Peleus and Thetis
+> — The Competition of Apollo and Pan and the judgment of Midas
+> — Marriage of Cupid and Psyche
+> — The Triumph of Bacchus
+> — Apollo in Vulcan's forge revealing Venus' love-affair with Mars
+> — The Triumph of Mars: an Allegory of War
+> — The meeting of Nausicaa and Ulysses
+> — The meeting of Dido and Aeneas
+> — The sacrifice of Iphigenia
+> — The goddess Pallas Athena and the horse Pegasus
+> — Dido's sacrifice to Juno
+> — Sacrifice to Venus in a temple
+> Answer with the subject only.
+
+**Response (verbatim):**
+
+> The meeting of Dido and Aeneas
+
+## Model: `gemini:gemini-3.5-flash`
+
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
+
+_Run: 2026-06-18T13:48:32+00:00_
+
+**Prompt:**
+
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
+
+**Response (verbatim):**
+
+> {
+>   "recognized": true,
+>   "artist": "Peter Paul Rubens",
+>   "title": "The Meeting of Dido and Aeneas",
+>   "date": "c. 1630",
+>   "collection": null
+> }
+
+### Probe B-plain — Open identification, no context
+
+_Run: 2026-06-18T13:09:59+00:00_
+
+**Prompt:**
+
+> What is depicted in this image?
+
+**Response (verbatim):**
+
+> This painting depicts **the meeting of Aeneas and Dido** (from Virgil’s epic poem, the *Aeneid*), rendered in the Flemish Baroque style associated with **Peter Paul Rubens** or his workshop/circle. 
+> 
+> ### Key Elements of the Scene:
+> * **Aeneas and Dido:** In the center, the Trojan hero Aeneas, clad in classical Roman armor and a flowing red cloak, approaches Dido, the Queen of Carthage. Dido stands gracefully on the right in a white gown and blue mantle, with her train held by a kneeling handmaiden.
+> * **Divine Intervention:** In the upper left, floating on a cloud, are **Venus** (Aeneas's mother) and **Cupid** with his bow. Venus points toward the couple, directing Cupid to strike Dido with love for Aeneas.
+> * **The Setting (Carthage):** The encounter takes place before a grand classical palace representing the newly built city of Carthage. Above the archway on the far right, a decorative cartouche is inscribed with the name **"DIDO"**. 
+> * **The Trojan Fleet:** On the far left, Trojan ships are visible moored along the shoreline, indicating Aeneas's recent shipwreck and arrival.
+> * **Supporting Figures:** 
+>   * Aeneas is accompanied by his soldiers (including his loyal companion Achates).
+>   * Dido is surrounded by her court ladies and attendants.
+>   * In the lower-left foreground, a slender dog stands watching.
+>   * On the far right, a young black servant stands near a parrot perched on a stand.
+
+### Probe B-framed — Open identification, cultural framing
+
+_Run: 2026-06-18T13:10:12+00:00_
+
+**Prompt:**
+
+> This is a European oil painting. What scene or subject is depicted? Name the episode and the figures if you can.
+
+**Response (verbatim):**
+
+> Based on the visual details and classical iconography, this painting depicts **the departure of Aeneas from Carthage** (an episode from Book IV of Virgil's epic poem, the *Aeneid*). 
+> 
+> ### **The Episode**
+> The Trojan hero **Aeneas** is commanded by the gods (via Mercury) to leave Carthage and his lover, **Queen Dido**, to fulfill his destiny of founding Rome. The painting captures the bittersweet moment of his departure, as he prepares to board his ships while Dido watches in despair.
+> 
+> ### **Key Figures Depicted**
+> * **Aeneas:** The central male figure in Roman-style armor and a flowing red cloak, walking toward his fleet on the left but looking back reluctantly toward Dido.
+> * **Dido:** The Queen of Carthage, standing on the right in a white gown with a blue mantle, looking distraught. Her name **"DIDO"** is inscribed on the cartouche above the palace archway on the far right.
+> * **Venus and Cupid:** Floating in the clouds above, representing the divine forces of love and fate that governed their tragic romance (Venus is Aeneas's mother).
+> * **Dido's Attendants:** Handmaidens surrounding the queen, including one kneeling to hold the train of her dress.
+> * **Trojan Soldiers:** Accompanying Aeneas on the left, with ships visible in the harbor behind them.
+> * **Palace Servants:** A dark-skinned page/servant standing next to a parrot on a perch near the palace entrance on the right.
+
+### Probe B-forced-choice — Closed identification
+
+_Run: 2026-06-18T13:10:31+00:00_
 
 **Prompt:**
 

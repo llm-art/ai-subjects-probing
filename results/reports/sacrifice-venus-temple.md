@@ -12,31 +12,29 @@ _Image served from IIIF (click for full resolution) — [info.json](https://medi
 - **Probe battery version:** 1.2
 - **System instruction (all sessions):** You are looking at a single image. Answer only from what is visible in the image and your own internal knowledge. Do not use web search, retrieval, external tools, or any internet resources to answer.
 
-_Each probe ran in a separate stateless session. Probe A is a logged covariate — record only, never score. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
+_Each probe ran in a separate stateless session. Probe A returns structured JSON and is scored per element (artist/title/date/collection) by an LLM judge against institutional ground truth; the collection element is low-confidence. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
 
 ## Model: `gemini:gemini-2.5-pro`
 
-### Probe A — Recognition (logged covariate — record only, do not score)
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
 
-_Run: 2026-06-15T07:45:43+00:00_
+_Run: 2026-06-18T13:44:39+00:00_
 
 **Prompt:**
 
-> What artwork is this? If you can, name the artist, title, approximate date, and collection. If you don't recognise the specific work, say so explicitly.
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
 
 **Response (verbatim):**
 
-> Based on the visual evidence and my internal knowledge, this is a famous painting from the Baroque period.
-> 
-> **Artist:** Peter Paul Rubens
-> 
-> **Title:** *The Feast of Venus* (or *The Worship of Venus*)
-> 
-> **Approximate Date:** c. 1636–1637
-> 
-> **Collection:** Kunsthistorisches Museum, Vienna
-> 
-> This painting is Rubens's interpretation of a subject famously depicted by the Renaissance master Titian. The scene is based on the writings of the ancient Greek author Philostratus, who described a painting of cupids gathering apples in a garden sacred to the goddess Venus. In the painting, numerous putti (cherubic infants) celebrate in a fertile landscape before a statue of Venus, the goddess of love, who is being honored by nymphs.
+> ```json
+> {
+>   "recognized": true,
+>   "artist": "Peter Paul Rubens",
+>   "title": "The Worship of Venus",
+>   "date": "c. 1636-1637",
+>   "collection": "Museo Nacional del Prado"
+> }
+> ```
 
 ### Probe B-plain — Open identification, no context
 
@@ -101,6 +99,104 @@ _Run: 2026-06-15T07:46:14+00:00_
 ### Probe B-forced-choice — Closed identification
 
 _Run: 2026-06-15T07:46:32+00:00_
+
+**Prompt:**
+
+> This painting depicts one of the following subjects. Which one is it?
+> — Prometheus chained by Vulcan
+> — Aeneas rescues his father Anchises from the burning Troy
+> — Abduction of Amphitrite by Poseidon
+> — The wedding of Peleus and Thetis
+> — The Competition of Apollo and Pan and the judgment of Midas
+> — Marriage of Cupid and Psyche
+> — The Triumph of Bacchus
+> — Apollo in Vulcan's forge revealing Venus' love-affair with Mars
+> — The Triumph of Mars: an Allegory of War
+> — The meeting of Nausicaa and Ulysses
+> — The meeting of Dido and Aeneas
+> — The sacrifice of Iphigenia
+> — The goddess Pallas Athena and the horse Pegasus
+> — Dido's sacrifice to Juno
+> — Sacrifice to Venus in a temple
+> Answer with the subject only.
+
+**Response (verbatim):**
+
+> Sacrifice to Venus in a temple
+
+## Model: `gemini:gemini-3.5-flash`
+
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
+
+_Run: 2026-06-18T13:48:51+00:00_
+
+**Prompt:**
+
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
+
+**Response (verbatim):**
+
+> {
+>   "recognized": true,
+>   "artist": "Peter Paul Rubens",
+>   "title": "The Feast of Venus",
+>   "date": "c. 1636-1637",
+>   "collection": "Kunsthistorisches Museum, Vienna"
+> }
+
+### Probe B-plain — Open identification, no context
+
+_Run: 2026-06-18T13:10:49+00:00_
+
+**Prompt:**
+
+> What is depicted in this image?
+
+**Response (verbatim):**
+
+> This painting is ***The Feast of Venus*** (also known as *The Worship of Venus*), created around 1636–1637 by the Flemish Baroque master **Peter Paul Rubens**. 
+> 
+> ### Key Depicted Elements:
+> * **The Statue of Venus:** On the right side of the painting, a classical stone statue of Venus (the Roman goddess of love, beauty, and fertility) stands atop a high pedestal. Water flows from a dolphin at her feet, symbolizing her birth from the sea.
+> * **The Worshippers:** Two women (often identified as Roman matrons or nymphs) pay homage to the goddess. One woman in a red and white dress holds up a golden mirror to Venus, while another woman behind her assists in the ritual.
+> * **The Cupids (Putti):** The central and left portions of the canvas are filled with dozens of winged cupids (putti) celebrating love and fertility. They are depicted in various playful, dynamic activities:
+>   * Dancing in a joyous circle.
+>   * Hugging, kissing, and tumbling on the ground.
+>   * Climbing the lush trees to pick apples (a fruit sacred to Venus).
+>   * Flying through the air and resting in the branches.
+>   * Gathering fruit into baskets on the forest floor.
+> * **The Setting:** A rich, fertile landscape with dense trees, a soft sunset/sunrise on the horizon, and a dramatic, cloudy sky, which is characteristic of Rubens' late, sensuous Baroque style.
+
+### Probe B-framed — Open identification, cultural framing
+
+_Run: 2026-06-18T13:10:59+00:00_
+
+**Prompt:**
+
+> This is a European oil painting. What scene or subject is depicted? Name the episode and the figures if you can.
+
+**Response (verbatim):**
+
+> This painting is ***The Feast of Venus* (or *Das Venusfest*)** by the Flemish Baroque master **Peter Paul Rubens**, painted around 1636–1637. It is currently housed in the Kunsthistorisches Museum in Vienna.
+> 
+> ### Subject and Episode
+> The painting depicts the ancient Roman festival of **Veneralia** (held on April 1st in honor of **Venus Verticordia**), which is described in **Ovid’s *Fasti*** (Book IV). 
+> 
+> Rubens also heavily integrated a description from **Philostratus the Elder’s *Imagines*** (specifically the chapter "Cupids" or "Amorines"), which describes a swarm of winged cupids gathering apples, dancing, playing, and wrestling in a sacred orchard.
+> 
+> ### Key Figures and Elements
+> * **The Statue of Venus:** On the right, a classical stone statue of Venus stands on a high pedestal. She is depicted in the pose of the *Venus Pudica* (modest Venus), with a dolphin at her feet.
+> * **The Attendants/Roman Women:** Two women on the right are shown preparing and honoring the goddess. One holds up a golden mirror to the statue, while another reaches up to drape or clean her. In the background, a larger crowd of women (representing Roman matrons, brides, and courtesans) can be seen bathing in a stream to purify themselves for the festival.
+> * **The Cupids (*Amores* / *Putti*):** A joyous, chaotic crowd of winged cupids dominates the left and center of the canvas. Following Philostratus's text, they are shown:
+>   * Climbing trees to shake down and gather golden apples.
+>   * Dancing in a lively ring.
+>   * Hugging, kissing, and wrestling.
+>   * Playing with a hare (visible near the center-right, a traditional symbol of fertility and Venus).
+>   * Offering gifts and playing musical instruments.
+
+### Probe B-forced-choice — Closed identification
+
+_Run: 2026-06-18T13:11:07+00:00_
 
 **Prompt:**
 

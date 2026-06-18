@@ -12,31 +12,29 @@ _Image served from IIIF (click for full resolution) — [info.json](https://medi
 - **Probe battery version:** 1.2
 - **System instruction (all sessions):** You are looking at a single image. Answer only from what is visible in the image and your own internal knowledge. Do not use web search, retrieval, external tools, or any internet resources to answer.
 
-_Each probe ran in a separate stateless session. Probe A is a logged covariate — record only, never score. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
+_Each probe ran in a separate stateless session. Probe A returns structured JSON and is scored per element (artist/title/date/collection) by an LLM judge against institutional ground truth; the collection element is low-confidence. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
 
 ## Model: `gemini:gemini-2.5-pro`
 
-### Probe A — Recognition (logged covariate — record only, do not score)
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
 
-_Run: 2026-06-15T07:42:00+00:00_
+_Run: 2026-06-18T13:43:59+00:00_
 
 **Prompt:**
 
-> What artwork is this? If you can, name the artist, title, approximate date, and collection. If you don't recognise the specific work, say so explicitly.
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
 
 **Response (verbatim):**
 
-> Based on the visual evidence and my internal knowledge, this artwork is:
-> 
-> **Artist:** A collaboration between **Hendrick de Clerck** (figures) and **Denijs van Alsloot** (landscape).
-> 
-> **Title:** *The Contest between Apollo and Pan*
-> 
-> **Approximate Date:** c. 1620
-> 
-> **Collection:** Rijksmuseum, Amsterdam, Netherlands.
-> 
-> The painting depicts the mythological story of the musical contest between the god Apollo and the satyr Pan. Apollo, god of music and poetry, is the figure in the red cloak with a laurel wreath and a radiant glow, holding a stringed instrument (a *lira da braccio*). He is surrounded by nymphs, satyrs, and other figures who have gathered to hear the competition. The figure in the turban is King Midas, who, according to the myth, foolishly judged Pan's rustic music to be superior to Apollo's, for which he was punished with a pair of donkey's ears. The style is characteristic of the Flemish Baroque period.
+> ```json
+> {
+>   "recognized": true,
+>   "artist": "Hendrik van Balen the Elder and Jan Brueghel the Elder",
+>   "title": "The Judgment of Midas",
+>   "date": "c. 1605 - c. 1608",
+>   "collection": "Rijksmuseum"
+> }
+> ```
 
 ### Probe B-plain — Open identification, no context
 
@@ -87,6 +85,104 @@ _Run: 2026-06-15T07:42:34+00:00_
 ### Probe B-forced-choice — Closed identification
 
 _Run: 2026-06-15T07:42:55+00:00_
+
+**Prompt:**
+
+> This painting depicts one of the following subjects. Which one is it?
+> — Prometheus chained by Vulcan
+> — Aeneas rescues his father Anchises from the burning Troy
+> — Abduction of Amphitrite by Poseidon
+> — The wedding of Peleus and Thetis
+> — The Competition of Apollo and Pan and the judgment of Midas
+> — Marriage of Cupid and Psyche
+> — The Triumph of Bacchus
+> — Apollo in Vulcan's forge revealing Venus' love-affair with Mars
+> — The Triumph of Mars: an Allegory of War
+> — The meeting of Nausicaa and Ulysses
+> — The meeting of Dido and Aeneas
+> — The sacrifice of Iphigenia
+> — The goddess Pallas Athena and the horse Pegasus
+> — Dido's sacrifice to Juno
+> — Sacrifice to Venus in a temple
+> Answer with the subject only.
+
+**Response (verbatim):**
+
+> The Competition of Apollo and Pan and the judgment of Midas
+
+## Model: `gemini:gemini-3.5-flash`
+
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
+
+_Run: 2026-06-18T13:48:03+00:00_
+
+**Prompt:**
+
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
+
+**Response (verbatim):**
+
+> {
+>   "recognized": true,
+>   "artist": "Cornelis van Poelenburch",
+>   "title": "The Judgment of Midas",
+>   "date": "c. 1630",
+>   "collection": "State Hermitage Museum"
+> }
+
+### Probe B-plain — Open identification, no context
+
+_Run: 2026-06-18T13:08:25+00:00_
+
+**Prompt:**
+
+> What is depicted in this image?
+
+**Response (verbatim):**
+
+> Based on the visual details, this painting depicts the mythological scene of **The Judgment of Midas** (also known as the **Musical Contest between Apollo and Pan**), a story from Ovid's *Metamorphoses*. 
+> 
+> Key elements and figures shown in the scene include:
+> 
+> * **Apollo:** Standing on the right-center, distinguished by the radiant halo of light around his head, a laurel wreath, and a red cloak. He holds a stringed instrument (a lira da braccio or violin), representing refined, divine music.
+> * **Tmolus:** The mountain god acting as the judge, seated in the center wearing blue drapery and a crown of leaves, listening intently. He awards the victory to Apollo.
+> * **King Midas:** Seated on the far right wearing a turban. In the myth, Midas foolishly dissented from Tmolus's judgment, preferring the rustic music of Pan, which prompted Apollo to punish him by turning his ears into those of a donkey (ass's ears, which can be seen peeking out).
+> * **Pan / Satyrs:** The goat-legged satyr figures represent Pan and his followers, who played the rustic panpipes (syrinx) in the contest.
+> * **Spectators and Nymphs:** Various nymphs and woodland deities populate the lush, rocky landscape. In the center-left foreground, a woman in a white and pink dress sits looking directly at the viewer.
+> * **Foreground Instruments:** A lute, a viol/violin, and a music book lie on the ground in the foreground, symbolizing the musical theme of the painting.
+
+### Probe B-framed — Open identification, cultural framing
+
+_Run: 2026-06-18T13:08:38+00:00_
+
+**Prompt:**
+
+> This is a European oil painting. What scene or subject is depicted? Name the episode and the figures if you can.
+
+**Response (verbatim):**
+
+> This is a European oil painting depicting the mythological scene of **The Judgment of Midas** (also known as **The Contest between Apollo and Pan**). 
+> 
+> ### **The Episode**
+> According to Ovid's *Metamorphoses*, the satyr Pan boasted that his rustic music on the panpipes (syrinx) was superior to that of Apollo, the god of music. A contest was arranged to settle the dispute. 
+> 
+> * **Tmolus**, the mountain god, was chosen as the judge. He listened to both performances and declared Apollo the victor.
+> * **King Midas**, a follower of Pan, was the only onlooker who disagreed with the verdict, loudly declaring Pan's music to be superior.
+> * In anger at Midas's lack of musical taste, Apollo punished him by turning his ears into those of an ass (donkey ears). Midas thereafter wore a turban to hide them.
+> 
+> ---
+> 
+> ### **Key Figures Depicted**
+> * **Apollo:** Standing prominently on the right-center, crowned with laurel and surrounded by a radiant golden halo. He wears a red cloak and holds a stringed instrument (a *lira da braccio* or violin-like instrument).
+> * **Tmolus (The Judge):** Seated in the center, resting his head on his hand thoughtfully. He wears a crown of oak or vine leaves, symbolizing his status as a mountain god.
+> * **Pan:** Seated on the right with goat legs, holding his panpipes (syrinx).
+> * **King Midas:** On the far right, wearing a turban and a crown, looking on with disapproval.
+> * **Nymphs and Satyrs:** A crowd of onlookers surrounds the scene, including a prominent nymph in a white and pink dress sitting in the foreground looking directly at the viewer, and various satyrs scattered on the hillside behind them. 
+> * **Instruments on the Ground:** A lute, a violin/viola, and sheet music lie in the foreground, symbolizing the theme of music.
+
+### Probe B-forced-choice — Closed identification
+
+_Run: 2026-06-18T13:08:51+00:00_
 
 **Prompt:**
 

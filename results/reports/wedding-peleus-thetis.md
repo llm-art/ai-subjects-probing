@@ -12,28 +12,29 @@ _Image served from IIIF (click for full resolution) — [info.json](https://medi
 - **Probe battery version:** 1.2
 - **System instruction (all sessions):** You are looking at a single image. Answer only from what is visible in the image and your own internal knowledge. Do not use web search, retrieval, external tools, or any internet resources to answer.
 
-_Each probe ran in a separate stateless session. Probe A is a logged covariate — record only, never score. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
+_Each probe ran in a separate stateless session. Probe A returns structured JSON and is scored per element (artist/title/date/collection) by an LLM judge against institutional ground truth; the collection element is low-confidence. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
 
 ## Model: `gemini:gemini-2.5-pro`
 
-### Probe A — Recognition (logged covariate — record only, do not score)
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
 
-_Run: 2026-06-15T07:42:00+00:00_
+_Run: 2026-06-18T13:43:45+00:00_
 
 **Prompt:**
 
-> What artwork is this? If you can, name the artist, title, approximate date, and collection. If you don't recognise the specific work, say so explicitly.
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
 
 **Response (verbatim):**
 
-> Based on the style and subject matter visible in the image, this is a well-known work of Dutch Mannerism.
-> 
-> **Artist:** Joachim Wtewael
-> **Title:** *The Wedding of Peleus and Thetis*
-> **Approximate Date:** c. 1600-1602
-> **Collection:** Alte Pinakothek, Munich, Germany
-> 
-> The painting depicts the mythological wedding feast of the mortal king Peleus and the sea-nymph Thetis, which was attended by the gods and goddesses of Olympus. This event is famous in Greek mythology as the precursor to the Trojan War. The uninvited goddess of discord, Eris, would arrive and toss the Golden Apple inscribed "to the fairest" among the guests, sparking a rivalry between Hera, Athena, and Aphrodite that would ultimately be settled by the Judgment of Paris. Wtewael's composition is characteristic of the Mannerist style, with its crowded arrangement of elegant, elongated, and often nude figures in complex poses.
+> ```json
+> {
+>   "recognized": true,
+>   "artist": "Joachim Wtewael",
+>   "title": "The Wedding of Peleus and Thetis",
+>   "date": "c. 1612",
+>   "collection": "Alte Pinakothek, Munich"
+> }
+> ```
 
 ### Probe B-plain — Open identification, no context
 
@@ -88,6 +89,106 @@ _Run: 2026-06-15T07:42:35+00:00_
 ### Probe B-forced-choice — Closed identification
 
 _Run: 2026-06-15T07:42:55+00:00_
+
+**Prompt:**
+
+> This painting depicts one of the following subjects. Which one is it?
+> — Prometheus chained by Vulcan
+> — Aeneas rescues his father Anchises from the burning Troy
+> — Abduction of Amphitrite by Poseidon
+> — The wedding of Peleus and Thetis
+> — The Competition of Apollo and Pan and the judgment of Midas
+> — Marriage of Cupid and Psyche
+> — The Triumph of Bacchus
+> — Apollo in Vulcan's forge revealing Venus' love-affair with Mars
+> — The Triumph of Mars: an Allegory of War
+> — The meeting of Nausicaa and Ulysses
+> — The meeting of Dido and Aeneas
+> — The sacrifice of Iphigenia
+> — The goddess Pallas Athena and the horse Pegasus
+> — Dido's sacrifice to Juno
+> — Sacrifice to Venus in a temple
+> Answer with the subject only.
+
+**Response (verbatim):**
+
+> The wedding of Peleus and Thetis
+
+## Model: `gemini:gemini-3.5-flash`
+
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
+
+_Run: 2026-06-18T13:47:57+00:00_
+
+**Prompt:**
+
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
+
+**Response (verbatim):**
+
+> {
+>   "recognized": true,
+>   "artist": "Frans Floris",
+>   "title": "The Feast of the Gods",
+>   "date": "1550",
+>   "collection": "Royal Museum of Fine Arts Antwerp"
+> }
+
+### Probe B-plain — Open identification, no context
+
+_Run: 2026-06-18T13:07:53+00:00_
+
+**Prompt:**
+
+> What is depicted in this image?
+
+**Response (verbatim):**
+
+> Based on the visual details and artistic style, this painting depicts **"The Feast of the Gods"** (also commonly represented as **"The Banquet of the Gods"** or **"The Wedding of Peleus and Thetis"**), a popular subject in late 16th and early 17th-century Flemish Mannerist art (often associated with artists like Hendrick de Clerck, Hendrick van Balen, or Frans Floris).
+> 
+> ### Key Elements and Figures Depicted:
+> 
+> * **The Central Figures (Foreground):**
+>   * **Venus (Aphrodite):** The standing nude female figure in the center, draped with a vibrant red cloak behind her, representing beauty and love.
+>   * **Ceres and Bacchus (Left):** To the left, figures representing agriculture and wine are shown. A seated figure with a red drape reaches toward a dark-skinned child holding fruit, while another figure behind them holds a platter of grain/bread (Ceres). This composition often references the classical proverb *"Sine Cerere et Baccho friget Venus"* (Without Ceres/food and Bacchus/wine, Venus/love freezes).
+>   * **Putti/Cupids:** In the lower foreground, several young children (putti) are shown: one carrying a silver plate of red cherries/berries, and another on the bottom right playing with a large melon.
+>   * **Hebe or Ganymede (Far Right):** A female figure dressed in red pours nectar or wine from a large silver ewer (pitcher) into a cup, serving the assembly.
+> 
+> * **The Banquet (Background):**
+>   * A long table draped in a white tablecloth is filled with various Olympian gods and goddesses dining. 
+>   * Near the center of the table sits a crowned male figure holding a golden goblet, representing **Jupiter (Zeus)**, the king of the gods.
+> 
+> * **Still Life and Setting:**
+>   * **Abundance of Fruit:** The foreground features a rich display of harvested fruits, including baskets of grapes, apples, pears, and various gourds/melons, symbolizing fertility, nature's bounty, and celebration.
+>   * **Lush Landscape:** The feast takes place in a wooded, twilight glade, with dense forest foliage framing the scene.
+
+### Probe B-framed — Open identification, cultural framing
+
+_Run: 2026-06-18T13:08:12+00:00_
+
+**Prompt:**
+
+> This is a European oil painting. What scene or subject is depicted? Name the episode and the figures if you can.
+
+**Response (verbatim):**
+
+> This is a European oil painting depicting **The Feast of the Gods** (also commonly referred to as *The Banquet of the Gods* or *The Wedding of Peleus and Thetis*), a highly popular mythological subject in Renaissance and Baroque art (particularly within Flemish Mannerism).
+> 
+> ### **The Scene**
+> The painting depicts the Olympian gods gathered for a grand outdoor banquet, celebrating with an abundance of food, wine, and fruit, symbolizing harmony, peace, and divine luxury.
+> 
+> ### **Key Figures Depicted**
+> * **Venus (Aphrodite):** The central, prominent standing nude female figure, representing beauty and love.
+> * **Jupiter (Zeus):** Seated at the center of the banquet table wearing a golden crown, presiding over the feast.
+> * **Juno (Hera):** Seated next to Jupiter at the table.
+> * **Hebe (or Ganymede):** On the far right, wearing a red robe and pouring nectar or wine from a large silver pitcher into a cup.
+> * **Bacchus (Dionysus) & Ceres (Demeter):** Represented through the themes of wine and harvest. The figures on the left handling grapes and the abundance of melons, squashes, and fruit baskets in the foreground pay tribute to these deities of agriculture and wine.
+> * **Cupid (Amor) and Putti:** The young children in the foreground, one carrying a plate of cherries, another playing with a melon, and a dark-skinned child offering grapes on the left.
+> * **Mercury (Hermes):** Visible further down the table wearing his characteristic traveler's hat/helmet.
+
+### Probe B-forced-choice — Closed identification
+
+_Run: 2026-06-18T13:08:33+00:00_
 
 **Prompt:**
 

@@ -41,8 +41,8 @@
   },
   "probes": {
     "A_recognition": {
-      "role": "logged covariate only — record verbatim, do not score; use to flag potential training-data contamination and to interpret B results",
-      "prompt": "What artwork is this? If you can, name the artist, title, approximate date, and collection. If you don't recognise the specific work, say so explicitly."
+      "role": "recognition probe — structured JSON; scored per element (artist/title/date/collection) by score_probe_a.py via LLM-judge against institutional ground truth (data/metadata.json). Also flags potential training-data contamination and helps interpret B results.",
+      "prompt": "What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: \"recognized\" (true or false — do you recognise this specific work), \"artist\", \"title\", \"date\", \"collection\". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge."
     },
     "B_plain": {
       "role": "core task — open subject identification, no context",

@@ -12,28 +12,29 @@ _Image served from IIIF (click for full resolution) — [info.json](https://iiif
 - **Probe battery version:** 1.2
 - **System instruction (all sessions):** You are looking at a single image. Answer only from what is visible in the image and your own internal knowledge. Do not use web search, retrieval, external tools, or any internet resources to answer.
 
-_Each probe ran in a separate stateless session. Probe A is a logged covariate — record only, never score. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
+_Each probe ran in a separate stateless session. Probe A returns structured JSON and is scored per element (artist/title/date/collection) by an LLM judge against institutional ground truth; the collection element is low-confidence. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
 
 ## Model: `gemini:gemini-2.5-pro`
 
-### Probe A — Recognition (logged covariate — record only, do not score)
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
 
-_Run: 2026-06-15T07:45:47+00:00_
+_Run: 2026-06-18T13:44:46+00:00_
 
 **Prompt:**
 
-> What artwork is this? If you can, name the artist, title, approximate date, and collection. If you don't recognise the specific work, say so explicitly.
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
 
 **Response (verbatim):**
 
-> Based on the visual evidence and my internal knowledge, this artwork is:
-> 
-> *   **Artist:** Mattia Preti (also known as Il Cavalier Calabrese)
-> *   **Title:** *The Sacrifice of Isaac*
-> *   **Approximate Date:** c. 1650-1660
-> *   **Collection:** Museo e Real Bosco di Capodimonte, Naples, Italy
-> 
-> The painting depicts the biblical story from the Book of Genesis where God tests Abraham by commanding him to sacrifice his son, Isaac. At the last moment, an angel intervenes to stop Abraham, providing a ram for the sacrifice instead. The style is characteristic of the Italian Baroque period, with its dramatic use of light and shadow (chiaroscuro), intense emotion, and dynamic composition, heavily influenced by the work of Caravaggio.
+> ```json
+> {
+>   "recognized": true,
+>   "artist": "Mattia Preti",
+>   "title": "The Sacrifice of Isaac",
+>   "date": "c. 1653-1656",
+>   "collection": "Museo di Capodimonte"
+> }
+> ```
 
 ### Probe B-plain — Open identification, no context
 
@@ -80,6 +81,96 @@ _Run: 2026-06-15T07:46:26+00:00_
 ### Probe B-forced-choice — Closed identification
 
 _Run: 2026-06-15T07:46:43+00:00_
+
+**Prompt:**
+
+> This painting depicts one of the following subjects. Which one is it?
+> — The finding of Moses: Pharaoh's daughter discovers the child floating on the river
+> — The sacrifice of Isaac (Abraham and Isaac)
+> — Potiphar's wife catches Joseph by his robe; Joseph escapes
+> — Balaam strikes his ass; the ass lies down and starts to speak
+> — Isaac blesses Jacob disguised in Esau's clothes
+> — Samson breaks the pillars; the temple of Dagon collapses
+> — The drunkenness of Noah
+> — Feast of Esther
+> — Belshazzar's Feast
+> — Bathsheba receives a letter from David
+> — The Gathering of Manna
+> — Hagar, Ishmael and the Angel in the Wilderness
+> — The Prodigal Son chased from the brothel (Luke 15:13)
+> — Jephtha welcomed by his daughter (Judges 11:29-40)
+> — Judah's love-affair with Tamar; he gives her his signet-ring and staff
+> Answer with the subject only.
+
+**Response (verbatim):**
+
+> The sacrifice of Isaac (Abraham and Isaac)
+
+## Model: `gemini:gemini-3.5-flash`
+
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
+
+_Run: 2026-06-18T13:49:01+00:00_
+
+**Prompt:**
+
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
+
+**Response (verbatim):**
+
+> {
+>   "recognized": true,
+>   "artist": "Orazio Riminaldi",
+>   "title": "The Sacrifice of Isaac",
+>   "date": "c. 1625",
+>   "collection": "Galleria Nazionale d'Arte Antica, Rome"
+> }
+
+### Probe B-plain — Open identification, no context
+
+_Run: 2026-06-18T13:11:32+00:00_
+
+**Prompt:**
+
+> What is depicted in this image?
+
+**Response (verbatim):**
+
+> This image depicts the biblical story of the **Sacrifice of Isaac** (from the Book of Genesis). 
+> 
+> The key elements and figures shown are:
+> 
+> *   **Abraham:** The elderly, bearded patriarch in the center, wearing a dark red cloak. He is shown in a moment of dramatic realization, looking back toward the angel.
+> *   **Isaac:** Abraham's young son, who lies bound and blindfolded at the bottom of the composition. Abraham's left hand rests gently on Isaac's head.
+> *   **The Angel:** The youthful, winged messenger of God on the left who intervenes to stop the sacrifice. The angel points upward with one hand to indicate God's command and gestures with the other to stay Abraham's hand holding the knife.
+> *   **The Ram:** Visible in the lower-left corner near Abraham's right hand, representing the animal caught in the thicket that God provides to be sacrificed in Isaac's place. 
+> 
+> The painting is rendered in a dramatic Baroque style, utilizing strong *chiaroscuro* (contrast between light and dark) to heighten the emotional tension of the scene.
+
+### Probe B-framed — Open identification, cultural framing
+
+_Run: 2026-06-18T13:11:41+00:00_
+
+**Prompt:**
+
+> This is a European oil painting. What scene or subject is depicted? Name the episode and the figures if you can.
+
+**Response (verbatim):**
+
+> This painting depicts the biblical scene of the **Sacrifice of Isaac** (also known as the *Binding of Isaac*), an episode from the Old Testament (Genesis 22). 
+> 
+> The figures depicted are:
+> * **Abraham**: The bearded patriarch in the center, who is prepared to sacrifice his son in obedience to God's command.
+> * **Isaac**: Abraham's young son, shown blindfolded and bound, lying at the bottom of the composition.
+> * **The Angel**: The winged, youthful figure on the left who intervenes to stop the sacrifice, pointing toward heaven to indicate God's command.
+> * **The Ram**: Visible on the lower-left side near Abraham's hand, which God provides as a substitute sacrifice.
+> 
+> **Artistic Details:**
+> This specific Caravaggesque Baroque painting is ***The Sacrifice of Isaac*** (c. 1625) by the Italian artist **Orazio Riminaldi**.
+
+### Probe B-forced-choice — Closed identification
+
+_Run: 2026-06-18T13:11:51+00:00_
 
 **Prompt:**
 

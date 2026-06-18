@@ -12,28 +12,29 @@ _Image served from IIIF (click for full resolution) — [info.json](https://iiif
 - **Probe battery version:** 1.2
 - **System instruction (all sessions):** You are looking at a single image. Answer only from what is visible in the image and your own internal knowledge. Do not use web search, retrieval, external tools, or any internet resources to answer.
 
-_Each probe ran in a separate stateless session. Probe A is a logged covariate — record only, never score. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
+_Each probe ran in a separate stateless session. Probe A returns structured JSON and is scored per element (artist/title/date/collection) by an LLM judge against institutional ground truth; the collection element is low-confidence. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
 
 ## Model: `gemini:gemini-2.5-pro`
 
-### Probe A — Recognition (logged covariate — record only, do not score)
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
 
-_Run: 2026-06-18T08:02:15+00:00_
+_Run: 2026-06-18T13:46:25+00:00_
 
 **Prompt:**
 
-> What artwork is this? If you can, name the artist, title, approximate date, and collection. If you don't recognise the specific work, say so explicitly.
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
 
 **Response (verbatim):**
 
-> Based on the visual evidence and my internal knowledge, this is a well-known masterpiece of Venetian painting.
-> 
-> **Artist:** Jacopo Tintoretto (also known as Jacopo Robusti)
-> **Title:** *The Abduction of Helen* (or *The Rape of Helen*)
-> **Approximate Date:** c. 1578–1579
-> **Collection:** Museo Nacional del Prado, Madrid
-> 
-> The painting depicts the mythological event that triggered the Trojan War. The Trojan prince Paris, in the center wearing a helmet, leads Helen, the wife of the Spartan king Menelaus, towards the ships waiting in the harbor to take her to Troy. The scene is filled with dynamic action and numerous figures, including soldiers and Helen's attendants. The presence of cupids (one flying with a torch, another on the ground with a bow) signifies that the event is driven by love and passion, instigated by the goddess Venus (Aphrodite). The dramatic composition, energetic figures, and flickering light are all characteristic of Tintoretto's late style.
+> ```json
+> {
+>   "recognized": true,
+>   "artist": "Tintoretto (Jacopo Robusti)",
+>   "title": "The Rape of Helen",
+>   "date": "c. 1578-1579",
+>   "collection": "Museo Nacional del Prado"
+> }
+> ```
 
 ### Probe B-plain — Open identification, no context
 
@@ -98,6 +99,94 @@ _Run: 2026-06-18T08:02:56+00:00_
 ### Probe B-forced-choice — Closed identification
 
 _Run: 2026-06-18T08:03:16+00:00_
+
+**Prompt:**
+
+> This painting depicts one of the following subjects. Which one is it?
+> — Prometheus chained by Vulcan
+> — Aeneas rescues his father Anchises from the burning Troy
+> — Abduction of Amphitrite by Poseidon
+> — The wedding of Peleus and Thetis
+> — The Competition of Apollo and Pan and the judgment of Midas
+> — Marriage of Cupid and Psyche
+> — The Triumph of Bacchus
+> — Apollo in Vulcan's forge revealing Venus' love-affair with Mars
+> — The Triumph of Mars: an Allegory of War
+> — The meeting of Nausicaa and Ulysses
+> — The meeting of Dido and Aeneas
+> — The sacrifice of Iphigenia
+> — The goddess Pallas Athena and the horse Pegasus
+> — Dido's sacrifice to Juno
+> — Sacrifice to Venus in a temple
+> Answer with the subject only.
+
+**Response (verbatim):**
+
+> The meeting of Dido and Aeneas
+
+## Model: `gemini:gemini-3.5-flash`
+
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
+
+_Run: 2026-06-18T13:50:52+00:00_
+
+**Prompt:**
+
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
+
+**Response (verbatim):**
+
+> {"recognized": true, "artist": "Guido Reni", "title": "The Abduction of Helen", "date": "1631", "collection": "Louvre Museum"}
+
+### Probe B-plain — Open identification, no context
+
+_Run: 2026-06-18T13:16:30+00:00_
+
+**Prompt:**
+
+> What is depicted in this image?
+
+**Response (verbatim):**
+
+> This image depicts the famous Baroque painting ***The Abduction of Helen*** (also known as *The Rape of Helen*), painted by the Italian artist **Guido Reni** between 1626 and 1629. 
+> 
+> ### Key Elements Depicted:
+> * **Helen of Troy and Paris:** In the center, Helen is being led away by the Trojan prince Paris, who is dressed in classical armor with a feathered helmet.
+> * **The Departure:** To the right, a soldier points toward the harbor in the background, where Trojan ships are waiting to take them to Troy.
+> * **Cupids (Putti):** Two cupids symbolize the power of love driving the event—one flies overhead holding a torch, while another stands in the lower right corner holding a bow.
+> * **Handmaidens:** On the far left, three of Helen's handmaidens follow her, carrying her jewelry boxes and treasures.
+> * **Attendants and Animals:** In the lower-left corner, a young page holds a leash attached to a small monkey on the ground, while a small dog stands near the feet of Helen and Paris in the center foreground.
+
+### Probe B-framed — Open identification, cultural framing
+
+_Run: 2026-06-18T13:16:37+00:00_
+
+**Prompt:**
+
+> This is a European oil painting. What scene or subject is depicted? Name the episode and the figures if you can.
+
+**Response (verbatim):**
+
+> This painting is ***The Abduction of Helen*** (also known as *The Rape of Helen*), a famous masterpiece by the Italian Baroque painter **Guido Reni**, created between 1626 and 1629 (now housed in the Louvre Museum, Paris).
+> 
+> ### **Subject and Episode**
+> The painting depicts the mythological event that triggered the Trojan War: the Trojan prince **Paris** abducting **Helen**, the Queen of Sparta and wife of Menelaus, to take her back to Troy. 
+> 
+> Rather than depicting a violent struggle, Reni portrays the scene with courtly elegance, refinement, and calm, characteristic of his classicizing Baroque style. Helen appears to go along willingly, accompanied by her attendants and treasures.
+> 
+> ### **Key Figures Depicted**
+> * **Helen of Troy:** The central female figure, dressed in elegant classical robes, looking back slightly but moving forward.
+> * **Paris:** The handsome Trojan prince leading Helen by the hand, wearing a classical helmet adorned with large white feathers.
+> * **Cupid (Eros):** 
+>   * The winged toddler in the bottom right corner holding a bow, pointing toward the couple to signify that their actions are driven by divine love/passion.
+>   * A second flying Cupid (or Hymen, the god of marriage) hovers in the upper right holding a torch, symbolizing the flame of love.
+> * **Trojan Soldiers:** The figures in armor behind Paris, including one pointing toward the sea where the Trojan fleet is waiting to depart.
+> * **Helen's Handmaidens:** The three women on the far left carrying Helen's jewelry boxes and treasures.
+> * **The Page Boy and Pets:** A young page boy on the bottom left holding a leash, with a small spaniel dog in the center foreground, adding a genre-like, courtly detail to the mythological scene.
+
+### Probe B-forced-choice — Closed identification
+
+_Run: 2026-06-18T13:16:47+00:00_
 
 **Prompt:**
 

@@ -12,28 +12,29 @@ _Image served from IIIF (click for full resolution) — [info.json](https://medi
 - **Probe battery version:** 1.2
 - **System instruction (all sessions):** You are looking at a single image. Answer only from what is visible in the image and your own internal knowledge. Do not use web search, retrieval, external tools, or any internet resources to answer.
 
-_Each probe ran in a separate stateless session. Probe A is a logged covariate — record only, never score. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
+_Each probe ran in a separate stateless session. Probe A returns structured JSON and is scored per element (artist/title/date/collection) by an LLM judge against institutional ground truth; the collection element is low-confidence. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
 
 ## Model: `gemini:gemini-2.5-pro`
 
-### Probe A — Recognition (logged covariate — record only, do not score)
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
 
-_Run: 2026-06-15T07:42:00+00:00_
+_Run: 2026-06-18T13:43:45+00:00_
 
 **Prompt:**
 
-> What artwork is this? If you can, name the artist, title, approximate date, and collection. If you don't recognise the specific work, say so explicitly.
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
 
 **Response (verbatim):**
 
-> Based on the visual evidence and my internal knowledge, this is a well-known Baroque painting.
-> 
-> **Artist:** Dirck van Baburen
-> **Title:** *Prometheus Being Chained by Vulcan*
-> **Approximate Date:** c. 1623
-> **Collection:** Rijksmuseum, Amsterdam
-> 
-> The painting depicts a scene from Greek mythology. The muscular, bearded figure is Vulcan (the Roman equivalent of Hephaestus), the god of the forge, who is chaining the Titan Prometheus to a rock. This was Prometheus's punishment, ordered by Jupiter (Zeus), for stealing fire from the gods and giving it to humanity. The figure looking on with a winged helmet and holding a caduceus (a staff with two intertwined snakes) is Mercury (Hermes), the messenger of the gods. In the upper left corner, the eagle that would come to eat Prometheus's liver each day is visible in the shadows. The style, with its dramatic lighting (chiaroscuro) and gritty realism, is characteristic of the Utrecht Caravaggisti, of whom Dirck van Baburen was a leading member.
+> ```json
+> {
+>   "recognized": true,
+>   "artist": "Dirck van Baburen",
+>   "title": "Prometheus Being Chained by Vulcan",
+>   "date": "c. 1623",
+>   "collection": "Rijksmuseum"
+> }
+> ```
 
 ### Probe B-plain — Open identification, no context
 
@@ -86,6 +87,90 @@ _Run: 2026-06-15T07:42:35+00:00_
 ### Probe B-forced-choice — Closed identification
 
 _Run: 2026-06-15T07:42:55+00:00_
+
+**Prompt:**
+
+> This painting depicts one of the following subjects. Which one is it?
+> — Prometheus chained by Vulcan
+> — Aeneas rescues his father Anchises from the burning Troy
+> — Abduction of Amphitrite by Poseidon
+> — The wedding of Peleus and Thetis
+> — The Competition of Apollo and Pan and the judgment of Midas
+> — Marriage of Cupid and Psyche
+> — The Triumph of Bacchus
+> — Apollo in Vulcan's forge revealing Venus' love-affair with Mars
+> — The Triumph of Mars: an Allegory of War
+> — The meeting of Nausicaa and Ulysses
+> — The meeting of Dido and Aeneas
+> — The sacrifice of Iphigenia
+> — The goddess Pallas Athena and the horse Pegasus
+> — Dido's sacrifice to Juno
+> — Sacrifice to Venus in a temple
+> Answer with the subject only.
+
+**Response (verbatim):**
+
+> Prometheus chained by Vulcan
+
+## Model: `gemini:gemini-3.5-flash`
+
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
+
+_Run: 2026-06-18T13:47:46+00:00_
+
+**Prompt:**
+
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
+
+**Response (verbatim):**
+
+> {"recognized": true, "artist": "Dirck van Baburen", "title": "Prometheus Being Chained by Vulcan", "date": "1623", "collection": "Rijksmuseum"}
+
+### Probe B-plain — Open identification, no context
+
+_Run: 2026-06-18T13:07:37+00:00_
+
+**Prompt:**
+
+> What is depicted in this image?
+
+**Response (verbatim):**
+
+> This painting depicts the Greek mythological scene of **Prometheus being chained to a rock by Vulcan (Hephaestus)**, under the supervision of **Mercury (Hermes)**. 
+> 
+> Here are the key elements and figures shown in the artwork:
+> 
+> *   **Prometheus (center/bottom):** He is shown bound and writhing on a stone block, looking directly at the viewer with an upside-down expression of anguish. 
+> *   **Vulcan / Hephaestus (left):** The muscular blacksmith god is depicted in a loincloth, actively securing Prometheus with heavy iron chains. His blacksmith tools (a hammer and tongs) lie on the ground near his feet. He presses his foot down near Prometheus's head to hold him in place.
+> *   **Mercury / Hermes (right):** Standing in a blue cloak, Mercury watches the punishment with a slight, knowing smile. He is easily identified by his winged helmet (*petasos*) and the *caduceus* (the staff entwined with two snakes) in his hand.
+> *   **The Eagle (top left):** Looming in the dark shadows of the upper-left corner is the eagle of Zeus, foreshadowing Prometheus's eternal punishment of having his liver devoured daily by the bird.
+> 
+> ### Art Historical Context
+> This is a famous Dutch Golden Age painting titled ***Prometheus Chained by Vulcan*** (1623) by the Utrecht Caravaggist painter **Dirck van Baburen**. The painting is celebrated for its dramatic use of *chiaroscuro* (strong contrasts between light and dark), realistic anatomy, and intense, theatrical emotion.
+
+### Probe B-framed — Open identification, cultural framing
+
+_Run: 2026-06-18T13:07:45+00:00_
+
+**Prompt:**
+
+> This is a European oil painting. What scene or subject is depicted? Name the episode and the figures if you can.
+
+**Response (verbatim):**
+
+> This painting depicts the mythological scene of **Prometheus being chained to a rock by Vulcan (Hephaestus)**, under the watchful eye of **Mercury (Hermes)**. 
+> 
+> Specifically, it is the famous Dutch Golden Age painting ***Prometheus Being Chained by Vulcan*** (1623) by the Utrecht Caravaggisti painter **Dirck van Baburen**.
+> 
+> ### Figures and Details Depicted:
+> * **Prometheus (bottom/center):** The Titan who defied the gods by stealing fire and giving it to humanity. He is shown pinned to the rock, looking out in anguish as he is bound.
+> * **Vulcan / Hephaestus (left):** The blacksmith god of fire, depicted as a muscular, weathered craftsman. He is shown actively securing the heavy iron chains around Prometheus, using his foot to hold him down. His blacksmithing tools (pliers and hammer) lie on the ground below.
+> * **Mercury / Hermes (right):** The messenger of the gods, sent by Jupiter (Zeus) to oversee the punishment. He is easily identified by his winged helmet (*petasos*), blue cloak, and the caduceus staff in his hand. He looks on with a mocking, satisfied expression.
+> * **The Eagle (top left):** Hovering in the dark shadows above is the eagle of Jupiter, which was sent to eternally feast on Prometheus's regenerating liver as part of his torment.
+
+### Probe B-forced-choice — Closed identification
+
+_Run: 2026-06-18T13:07:52+00:00_
 
 **Prompt:**
 

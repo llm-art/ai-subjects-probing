@@ -12,36 +12,29 @@ _Image served from IIIF (click for full resolution) — [info.json](https://iiif
 - **Probe battery version:** 1.2
 - **System instruction (all sessions):** You are looking at a single image. Answer only from what is visible in the image and your own internal knowledge. Do not use web search, retrieval, external tools, or any internet resources to answer.
 
-_Each probe ran in a separate stateless session. Probe A is a logged covariate — record only, never score. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
+_Each probe ran in a separate stateless session. Probe A returns structured JSON and is scored per element (artist/title/date/collection) by an LLM judge against institutional ground truth; the collection element is low-confidence. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
 
 ## Model: `gemini:gemini-2.5-pro`
 
-### Probe A — Recognition (logged covariate — record only, do not score)
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
 
-_Run: 2026-06-15T07:48:07+00:00_
+_Run: 2026-06-18T13:45:25+00:00_
 
 **Prompt:**
 
-> What artwork is this? If you can, name the artist, title, approximate date, and collection. If you don't recognise the specific work, say so explicitly.
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
 
 **Response (verbatim):**
 
-> Based on the visual evidence and my internal knowledge, this is a well-known work of the Italian Renaissance.
-> 
-> **Artist:** Ercole de' Roberti (also known as Ercole Ferrarese)
-> **Title:** *The Israelites Gathering Manna*
-> **Approximate Date:** c. 1473
-> **Collection:** The National Gallery, London
-> 
-> This painting depicts the biblical story from the Book of Exodus where God provides manna, or "bread from heaven," to the Israelites wandering in the desert.
-> 
-> In the image, we can see:
-> *   At the top center, the face of God the Father appears in a cloud, from which the white, wafer-like manna is falling to the ground.
-> *   Below, various figures representing the Israelites are collecting the manna. In the center, a man and a woman kneel to gather it into bowls. On the right, a woman stands holding a basket, while a small child also gathers the food.
-> *   On the far left, two elderly, bearded men, likely representing Moses and Aaron, stand and look up towards the heavens.
-> *   The setting is a rocky, verdant landscape with a fortified town visible in the distance.
-> 
-> The style is characteristic of the Ferrarese School of the 15th century, known for its expressive figures, sharp and complex drapery, and detailed, imaginative landscapes. This panel was originally part of the *predella* (the base) of a large altarpiece known as the Griffoni Polyptych, which was painted for a chapel in the Basilica of San Petronio in Bologna.
+> ```json
+> {
+>   "recognized": true,
+>   "artist": "Ercole de' Roberti",
+>   "title": "The Israelites Gathering Manna",
+>   "date": "c. 1490",
+>   "collection": "The National Gallery, London"
+> }
+> ```
 
 ### Probe B-plain — Open identification, no context
 
@@ -96,6 +89,93 @@ _Run: 2026-06-15T07:48:42+00:00_
 ### Probe B-forced-choice — Closed identification
 
 _Run: 2026-06-15T07:48:59+00:00_
+
+**Prompt:**
+
+> This painting depicts one of the following subjects. Which one is it?
+> — The finding of Moses: Pharaoh's daughter discovers the child floating on the river
+> — The sacrifice of Isaac (Abraham and Isaac)
+> — Potiphar's wife catches Joseph by his robe; Joseph escapes
+> — Balaam strikes his ass; the ass lies down and starts to speak
+> — Isaac blesses Jacob disguised in Esau's clothes
+> — Samson breaks the pillars; the temple of Dagon collapses
+> — The drunkenness of Noah
+> — Feast of Esther
+> — Belshazzar's Feast
+> — Bathsheba receives a letter from David
+> — The Gathering of Manna
+> — Hagar, Ishmael and the Angel in the Wilderness
+> — The Prodigal Son chased from the brothel (Luke 15:13)
+> — Jephtha welcomed by his daughter (Judges 11:29-40)
+> — Judah's love-affair with Tamar; he gives her his signet-ring and staff
+> Answer with the subject only.
+
+**Response (verbatim):**
+
+> The Gathering of Manna
+
+## Model: `gemini:gemini-3.5-flash`
+
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
+
+_Run: 2026-06-18T13:49:30+00:00_
+
+**Prompt:**
+
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
+
+**Response (verbatim):**
+
+> {
+>   "recognized": true,
+>   "artist": "Bernardino Luini",
+>   "title": "The Gathering of Manna",
+>   "date": "c. 1520-1523",
+>   "collection": "Pinacoteca di Brera"
+> }
+
+### Probe B-plain — Open identification, no context
+
+_Run: 2026-06-18T13:13:14+00:00_
+
+**Prompt:**
+
+> What is depicted in this image?
+
+**Response (verbatim):**
+
+> Based on the visual elements, this image depicts the biblical story of the **Gathering of Manna** (from the Book of Exodus). 
+> 
+> Key details in the scene include:
+> * **The Divine Source:** In the upper center, a face representing God appears within a cloud, raining down small flakes or seeds (manna) onto the earth.
+> * **Moses and Aaron:** On the far left, two prominent figures (likely Moses and Aaron) stand looking upward in prayer and thanksgiving.
+> * **The Israelites:** In the center and foreground, people are kneeling and bending down to gather the fallen manna from the ground into bowls.
+> * **Gratitude and Wonder:** On the right, a woman stands holding a basket, looking up toward the sky in awe, while a small child crawls nearby to help collect the food.
+
+### Probe B-framed — Open identification, cultural framing
+
+_Run: 2026-06-18T13:13:29+00:00_
+
+**Prompt:**
+
+> This is a European oil painting. What scene or subject is depicted? Name the episode and the figures if you can.
+
+**Response (verbatim):**
+
+> Based on the visual details, this painting depicts the Old Testament biblical scene of **The Gathering of the Manna** (from the Book of Exodus, Chapter 16). 
+> 
+> ### **Episode:**
+> During the Exodus, as the Israelites journeyed through the desert and faced starvation, God miraculously rained down "bread from heaven" (manna) each morning to sustain them. 
+> 
+> ### **Figures Depicted:**
+> * **Moses:** The elderly, bearded patriarch standing on the far left, observing the miracle.
+> * **Aaron:** Standing next to Moses, wearing a turban/head covering, with his hands raised in prayer and thanksgiving.
+> * **God the Father:** Represented by the bearded face looking down from the clouds, from which the small white flakes of manna are falling.
+> * **The Israelites:** The figures in the foreground and middle ground gathering the manna from the ground into bowls and baskets, including a kneeling man, a kneeling woman, a crawling child, and a standing woman on the right looking up to heaven in gratitude.
+
+### Probe B-forced-choice — Closed identification
+
+_Run: 2026-06-18T13:13:40+00:00_
 
 **Prompt:**
 

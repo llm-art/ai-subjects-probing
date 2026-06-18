@@ -12,31 +12,29 @@ _Image served from IIIF (click for full resolution) — [info.json](https://iiif
 - **Probe battery version:** 1.2
 - **System instruction (all sessions):** You are looking at a single image. Answer only from what is visible in the image and your own internal knowledge. Do not use web search, retrieval, external tools, or any internet resources to answer.
 
-_Each probe ran in a separate stateless session. Probe A is a logged covariate — record only, never score. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
+_Each probe ran in a separate stateless session. Probe A returns structured JSON and is scored per element (artist/title/date/collection) by an LLM judge against institutional ground truth; the collection element is low-confidence. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
 
 ## Model: `gemini:gemini-2.5-pro`
 
-### Probe A — Recognition (logged covariate — record only, do not score)
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
 
-_Run: 2026-06-18T07:59:04+00:00_
+_Run: 2026-06-18T13:45:50+00:00_
 
 **Prompt:**
 
-> What artwork is this? If you can, name the artist, title, approximate date, and collection. If you don't recognise the specific work, say so explicitly.
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
 
 **Response (verbatim):**
 
-> Based on the visual evidence and my internal knowledge, this is a well-known painting from the Italian Renaissance.
-> 
-> **Artist:** Dosso Dossi (Giovanni di Niccolò de Luteri)
-> 
-> **Title:** *Jupiter, Mercury and Virtue* (also known as *Allegory of Virtue*)
-> 
-> **Approximate Date:** c. 1524
-> 
-> **Collection:** Kunsthistorisches Museum, Vienna, Austria
-> 
-> The painting is an allegory. The figure on the left, painting butterflies, is Jupiter, the king of the gods. The central figure with the winged hat (petasus) and winged sandals (talaria) is Mercury, the messenger god, who makes a gesture for silence. The woman on the right, adorned with flowers, is the personification of Virtue, who appears to be complaining to Mercury that she is being ignored by Jupiter, who is busy with trivial pursuits (the ephemeral butterflies).
+> ```json
+> {
+>   "recognized": true,
+>   "artist": "Dosso Dossi (Giovanni di Niccolò de Luteri)",
+>   "title": "Jupiter, Mercury and Virtue",
+>   "date": "c. 1524",
+>   "collection": "Kunsthistorisches Museum, Vienna"
+> }
+> ```
 
 ### Probe B-plain — Open identification, no context
 
@@ -125,4 +123,90 @@ _Run: 2026-06-18T08:00:08+00:00_
 **Response (verbatim):**
 
 > Marriage of Cupid and Psyche
+
+## Model: `gemini:gemini-3.5-flash`
+
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
+
+_Run: 2026-06-18T13:50:14+00:00_
+
+**Prompt:**
+
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
+
+**Response (verbatim):**
+
+> {
+>   "recognized": true,
+>   "artist": "Dosso Dossi",
+>   "title": "Jupiter, Mercury and Virtue",
+>   "date": "c. 1524",
+>   "collection": "Wawel Royal Castle, Kraków"
+> }
+
+### Probe B-plain — Open identification, no context
+
+_Run: 2026-06-18T13:14:40+00:00_
+
+**Prompt:**
+
+> What is depicted in this image?
+
+**Response (verbatim):**
+
+> This image depicts the famous Renaissance painting ***Jupiter, Mercury and Virtue*** (also known as *Jupiter Painting Butterflies*), created around 1524 by the Italian artist **Dosso Dossi**. 
+> 
+> The painting is an allegory containing three mythological figures:
+> 
+> 1. **Jupiter (left):** Depicted not as a powerful ruler of the gods, but as a quiet artist wearing a red robe, focused on painting butterflies onto a canvas. His powerful weapon, the thunderbolt, lies neglected on the ground near his feet.
+> 2. **Mercury (center):** The messenger god, recognizable by his winged hat, winged sandals, and the caduceus in his hand. He places a finger to his lips, gesturing for silence.
+> 3. **Virtue (right):** A female figure crowned with flowers who approaches imploringly, seeking Jupiter's help or attention. Mercury hushes her so she does not interrupt Jupiter's creative work. 
+> 
+> The painting is often interpreted as an allegory of the creative process, suggesting that even the supreme ruler of the cosmos prefers the peaceful, quiet pursuit of art over the demanding complaints of the world.
+
+### Probe B-framed — Open identification, cultural framing
+
+_Run: 2026-06-18T13:14:46+00:00_
+
+**Prompt:**
+
+> This is a European oil painting. What scene or subject is depicted? Name the episode and the figures if you can.
+
+**Response (verbatim):**
+
+> This painting is ***Jupiter, Mercury and Virtue*** (also known as *Jupiter Painting Butterflies*), a famous work by the Italian Renaissance master **Dosso Dossi** (painted around 1523–1524). 
+> 
+> ### **The Figures and Scene Depicted:**
+> 
+> * **Jupiter (Zeus) on the left:** Depicted not with his usual thunderbolts (which lie discarded on the floor beside him), but as a bearded artist peacefully painting butterflies on a canvas. This serves as an allegory for divine creation and the nobility of painting.
+> * **Mercury (Hermes) in the center:** Recognizable by his winged hat (*petasos*), winged sandals, and the caduceus in his hand. He places a finger to his lips, gesturing for silence.
+> * **Virtue (*Virtus*) on the right:** A female figure crowned with flowers. According to the mythological allegory (derived from a dialogue by the humanist Leon Battista Alberti), Virtue has come to complain to the king of the gods about how she is mistreated and ignored on Earth. However, Mercury silences her, warning her not to interrupt Jupiter while he is deeply absorbed in his creative work.
+
+### Probe B-forced-choice — Closed identification
+
+_Run: 2026-06-18T13:14:52+00:00_
+
+**Prompt:**
+
+> This painting depicts one of the following subjects. Which one is it?
+> — Prometheus chained by Vulcan
+> — Aeneas rescues his father Anchises from the burning Troy
+> — Abduction of Amphitrite by Poseidon
+> — The wedding of Peleus and Thetis
+> — The Competition of Apollo and Pan and the judgment of Midas
+> — Marriage of Cupid and Psyche
+> — The Triumph of Bacchus
+> — Apollo in Vulcan's forge revealing Venus' love-affair with Mars
+> — The Triumph of Mars: an Allegory of War
+> — The meeting of Nausicaa and Ulysses
+> — The meeting of Dido and Aeneas
+> — The sacrifice of Iphigenia
+> — The goddess Pallas Athena and the horse Pegasus
+> — Dido's sacrifice to Juno
+> — Sacrifice to Venus in a temple
+> Answer with the subject only.
+
+**Response (verbatim):**
+
+> Jupiter, Mercury and Virtue
 

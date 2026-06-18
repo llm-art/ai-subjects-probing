@@ -12,28 +12,29 @@ _Image served from IIIF (click for full resolution) — [info.json](https://hert
 - **Probe battery version:** 1.2
 - **System instruction (all sessions):** You are looking at a single image. Answer only from what is visible in the image and your own internal knowledge. Do not use web search, retrieval, external tools, or any internet resources to answer.
 
-_Each probe ran in a separate stateless session. Probe A is a logged covariate — record only, never score. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
+_Each probe ran in a separate stateless session. Probe A returns structured JSON and is scored per element (artist/title/date/collection) by an LLM judge against institutional ground truth; the collection element is low-confidence. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
 
 ## Model: `gemini:gemini-2.5-pro`
 
-### Probe A — Recognition (logged covariate — record only, do not score)
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
 
-_Run: 2026-06-15T07:46:50+00:00_
+_Run: 2026-06-18T13:44:50+00:00_
 
 **Prompt:**
 
-> What artwork is this? If you can, name the artist, title, approximate date, and collection. If you don't recognise the specific work, say so explicitly.
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
 
 **Response (verbatim):**
 
-> Based on the information visible in the image, this is a photograph of a painting. Here are the details:
-> 
-> *   **Artist:** Giovanni Biliverti. The printed text misspells the name as "Belivart," but a handwritten correction below it reads "Biliverti."
-> *   **Title:** *La castità di Giuseppe* (The Chastity of Joseph). This title refers to the biblical story of Joseph and Potiphar's wife from the Book of Genesis.
-> *   **Approximate Date:** Giovanni Biliverti was active in the first half of the 17th century, so the painting dates to that period.
-> *   **Collection:** At the time the photograph was taken, the painting was in the Galleria Barberini in Rome (now part of the Gallerie Nazionali di Arte Antica).
-> 
-> The photograph itself was taken by Anderson and is part of the collection of the Bibliotheca Hertziana - Max Planck Institute.
+> ```json
+> {
+>   "recognized": true,
+>   "artist": "Giovanni Biliverti",
+>   "title": "La castità di Giuseppe (The Chastity of Joseph)",
+>   "date": null,
+>   "collection": "Galleria Barberini"
+> }
+> ```
 
 ### Probe B-plain — Open identification, no context
 
@@ -90,6 +91,91 @@ _Run: 2026-06-15T07:47:24+00:00_
 ### Probe B-forced-choice — Closed identification
 
 _Run: 2026-06-15T07:47:40+00:00_
+
+**Prompt:**
+
+> This painting depicts one of the following subjects. Which one is it?
+> — The finding of Moses: Pharaoh's daughter discovers the child floating on the river
+> — The sacrifice of Isaac (Abraham and Isaac)
+> — Potiphar's wife catches Joseph by his robe; Joseph escapes
+> — Balaam strikes his ass; the ass lies down and starts to speak
+> — Isaac blesses Jacob disguised in Esau's clothes
+> — Samson breaks the pillars; the temple of Dagon collapses
+> — The drunkenness of Noah
+> — Feast of Esther
+> — Belshazzar's Feast
+> — Bathsheba receives a letter from David
+> — The Gathering of Manna
+> — Hagar, Ishmael and the Angel in the Wilderness
+> — The Prodigal Son chased from the brothel (Luke 15:13)
+> — Jephtha welcomed by his daughter (Judges 11:29-40)
+> — Judah's love-affair with Tamar; he gives her his signet-ring and staff
+> Answer with the subject only.
+
+**Response (verbatim):**
+
+> Potiphar's wife catches Joseph by his robe; Joseph escapes
+
+## Model: `gemini:gemini-3.5-flash`
+
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
+
+_Run: 2026-06-18T13:49:05+00:00_
+
+**Prompt:**
+
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
+
+**Response (verbatim):**
+
+> {
+>   "recognized": true,
+>   "artist": "Giovanni Bilivert",
+>   "title": "The Chastity of Joseph",
+>   "date": "1624",
+>   "collection": "Galleria Nazionale d'Arte Antica, Palazzo Barberini"
+> }
+
+### Probe B-plain — Open identification, no context
+
+_Run: 2026-06-18T13:11:38+00:00_
+
+**Prompt:**
+
+> What is depicted in this image?
+
+**Response (verbatim):**
+
+> Based on the text printed at the bottom of the photograph and the visual content, this image depicts:
+> 
+> * **Subject:** The biblical scene of **"The Chastity of Joseph"** (also known as *Joseph and Potiphar's Wife*). It shows Potiphar's wife attempting to seduce Joseph on her bed, while he pulls away to escape her advances and preserve his virtue.
+> * **Artist:** The Italian Baroque painter **Giovanni Bilivert** (indicated by the printed name "Belivart" and the handwritten "Bilivert" at the bottom left).
+> * **Location of the original painting:** The **Galleria Barberini** (Palazzo Barberini) in Rome, Italy.
+> * **Photograph Details:** This is an archival photograph (No. 721) taken by the famous **Anderson** photographic studio of Rome.
+
+### Probe B-framed — Open identification, cultural framing
+
+_Run: 2026-06-18T13:11:45+00:00_
+
+**Prompt:**
+
+> This is a European oil painting. What scene or subject is depicted? Name the episode and the figures if you can.
+
+**Response (verbatim):**
+
+> Based on the painting and the inscription at the bottom of the photograph, the scene depicted is **"The Chastity of Joseph"** (also commonly known as **"Joseph and Potiphar's Wife"**), a biblical episode from the Book of Genesis (Genesis 39).
+> 
+> ### Figures and Episode:
+> * **Potiphar's Wife (left):** She is shown sitting on her bed, attempting to seduce and hold back the young Hebrew servant.
+> * **Joseph (right):** He is depicted resisting her advances and pulling away, leaving his cloak in her hands as he flees.
+> 
+> ### Artwork Details:
+> * **Artist:** Giovanni Bilivert (indicated by the cursive "Bilivert" and the printed "Belivart" at the bottom).
+> * **Location:** Galleria Barberini, Rome.
+
+### Probe B-forced-choice — Closed identification
+
+_Run: 2026-06-18T13:11:50+00:00_
 
 **Prompt:**
 

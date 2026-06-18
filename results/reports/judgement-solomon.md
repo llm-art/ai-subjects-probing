@@ -12,28 +12,29 @@ _Image served from IIIF (click for full resolution) — [info.json](https://iiif
 - **Probe battery version:** 1.2
 - **System instruction (all sessions):** You are looking at a single image. Answer only from what is visible in the image and your own internal knowledge. Do not use web search, retrieval, external tools, or any internet resources to answer.
 
-_Each probe ran in a separate stateless session. Probe A is a logged covariate — record only, never score. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
+_Each probe ran in a separate stateless session. Probe A returns structured JSON and is scored per element (artist/title/date/collection) by an LLM judge against institutional ground truth; the collection element is low-confidence. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
 
 ## Model: `gemini:gemini-2.5-pro`
 
-### Probe A — Recognition (logged covariate — record only, do not score)
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
 
-_Run: 2026-06-18T08:07:55+00:00_
+_Run: 2026-06-18T13:47:27+00:00_
 
 **Prompt:**
 
-> What artwork is this? If you can, name the artist, title, approximate date, and collection. If you don't recognise the specific work, say so explicitly.
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
 
 **Response (verbatim):**
 
-> Based on the style and subject matter visible in the image, this is a photograph of the painting:
-> 
-> *   **Artist:** Valentin de Boulogne
-> *   **Title:** *The Judgment of Solomon*
-> *   **Date:** c. 1625
-> *   **Collection:** Musée du Louvre, Paris
-> 
-> The painting is a prime example of the Caravaggesque style, characterized by its dramatic use of light and shadow (tenebrism) and its intense, naturalistic depiction of figures. The scene illustrates the biblical story from the First Book of Kings, where King Solomon wisely identifies the true mother of a baby by threatening to split the child in two. The real mother, seen kneeling in distress, reveals herself by her willingness to give up the child to save its life.
+> ```json
+> {
+>   "recognized": true,
+>   "artist": "Matthias Stom",
+>   "title": "The Judgment of Solomon",
+>   "date": "c. 1640",
+>   "collection": "Museum of Fine Arts, Houston"
+> }
+> ```
 
 ### Probe B-plain — Open identification, no context
 
@@ -80,4 +81,117 @@ _Run: 2026-06-18T08:08:33+00:00_
 > *   **Courtiers/Onlookers:** The figures standing on the right are members of Solomon's court, observing the dramatic scene unfold.
 > 
 > The painting's dramatic use of light and shadow (chiaroscuro), intense emotion, and realistic depiction of the figures are characteristic of the Baroque period, particularly the style of Caravaggio and his followers (the Caravaggisti).
+
+### Probe B-forced-choice — Closed identification
+
+_Run: 2026-06-18T13:05:27+00:00_
+
+**Prompt:**
+
+> This painting depicts one of the following subjects. Which one is it?
+> — The finding of Moses: Pharaoh's daughter discovers the child floating on the river
+> — The sacrifice of Isaac (Abraham and Isaac)
+> — Potiphar's wife catches Joseph by his robe; Joseph escapes
+> — Balaam strikes his ass; the ass lies down and starts to speak
+> — Isaac blesses Jacob disguised in Esau's clothes
+> — Samson breaks the pillars; the temple of Dagon collapses
+> — The drunkenness of Noah
+> — Feast of Esther
+> — Belshazzar's Feast
+> — Bathsheba receives a letter from David
+> — The Gathering of Manna
+> — Hagar, Ishmael and the Angel in the Wilderness
+> — The Prodigal Son chased from the brothel (Luke 15:13)
+> — Jephtha welcomed by his daughter (Judges 11:29-40)
+> — Judah's love-affair with Tamar; he gives her his signet-ring and staff
+> Answer with the subject only.
+
+**Response (verbatim):**
+
+> The sacrifice of Isaac (Abraham and Isaac)
+
+## Model: `gemini:gemini-3.5-flash`
+
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
+
+_Run: 2026-06-18T13:52:09+00:00_
+
+**Prompt:**
+
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
+
+**Response (verbatim):**
+
+> {"recognized": true, "artist": "Jusepe de Ribera", "title": "The Judgment of Solomon", "date": "c. 1609-1610", "collection": "Galleria Borghese"}
+
+### Probe B-plain — Open identification, no context
+
+_Run: 2026-06-18T13:21:25+00:00_
+
+**Prompt:**
+
+> What is depicted in this image?
+
+**Response (verbatim):**
+
+> This image depicts the biblical story of **The Judgment of Solomon** (from the Book of Kings, 1 Kings 3:16–28). 
+> 
+> Key elements shown in the scene include:
+> * **King Solomon:** Seated on a throne on the left, wearing a crown and gesturing as he delivers his famous ruling to divide the living child in half.
+> * **The Soldier/Executioner:** Standing in the center-right, holding the living baby upside down by its leg, prepared to cut it with a sword.
+> * **The True Mother:** Kneeling on the floor in anguish, pleading with the king to spare the baby's life and give it to the other woman instead.
+> * **The False Mother:** Standing behind the kneeling woman, pointing and appearing to agree with the king's harsh decree.
+> * **The Dead Baby:** Lying on the floor near the kneeling mother, representing the child who died in the night, which sparked the dispute between the two women.
+> * **Onlookers:** Men standing on the right watching the dramatic resolution of the dispute.
+
+### Probe B-framed — Open identification, cultural framing
+
+_Run: 2026-06-18T13:21:31+00:00_
+
+**Prompt:**
+
+> This is a European oil painting. What scene or subject is depicted? Name the episode and the figures if you can.
+
+**Response (verbatim):**
+
+> This painting depicts the biblical episode of **The Judgment of Solomon** (from the First Book of Kings, 3:16–28). 
+> 
+> ### **The Scene and Figures Depicted:**
+> * **King Solomon** (seated on the throne on the left, wearing a crown): He has just ordered that the living child be cut in half so that both women can have an equal share, a clever ruse to reveal the true mother.
+> * **The True Mother** (kneeling on the floor): She looks up at Solomon in anguish, pleading for him to spare the baby's life and give it to the other woman instead.
+> * **The False Mother** (standing behind her): She points aggressively, agreeing to the division of the child ("Let it be neither mine nor yours, but divide it!").
+> * **The Executioner/Soldier** (center-right): A muscular figure holding the living baby upside down by its leg, preparing to carry out the king's initial command.
+> * **The Dead Baby** (lying on the floor): The child belonging to one of the women that died during the night, which sparked the dispute.
+> * **Onlookers/Courtiers** (on the right): Witnesses observing the wisdom of Solomon's judgment.
+> 
+> ### **About the Painting:**
+> This is a black-and-white photograph of ***The Judgment of Solomon*** (c. 1609–1610), an early masterpiece by the Spanish Baroque painter **Jusepe de Ribera** (also known as *Lo Spagnoletto*), currently housed in the Galleria Borghese in Rome. The work is highly influenced by the dramatic chiaroscuro style of Caravaggio.
+
+### Probe B-forced-choice — Closed identification
+
+_Run: 2026-06-18T13:21:40+00:00_
+
+**Prompt:**
+
+> This painting depicts one of the following subjects. Which one is it?
+> — The finding of Moses: Pharaoh's daughter discovers the child floating on the river
+> — The sacrifice of Isaac (Abraham and Isaac)
+> — Potiphar's wife catches Joseph by his robe; Joseph escapes
+> — Balaam strikes his ass; the ass lies down and starts to speak
+> — Isaac blesses Jacob disguised in Esau's clothes
+> — Samson breaks the pillars; the temple of Dagon collapses
+> — The drunkenness of Noah
+> — Feast of Esther
+> — Belshazzar's Feast
+> — Bathsheba receives a letter from David
+> — The Gathering of Manna
+> — Hagar, Ishmael and the Angel in the Wilderness
+> — The Prodigal Son chased from the brothel (Luke 15:13)
+> — Jephtha welcomed by his daughter (Judges 11:29-40)
+> — Judah's love-affair with Tamar; he gives her his signet-ring and staff
+> Answer with the subject only.
+
+**Response (verbatim):**
+
+> The Judgment of Solomon
 

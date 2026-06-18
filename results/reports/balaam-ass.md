@@ -12,28 +12,29 @@ _Image served from IIIF (click for full resolution) — [info.json](https://medi
 - **Probe battery version:** 1.2
 - **System instruction (all sessions):** You are looking at a single image. Answer only from what is visible in the image and your own internal knowledge. Do not use web search, retrieval, external tools, or any internet resources to answer.
 
-_Each probe ran in a separate stateless session. Probe A is a logged covariate — record only, never score. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
+_Each probe ran in a separate stateless session. Probe A returns structured JSON and is scored per element (artist/title/date/collection) by an LLM judge against institutional ground truth; the collection element is low-confidence. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
 
 ## Model: `gemini:gemini-2.5-pro`
 
-### Probe A — Recognition (logged covariate — record only, do not score)
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
 
-_Run: 2026-06-15T07:46:57+00:00_
+_Run: 2026-06-18T13:44:57+00:00_
 
 **Prompt:**
 
-> What artwork is this? If you can, name the artist, title, approximate date, and collection. If you don't recognise the specific work, say so explicitly.
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
 
 **Response (verbatim):**
 
-> Based on the visual evidence and my internal knowledge, this is a well-known painting.
-> 
-> **Artist:** Rembrandt van Rijn
-> **Title:** *Balaam and the Ass*
-> **Date:** c. 1626
-> **Collection:** Musée Cognacq-Jay, Paris, France
-> 
-> The painting depicts the biblical story from the Book of Numbers (22:21-39). The prophet Balaam is on his way to curse the Israelites as requested by the Moabite king Balak. God sends an angel with a drawn sword to block his path. While Balaam cannot see the angel, his donkey can and refuses to move forward. The painting captures the dramatic moment when the enraged Balaam raises his staff to strike the donkey for the third time, just as the angel appears, visible to the viewer but not yet to Balaam. This work is a prime example of Rembrandt's early style, characterized by its dramatic composition, rich colors, and intense emotional expression.
+> ```json
+> {
+>   "recognized": true,
+>   "artist": "Rembrandt van Rijn",
+>   "title": "Balaam and the Ass",
+>   "date": "1626",
+>   "collection": "Musée Cognacq-Jay"
+> }
+> ```
 
 ### Probe B-plain — Open identification, no context
 
@@ -84,6 +85,92 @@ _Run: 2026-06-15T07:47:32+00:00_
 ### Probe B-forced-choice — Closed identification
 
 _Run: 2026-06-15T07:47:50+00:00_
+
+**Prompt:**
+
+> This painting depicts one of the following subjects. Which one is it?
+> — The finding of Moses: Pharaoh's daughter discovers the child floating on the river
+> — The sacrifice of Isaac (Abraham and Isaac)
+> — Potiphar's wife catches Joseph by his robe; Joseph escapes
+> — Balaam strikes his ass; the ass lies down and starts to speak
+> — Isaac blesses Jacob disguised in Esau's clothes
+> — Samson breaks the pillars; the temple of Dagon collapses
+> — The drunkenness of Noah
+> — Feast of Esther
+> — Belshazzar's Feast
+> — Bathsheba receives a letter from David
+> — The Gathering of Manna
+> — Hagar, Ishmael and the Angel in the Wilderness
+> — The Prodigal Son chased from the brothel (Luke 15:13)
+> — Jephtha welcomed by his daughter (Judges 11:29-40)
+> — Judah's love-affair with Tamar; he gives her his signet-ring and staff
+> Answer with the subject only.
+
+**Response (verbatim):**
+
+> Balaam strikes his ass; the ass lies down and starts to speak
+
+## Model: `gemini:gemini-3.5-flash`
+
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
+
+_Run: 2026-06-18T13:49:05+00:00_
+
+**Prompt:**
+
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
+
+**Response (verbatim):**
+
+> {
+>   "recognized": true,
+>   "artist": "Rembrandt van Rijn",
+>   "title": "Balaam and the Ass",
+>   "date": "1626",
+>   "collection": "Musée Cognacq-Jay"
+> }
+
+### Probe B-plain — Open identification, no context
+
+_Run: 2026-06-18T13:11:47+00:00_
+
+**Prompt:**
+
+> What is depicted in this image?
+
+**Response (verbatim):**
+
+> This painting depicts the biblical story of **Balaam and his Ass** (also known as *Balaam and the Angel*), painted by the Dutch master **Rembrandt van Rijn** in 1626. 
+> 
+> ### Key Elements Depicted:
+> * **Balaam:** The central figure, an old man with a white beard wearing an elaborate turban and rich yellow and red robes. He is angrily raising a staff to beat his donkey for refusing to move forward.
+> * **The Donkey:** Kneeling on the ground, looking back at Balaam with an open mouth, depicting the moment from the Book of Numbers where the donkey is miraculously given the power of speech to protest the beating.
+> * **The Angel:** A winged, youthful figure dressed in white, standing in the path with a raised sword. The angel is visible to the donkey (and the viewer) but initially invisible to Balaam.
+> * **The Retinue:** In the background, Balaam's servants and companions look on, some on horseback, wearing turbans and orientalist attire.
+
+### Probe B-framed — Open identification, cultural framing
+
+_Run: 2026-06-18T13:11:56+00:00_
+
+**Prompt:**
+
+> This is a European oil painting. What scene or subject is depicted? Name the episode and the figures if you can.
+
+**Response (verbatim):**
+
+> This painting depicts the biblical story of **Balaam and his Ass** (also known as **Balaam and the Angel**), from the Old Testament (Book of Numbers, Chapter 22). 
+> 
+> It is a famous early work by the Dutch master **Rembrandt van Rijn**, painted in 1626.
+> 
+> ### Key Figures and Scene Details:
+> * **Balaam:** The prophet/diviner in the center, dressed in rich, exotic Eastern robes and a turban. He is angrily raising his staff to beat his donkey for refusing to move forward.
+> * **The Ass (Donkey):** Shown kneeling on the ground, turning its head back toward Balaam with its mouth open. In the biblical narrative, God opens the donkey's mouth to speak and protest the unjust beating.
+> * **The Angel of the Lord:** The winged figure on the left holding a raised sword. The angel blocks the path to prevent Balaam from cursing the Israelites. While the donkey can see the angel, Balaam is initially blind to its presence.
+> * **The Retinue:** In the background are Balaam's servants and the emissaries of King Balak of Moab, who had hired Balaam.
+
+### Probe B-forced-choice — Closed identification
+
+_Run: 2026-06-18T13:12:05+00:00_
 
 **Prompt:**
 

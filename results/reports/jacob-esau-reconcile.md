@@ -12,29 +12,29 @@ _Image served from IIIF (click for full resolution) — [info.json](https://iiif
 - **Probe battery version:** 1.2
 - **System instruction (all sessions):** You are looking at a single image. Answer only from what is visible in the image and your own internal knowledge. Do not use web search, retrieval, external tools, or any internet resources to answer.
 
-_Each probe ran in a separate stateless session. Probe A is a logged covariate — record only, never score. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
+_Each probe ran in a separate stateless session. Probe A returns structured JSON and is scored per element (artist/title/date/collection) by an LLM judge against institutional ground truth; the collection element is low-confidence. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
 
 ## Model: `gemini:gemini-2.5-pro`
 
-### Probe A — Recognition (logged covariate — record only, do not score)
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
 
-_Run: 2026-06-18T08:08:27+00:00_
+_Run: 2026-06-18T13:47:38+00:00_
 
 **Prompt:**
 
-> What artwork is this? If you can, name the artist, title, approximate date, and collection. If you don't recognise the specific work, say so explicitly.
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
 
 **Response (verbatim):**
 
-> Based on the visual evidence and my internal knowledge, this is a photograph of a famous Baroque painting.
-> 
-> **Artist:** Pietro da Cortona
-> 
-> **Title:** *The Rape of the Sabine Women* (Il Ratto delle Sabine). It is important to note that while this is the common title, the painting actually depicts a later event in the story: the *Intervention of the Sabine Women*, where the women, now wives and mothers, rush between the battle lines of their Roman husbands and their Sabine fathers and brothers to force a reconciliation.
-> 
-> **Approximate Date:** c. 1629–1631
-> 
-> **Collection:** Pinacoteca Capitolina (Capitoline Museums), Rome, Italy.
+> ```json
+> {
+>   "recognized": true,
+>   "artist": "Pietro da Cortona",
+>   "title": "The Rape of the Sabine Women",
+>   "date": "c. 1629-1631",
+>   "collection": "Capitoline Museums, Rome"
+> }
+> ```
 
 ### Probe B-plain — Open identification, no context
 
@@ -113,4 +113,93 @@ _Run: 2026-06-18T08:09:33+00:00_
 **Response (verbatim):**
 
 > Jephtha welcomed by his daughter (Judges 11:29-40)
+
+## Model: `gemini:gemini-3.5-flash`
+
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
+
+_Run: 2026-06-18T13:52:20+00:00_
+
+**Prompt:**
+
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
+
+**Response (verbatim):**
+
+> {
+>   "recognized": true,
+>   "artist": "Giovanni Maria Bottalla",
+>   "title": "The Meeting of Jacob and Esau",
+>   "date": "c. 1640",
+>   "collection": "Capitoline Museums, Rome"
+> }
+
+### Probe B-plain — Open identification, no context
+
+_Run: 2026-06-18T13:21:58+00:00_
+
+**Prompt:**
+
+> What is depicted in this image?
+
+**Response (verbatim):**
+
+> Based on the visual details, this image depicts the biblical scene of **the meeting and reconciliation of Jacob and Esau** (from Genesis 33 in the Old Testament). 
+> 
+> Key elements depicted in the scene include:
+> 
+> * **The Central Embrace:** In the center, the twin brothers Jacob and Esau embrace after years of estrangement. 
+>     * **Esau** (on the right) is depicted as a warrior wearing classical Roman-style armor, a cloak, and sandals, representing his strength and the army of 400 men he brought with him.
+>     * **Jacob** (on the left) is dressed in simpler, humble robes.
+> * **Jacob's Family and Caravan (Left):** To the left are Jacob's wives (Leah and Rachel, one of whom is mounted high on a camel), his children, and servants. They are shown looking on with relief, some kneeling in supplication or respect. Camels in the background signify their long journey from Mesopotamia.
+> * **Esau's Soldiers (Right):** Behind Esau on the right are his armed soldiers, one holding a shield and wearing a helmet, along with a horse, representing his military retinue. 
+> 
+> This is a black-and-white photograph of a classic Baroque-era painting illustrating this dramatic biblical narrative of forgiveness and family reunion.
+
+### Probe B-framed — Open identification, cultural framing
+
+_Run: 2026-06-18T13:22:09+00:00_
+
+**Prompt:**
+
+> This is a European oil painting. What scene or subject is depicted? Name the episode and the figures if you can.
+
+**Response (verbatim):**
+
+> This painting depicts the biblical scene of **The Meeting of Jacob and Esau** (from the Book of Genesis, Chapter 33), a famous composition by the Flemish Baroque artist **Peter Paul Rubens** (and his workshop).
+> 
+> ### **The Episode and Figures Depicted:**
+> * **The Central Action:** The reconciliation between the twin brothers **Jacob** and **Esau** after years of estrangement and fear of conflict. 
+> * **Jacob (center-left):** Dressed in simple, rustic robes, Jacob bows slightly as he warmly embraces his brother.
+> * **Esau (center-right):** Depicted as a powerful leader in classical Roman-style military armor, reaching out to embrace Jacob in forgiveness.
+> * **Jacob's Family (left side):** Jacob's wives (**Leah** and **Rachel**), his children, and his servants are shown with their livestock and camels, representing his journey back to Canaan.
+> * **Esau's Retinue (right side):** Esau's armed soldiers and horses, representing the 400 men he brought with him to meet Jacob.
+
+### Probe B-forced-choice — Closed identification
+
+_Run: 2026-06-18T13:22:28+00:00_
+
+**Prompt:**
+
+> This painting depicts one of the following subjects. Which one is it?
+> — The finding of Moses: Pharaoh's daughter discovers the child floating on the river
+> — The sacrifice of Isaac (Abraham and Isaac)
+> — Potiphar's wife catches Joseph by his robe; Joseph escapes
+> — Balaam strikes his ass; the ass lies down and starts to speak
+> — Isaac blesses Jacob disguised in Esau's clothes
+> — Samson breaks the pillars; the temple of Dagon collapses
+> — The drunkenness of Noah
+> — Feast of Esther
+> — Belshazzar's Feast
+> — Bathsheba receives a letter from David
+> — The Gathering of Manna
+> — Hagar, Ishmael and the Angel in the Wilderness
+> — The Prodigal Son chased from the brothel (Luke 15:13)
+> — Jephtha welcomed by his daughter (Judges 11:29-40)
+> — Judah's love-affair with Tamar; he gives her his signet-ring and staff
+> Answer with the subject only.
+
+**Response (verbatim):**
+
+> Isaac blesses Jacob disguised in Esau's clothes
 

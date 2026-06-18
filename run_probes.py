@@ -5,7 +5,7 @@ Methodology constraints enforced here (do not weaken):
   - Each probe variant runs in a SEPARATE stateless session per image per model.
   - Probe C checklist questions are asked individually and sequentially as turns
     of one session, never as a single list.
-  - Probe A is recorded verbatim and never scored.
+  - Probe A returns structured JSON and is scored per element by score_probe_a.py.
   - B_enriched runs only if B_plain has already completed for that image+model,
     and only when every subject description for the image's category is written
     (no "TODO" entries).
@@ -74,7 +74,7 @@ REPORTS_DIR = ROOT / "results" / "reports"
 PROBE_ORDER = ["A", "B_plain", "B_framed", "B_forced", "B_enriched", "C"]
 
 PROBE_TITLES = {
-    "A": "Probe A — Recognition (logged covariate — record only, do not score)",
+    "A": "Probe A — Recognition (structured JSON; per-element LLM-judge scored)",
     "B_plain": "Probe B-plain — Open identification, no context",
     "B_framed": "Probe B-framed — Open identification, cultural framing",
     "B_forced": "Probe B-forced-choice — Closed identification",
@@ -82,7 +82,7 @@ PROBE_TITLES = {
     "C": "Probe C — Closed verification checklist (expert-scored, semantic match)",
 }
 
-GEN_PARAMS = {"temperature": 0.0, "max_tokens": 8192}
+GEN_PARAMS = {"temperature": 0.0, "max_tokens": 16384}
 
 RETRY_STATUSES = {429, 500, 502, 503, 504, 529}
 MAX_RETRIES = 5
@@ -188,13 +188,14 @@ class GeminiProvider:
 
     def chat(self, turns, image_b64):
         """turns: [{'role': 'user'|'assistant', 'text': ...}]. Image attaches to the
-        first user turn. Stateless: full history is resent each call."""
+        first user turn. Stateless: full history is resent each call. When image_b64
+        is None the call is text-only (used by the Probe A LLM-judge scorer)."""
         contents = []
         image_attached = False
         for t in turns:
             role = "user" if t["role"] == "user" else "model"
             parts = []
-            if role == "user" and not image_attached:
+            if role == "user" and not image_attached and image_b64 is not None:
                 parts.append({"inline_data": {"mime_type": "image/jpeg",
                                               "data": image_b64}})
                 image_attached = True
@@ -216,7 +217,11 @@ class GeminiProvider:
         )
         data = resp.json()
         try:
-            parts = data["candidates"][0]["content"]["parts"]
+            candidate = data["candidates"][0]
+            finish = candidate.get("finishReason", "")
+            if finish == "PROHIBITED_CONTENT":
+                return "[REFUSED: model returned PROHIBITED_CONTENT — no response generated]"
+            parts = candidate["content"]["parts"]
             text = "".join(p.get("text", "") for p in parts).strip()
         except (KeyError, IndexError) as e:
             raise RuntimeError(
@@ -364,9 +369,9 @@ def run_probe(probes, provider, spec, row, probe, image_b64, image_meta):
     if probe == "A":
         prompt = probes["probes"]["A_recognition"]["prompt"]
         rec["scoring"] = {
-            "status": "logged_covariate_only",
-            "note": "Record verbatim, never score. Flag potential contamination "
-                    "when interpreting B results.",
+            "status": "pending_llm_judge",
+            "note": "Structured-JSON recognition answer; per-element correctness is "
+                    "filled by score_probe_a.py (LLM-as-judge vs data/metadata.json).",
         }
     elif probe == "B_plain":
         prompt = probes["probes"]["B_plain"]["prompt"]
@@ -466,10 +471,11 @@ def write_report(image_id, manifest_by_id):
         f"- **Probe battery version:** {first.get('probe_battery_version', '?')}",
         f"- **System instruction (all sessions):** {first.get('system_instruction', '—')}",
         "",
-        "_Each probe ran in a separate stateless session. Probe A is a logged "
-        "covariate — record only, never score. Probe C is expert-scored with "
-        "semantic matching (e.g. \"a burning building\", \"fire and smoke\" and "
-        "\"Troy in flames\" all match a burning-city reference)._",
+        "_Each probe ran in a separate stateless session. Probe A returns structured "
+        "JSON and is scored per element (artist/title/date/collection) by an LLM judge "
+        "against institutional ground truth; the collection element is low-confidence. "
+        "Probe C is expert-scored with semantic matching (e.g. \"a burning building\", "
+        "\"fire and smoke\" and \"Troy in flames\" all match a burning-city reference)._",
         "",
     ]
 
@@ -505,6 +511,34 @@ def write_report(image_id, manifest_by_id):
                 answer = rec["transcript"][1]["text"]
                 lines += ["**Prompt:**", "", block(prompt), "",
                           "**Response (verbatim):**", "", block(answer), ""]
+                scoring = rec.get("scoring", {})
+                els = scoring.get("elements")
+                if els:
+                    lines += [
+                        f"**LLM-judge scoring** (judge: `{scoring.get('judge_model','?')}`, "
+                        f"recognized={scoring.get('recognized')}, "
+                        f"score {scoring.get('score_sum','?')}/{scoring.get('n_scored','?')}):",
+                        "",
+                        "| element | model answer | ground truth | score | note |",
+                        "|---|---|---|---|---|",
+                    ]
+                    for name in ("artist", "title", "date", "collection"):
+                        el = els.get(name)
+                        if not el:
+                            continue
+                        gt = el.get("ground_truth", "")
+                        if isinstance(gt, list):
+                            gt = " / ".join(str(g) for g in gt)
+                        flag = " ⚠ low-conf" if el.get("low_confidence") else ""
+                        sc = el.get("score", "")
+                        reason = str(el.get("reason", "")).replace("|", "\\|")
+                        ma = str(el.get("model_answer", "")).replace("|", "\\|")
+                        gt = str(gt).replace("|", "\\|")
+                        lines.append(
+                            f"| {name}{flag} | {ma} | {gt} | {sc} | {reason} |")
+                    lines.append("")
+                elif scoring.get("status") == "parse_error":
+                    lines += ["_LLM-judge: response was not parseable JSON._", ""]
     lines.append("")
 
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)

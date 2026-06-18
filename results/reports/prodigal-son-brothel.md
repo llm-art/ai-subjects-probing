@@ -12,28 +12,29 @@ _Image served from IIIF (click for full resolution) — [info.json](https://medi
 - **Probe battery version:** 1.2
 - **System instruction (all sessions):** You are looking at a single image. Answer only from what is visible in the image and your own internal knowledge. Do not use web search, retrieval, external tools, or any internet resources to answer.
 
-_Each probe ran in a separate stateless session. Probe A is a logged covariate — record only, never score. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
+_Each probe ran in a separate stateless session. Probe A returns structured JSON and is scored per element (artist/title/date/collection) by an LLM judge against institutional ground truth; the collection element is low-confidence. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
 
 ## Model: `gemini:gemini-2.5-pro`
 
-### Probe A — Recognition (logged covariate — record only, do not score)
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
 
-_Run: 2026-06-15T07:48:59+00:00_
+_Run: 2026-06-18T13:45:30+00:00_
 
 **Prompt:**
 
-> What artwork is this? If you can, name the artist, title, approximate date, and collection. If you don't recognise the specific work, say so explicitly.
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
 
 **Response (verbatim):**
 
-> Based on the visual characteristics of the painting and my internal knowledge, this artwork is:
-> 
-> **Artist:** Faustino Bocchi
-> **Title:** *La Cacciata* (The Expulsion)
-> **Approximate Date:** c. 1720-1730
-> **Collection:** Pinacoteca Tosio Martinengo, Brescia, Italy
-> 
-> The painting is a lively genre scene, or *bambocciata*, depicting a chaotic public event. In the center, a man is being accosted and driven away by a mocking crowd, some of whom are brandishing what appear to be brooms or skewers. From a window above, a woman pours water on the scene. To the left, a man in a yellow tunic authoritatively points the way out, while on the right, musicians and other onlookers react to the commotion. Faustino Bocchi, a painter from Brescia, was known for such animated and often humorous scenes, though he is most famous for his paintings featuring dwarves.
+> ```json
+> {
+>   "recognized": true,
+>   "artist": "Jan Miel",
+>   "title": "The Charlatan",
+>   "date": "c. 1650",
+>   "collection": "Alte Pinakothek, Munich"
+> }
+> ```
 
 ### Probe B-plain — Open identification, no context
 
@@ -89,6 +90,93 @@ _Run: 2026-06-15T07:49:43+00:00_
 ### Probe B-forced-choice — Closed identification
 
 _Run: 2026-06-15T07:50:03+00:00_
+
+**Prompt:**
+
+> This painting depicts one of the following subjects. Which one is it?
+> — The finding of Moses: Pharaoh's daughter discovers the child floating on the river
+> — The sacrifice of Isaac (Abraham and Isaac)
+> — Potiphar's wife catches Joseph by his robe; Joseph escapes
+> — Balaam strikes his ass; the ass lies down and starts to speak
+> — Isaac blesses Jacob disguised in Esau's clothes
+> — Samson breaks the pillars; the temple of Dagon collapses
+> — The drunkenness of Noah
+> — Feast of Esther
+> — Belshazzar's Feast
+> — Bathsheba receives a letter from David
+> — The Gathering of Manna
+> — Hagar, Ishmael and the Angel in the Wilderness
+> — The Prodigal Son chased from the brothel (Luke 15:13)
+> — Jephtha welcomed by his daughter (Judges 11:29-40)
+> — Judah's love-affair with Tamar; he gives her his signet-ring and staff
+> Answer with the subject only.
+
+**Response (verbatim):**
+
+> The Prodigal Son chased from the brothel (Luke 15:13)
+
+## Model: `gemini:gemini-3.5-flash`
+
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
+
+_Run: 2026-06-18T13:49:42+00:00_
+
+**Prompt:**
+
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
+
+**Response (verbatim):**
+
+> {
+>   "recognized": true,
+>   "artist": "Jan Miel",
+>   "title": "The Interrupted Serenade",
+>   "date": "c. 1640",
+>   "collection": "State Hermitage Museum, St. Petersburg"
+> }
+
+### Probe B-plain — Open identification, no context
+
+_Run: 2026-06-18T13:14:05+00:00_
+
+**Prompt:**
+
+> What is depicted in this image?
+
+**Response (verbatim):**
+
+> This image depicts a dramatic and chaotic genre scene, likely from a 17th-century European painting (in the style of the Dutch/Flemish school or the Italianate *Bamboccianti*), showing a **brawl outside a tavern or inn**. 
+> 
+> Here are the key elements depicted in the scene:
+> 
+> *   **The Central Brawl:** On the stone steps of the inn, a group of people are engaged in a physical altercation. A man in a white shirt, red breeches, and blue stockings is being held back or attacked by a woman in a white apron. Behind them, other figures are joining the fray, with one woman raising a broom and a man brandishing a stick. A small black-and-white dog barks at the center of the commotion.
+> *   **The Woman at the Window:** Directly above the fight, a woman leans out of an upper window of the stone building, pouring a stream of water from a pitcher down onto the brawlers, likely in an attempt to break up the fight.
+> *   **The Observers (Left):** On the far left, two men stand watching the scene. The foremost man, dressed in a yellow doublet with a red sash and a wide-brimmed hat, points his finger toward the brawl, perhaps calling for order or directing someone's attention.
+> *   **Fleeing Musicians and Bystanders (Right):** On the right side, a woman covers her ears to block out the noise while a small child in green clings to her skirt. Next to them, two musicians carrying stringed instruments (a lute/guitar and a viol/cello slung over his back) are walking away, fleeing the disturbance.
+> *   **The Setting:** The scene takes place outside a rustic stone inn with a large archway and a leafy vine growing over it. In the background to the left, a peaceful, sunlit rural landscape with a tower, trees, and distant figures with livestock contrasts with the chaotic dispute in the foreground.
+
+### Probe B-framed — Open identification, cultural framing
+
+_Run: 2026-06-18T13:14:32+00:00_
+
+**Prompt:**
+
+> This is a European oil painting. What scene or subject is depicted? Name the episode and the figures if you can.
+
+**Response (verbatim):**
+
+> This European oil painting depicts a scene from **Miguel de Cervantes's** exemplary novel ***La ilustre fregona* (*The Illustrious Kitchen-Maid*)**, painted by the Italian Baroque artist **Michelangelo Cerquozzi** (or a closely associated artist of the *Bamboccianti* circle).
+> 
+> ### **The Episode Depicted:**
+> The painting illustrates the chaotic **brawl at the *Posada del Sevillano* (Inn of the Sevillano) in Toledo**, a central event in Cervantes's novella:
+> 
+> * **The Left (The Law):** The man in the yellow doublet and red sash pointing authoritatively is the ***Alguacil* (sheriff/magistrate)**, who arrives to restore order and make arrests.
+> * **The Center (The Brawl):** The protagonist, **Carriazo** (dressed in red breeches and a white shirt), is caught in a violent scuffle with the inn's staff. A woman leans out of the window above, pouring water from a pitcher to douse the brawlers, while others attack or hold him back with brooms.
+> * **The Right (The Fleeing Musicians):** The musicians who had come to serenade **Constanza** (the beautiful kitchen-maid of the title) are seen fleeing the chaotic scene with their stringed instruments (a violone/cello and a guitar/violin) to avoid getting caught up in the arrest.
+
+### Probe B-forced-choice — Closed identification
+
+_Run: 2026-06-18T13:15:00+00:00_
 
 **Prompt:**
 

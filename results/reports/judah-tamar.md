@@ -12,30 +12,29 @@ _Image served from IIIF (click for full resolution) — [info.json](https://medi
 - **Probe battery version:** 1.2
 - **System instruction (all sessions):** You are looking at a single image. Answer only from what is visible in the image and your own internal knowledge. Do not use web search, retrieval, external tools, or any internet resources to answer.
 
-_Each probe ran in a separate stateless session. Probe A is a logged covariate — record only, never score. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
+_Each probe ran in a separate stateless session. Probe A returns structured JSON and is scored per element (artist/title/date/collection) by an LLM judge against institutional ground truth; the collection element is low-confidence. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
 
 ## Model: `gemini:gemini-2.5-pro`
 
-### Probe A — Recognition (logged covariate — record only, do not score)
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
 
-_Run: 2026-06-15T07:49:29+00:00_
+_Run: 2026-06-18T13:45:37+00:00_
 
 **Prompt:**
 
-> What artwork is this? If you can, name the artist, title, approximate date, and collection. If you don't recognise the specific work, say so explicitly.
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
 
 **Response (verbatim):**
 
-> Based on the visual evidence and my internal knowledge, this is a well-known painting.
-> 
-> **Artist:** Lucas Cranach the Elder
-> **Title:** *Vertumnus and Pomona*
-> **Approximate Date:** c. 1529-1530
-> **Collection:** This work is in the collection of the National Gallery Prague, Czech Republic.
-> 
-> This painting illustrates a story from Ovid's *Metamorphoses*. The Roman god Vertumnus, the god of seasons and gardens, fell in love with the beautiful nymph Pomona, a goddess of fruit trees. Pomona, however, was uninterested in suitors. To get close to her, Vertumnus disguised himself in various forms, finally succeeding as an old woman.
-> 
-> In this depiction, Cranach shows Vertumnus in his disguise as an old man,
+> ```json
+> {
+>   "recognized": true,
+>   "artist": "Jan van Scorel",
+>   "title": "Vertumnus and Pomona",
+>   "date": "c. 1524",
+>   "collection": "Museum Boijmans Van Beuningen"
+> }
+> ```
 
 ### Probe B-plain — Open identification, no context
 
@@ -93,6 +92,100 @@ _Run: 2026-06-15T07:50:10+00:00_
 ### Probe B-forced-choice — Closed identification
 
 _Run: 2026-06-15T07:50:30+00:00_
+
+**Prompt:**
+
+> This painting depicts one of the following subjects. Which one is it?
+> — The finding of Moses: Pharaoh's daughter discovers the child floating on the river
+> — The sacrifice of Isaac (Abraham and Isaac)
+> — Potiphar's wife catches Joseph by his robe; Joseph escapes
+> — Balaam strikes his ass; the ass lies down and starts to speak
+> — Isaac blesses Jacob disguised in Esau's clothes
+> — Samson breaks the pillars; the temple of Dagon collapses
+> — The drunkenness of Noah
+> — Feast of Esther
+> — Belshazzar's Feast
+> — Bathsheba receives a letter from David
+> — The Gathering of Manna
+> — Hagar, Ishmael and the Angel in the Wilderness
+> — The Prodigal Son chased from the brothel (Luke 15:13)
+> — Jephtha welcomed by his daughter (Judges 11:29-40)
+> — Judah's love-affair with Tamar; he gives her his signet-ring and staff
+> Answer with the subject only.
+
+**Response (verbatim):**
+
+> Judah's love-affair with Tamar; he gives her his signet-ring and staff
+
+## Model: `gemini:gemini-3.5-flash`
+
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
+
+_Run: 2026-06-18T13:49:56+00:00_
+
+**Prompt:**
+
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
+
+**Response (verbatim):**
+
+> {
+>   "recognized": true,
+>   "artist": "Jan Swart van Groningen",
+>   "title": "Judah and Tamar",
+>   "date": "ca. 1530 - 1540",
+>   "collection": "Rijksmuseum, Amsterdam"
+> }
+
+### Probe B-plain — Open identification, no context
+
+_Run: 2026-06-18T13:14:12+00:00_
+
+**Prompt:**
+
+> What is depicted in this image?
+
+**Response (verbatim):**
+
+> Based on the visual details, this image depicts the biblical story of **Judah and Tamar** (from Genesis 38). 
+> 
+> ### Key Elements of the Depiction:
+> * **The Characters:** 
+>   * **Judah** is represented as the older, bearded man wearing a turban-like head covering. He has his arm around Tamar's shoulder.
+>   * **Tamar** (his daughter-in-law, disguised as a prostitute) is depicted as the younger woman sitting beside him.
+> * **The Pledges:** 
+>   * Tamar is holding Judah's **staff** in her right hand.
+>   * Judah is holding out his **signet ring** in his left hand. In the biblical narrative, Tamar demands these items (along with his cord) as a pledge of payment before agreeing to sleep with him.
+> * **The Setting:** They are seated in a wooded landscape, with a detailed Northern European-style village or manor house visible in the background to the right. 
+> 
+> This composition is characteristic of 16th-century Northern Renaissance (Netherlandish/Flemish) paintings of biblical narratives.
+
+### Probe B-framed — Open identification, cultural framing
+
+_Run: 2026-06-18T13:14:25+00:00_
+
+**Prompt:**
+
+> This is a European oil painting. What scene or subject is depicted? Name the episode and the figures if you can.
+
+**Response (verbatim):**
+
+> This painting depicts the Old Testament biblical episode of **Judah and Tamar** (from Genesis 38). 
+> 
+> ### Figures and Scene:
+> * **Tamar** (left): Judah's widowed daughter-in-law, who has disguised herself as a prostitute by the roadside to conceive a child by him after he failed to give her his youngest son in marriage as promised.
+> * **Judah** (right): Her father-in-law, who does not recognize her.
+> 
+> ### Key Iconography:
+> In the story, Tamar asks Judah for a pledge of payment until he can send her a young goat from his flock. She demands three personal items as security, which are clearly depicted here:
+> 1. **The Staff:** Tamar holds Judah's walking staff in her right hand.
+> 2. **The Signet Ring:** She holds up Judah's signet ring in her left hand. 
+> 
+> These items later serve as proof of the child's paternity when Judah accuses her of harlotry, forcing him to admit his own righteousness was lacking compared to hers.
+
+### Probe B-forced-choice — Closed identification
+
+_Run: 2026-06-18T13:14:35+00:00_
 
 **Prompt:**
 

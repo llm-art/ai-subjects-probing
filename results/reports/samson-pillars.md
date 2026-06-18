@@ -12,30 +12,29 @@ _Image served from IIIF (click for full resolution) — [info.json](https://iiif
 - **Probe battery version:** 1.2
 - **System instruction (all sessions):** You are looking at a single image. Answer only from what is visible in the image and your own internal knowledge. Do not use web search, retrieval, external tools, or any internet resources to answer.
 
-_Each probe ran in a separate stateless session. Probe A is a logged covariate — record only, never score. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
+_Each probe ran in a separate stateless session. Probe A returns structured JSON and is scored per element (artist/title/date/collection) by an LLM judge against institutional ground truth; the collection element is low-confidence. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
 
 ## Model: `gemini:gemini-2.5-pro`
 
-### Probe A — Recognition (logged covariate — record only, do not score)
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
 
-_Run: 2026-06-15T07:47:00+00:00_
+_Run: 2026-06-18T13:45:00+00:00_
 
 **Prompt:**
 
-> What artwork is this? If you can, name the artist, title, approximate date, and collection. If you don't recognise the specific work, say so explicitly.
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
 
 **Response (verbatim):**
 
-> Based on the visual evidence and my internal knowledge, this is a well-known artwork.
-> 
-> **Artist:** Peter Paul Rubens
-> **Title:** *The Death of Samson*
-> **Approximate Date:** c. 1605
-> **Collection:** J. Paul Getty Museum, Los Angeles
-> 
-> This artwork is an oil sketch, specifically a grisaille (a painting executed entirely in shades of grey or another neutral greyish color), which served as a preparatory study.
-> 
-> The painting depicts the dramatic biblical story from the Book of Judges. The central, muscular figure is Samson, who has been captured and blinded by the Philistines. In a final act of vengeance and self-sacrifice, he uses his God-given strength to topple the two central pillars of the Temple of Dagon, bringing the structure down upon himself and the thousands of Philistines gathered there. The scene is filled with the characteristic energy, emotion, and dynamic composition of the High Baroque style, of which Rubens was a master. The terror and panic of the Philistines are vividly portrayed as the temple collapses around them.
+> ```json
+> {
+>   "recognized": true,
+>   "artist": "Peter Paul Rubens",
+>   "title": "The Death of Samson",
+>   "date": "c. 1605",
+>   "collection": "J. Paul Getty Museum"
+> }
+> ```
 
 ### Probe B-plain — Open identification, no context
 
@@ -82,6 +81,90 @@ _Run: 2026-06-15T07:47:33+00:00_
 ### Probe B-forced-choice — Closed identification
 
 _Run: 2026-06-15T07:47:49+00:00_
+
+**Prompt:**
+
+> This painting depicts one of the following subjects. Which one is it?
+> — The finding of Moses: Pharaoh's daughter discovers the child floating on the river
+> — The sacrifice of Isaac (Abraham and Isaac)
+> — Potiphar's wife catches Joseph by his robe; Joseph escapes
+> — Balaam strikes his ass; the ass lies down and starts to speak
+> — Isaac blesses Jacob disguised in Esau's clothes
+> — Samson breaks the pillars; the temple of Dagon collapses
+> — The drunkenness of Noah
+> — Feast of Esther
+> — Belshazzar's Feast
+> — Bathsheba receives a letter from David
+> — The Gathering of Manna
+> — Hagar, Ishmael and the Angel in the Wilderness
+> — The Prodigal Son chased from the brothel (Luke 15:13)
+> — Jephtha welcomed by his daughter (Judges 11:29-40)
+> — Judah's love-affair with Tamar; he gives her his signet-ring and staff
+> Answer with the subject only.
+
+**Response (verbatim):**
+
+> Samson breaks the pillars; the temple of Dagon collapses
+
+## Model: `gemini:gemini-3.5-flash`
+
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
+
+_Run: 2026-06-18T13:49:21+00:00_
+
+**Prompt:**
+
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
+
+**Response (verbatim):**
+
+> {
+>   "recognized": true,
+>   "artist": "Valerio Castello",
+>   "title": "Samson Destroying the Temple",
+>   "date": "c. 1650",
+>   "collection": "Hermitage Museum, St. Petersburg"
+> }
+
+### Probe B-plain — Open identification, no context
+
+_Run: 2026-06-18T13:12:24+00:00_
+
+**Prompt:**
+
+> What is depicted in this image?
+
+**Response (verbatim):**
+
+> Based on the visual details, this image depicts the biblical story of **Samson destroying the Temple of Dagon** (from the Book of Judges). 
+> 
+> Key elements shown in the scene include:
+> * **Samson:** The central, highly muscular figure shown from behind, using his legendary strength to push and break a massive, fluted stone column, dislodging it from its base.
+> * **The Collapsing Temple:** The architectural structure is crumbling, with cracks in the columns and debris beginning to fall.
+> * **The Panicking Philistines:** 
+>   * On the right, a bearded man falls backward in terror, his mouth open in a scream and his hands raised defensively.
+>   * On the left, a crowd of people, including a mother clutching her infant, flee in chaos and fear.
+> * **Artistic Style:** The composition is rendered in a dramatic Baroque style, utilizing strong *chiaroscuro* (stark contrasts between light and shadow) to emphasize the muscular tension, dynamic movement, and intense emotion of the scene.
+
+### Probe B-framed — Open identification, cultural framing
+
+_Run: 2026-06-18T13:12:33+00:00_
+
+**Prompt:**
+
+> This is a European oil painting. What scene or subject is depicted? Name the episode and the figures if you can.
+
+**Response (verbatim):**
+
+> This painting depicts the biblical episode of **Samson destroying the Temple of Dagon** (from the Book of Judges, 16:29–30). 
+> 
+> ### Key Figures and Details:
+> * **Samson:** The central, highly muscular figure shown from behind, using his restored strength to push and break the massive stone columns supporting the temple.
+> * **The Philistines:** The terrified figures surrounding him, including the panicked man on the right and the fleeing women and children on the left, who are being crushed by the collapsing architecture of the temple dedicated to their god, Dagon.
+
+### Probe B-forced-choice — Closed identification
+
+_Run: 2026-06-18T13:12:42+00:00_
 
 **Prompt:**
 

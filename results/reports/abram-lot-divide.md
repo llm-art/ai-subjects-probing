@@ -12,26 +12,29 @@ _Image served from IIIF (click for full resolution) — [info.json](https://iiif
 - **Probe battery version:** 1.2
 - **System instruction (all sessions):** You are looking at a single image. Answer only from what is visible in the image and your own internal knowledge. Do not use web search, retrieval, external tools, or any internet resources to answer.
 
-_Each probe ran in a separate stateless session. Probe A is a logged covariate — record only, never score. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
+_Each probe ran in a separate stateless session. Probe A returns structured JSON and is scored per element (artist/title/date/collection) by an LLM judge against institutional ground truth; the collection element is low-confidence. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
 
 ## Model: `gemini:gemini-2.5-pro`
 
-### Probe A — Recognition (logged covariate — record only, do not score)
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
 
-_Run: 2026-06-18T08:05:28+00:00_
+_Run: 2026-06-18T13:47:06+00:00_
 
 **Prompt:**
 
-> What artwork is this? If you can, name the artist, title, approximate date, and collection. If you don't recognise the specific work, say so explicitly.
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
 
 **Response (verbatim):**
 
-> Based on the visual evidence in the image and my internal knowledge, this is a painting by the Italian Baroque artist **Antonio Zanchi**.
-> 
-> *   **Artist:** Antonio Zanchi (1631–1722)
-> *   **Title:** This work is commonly known as ***The School of the Platonists*** or sometimes ***The Mathematicians***. It depicts a gathering of ancient philosophers and scholars engaged in study and debate, centered around a large globe.
-> *   **Approximate Date:** c. 1660-1670. The style is characteristic of the Venetian Tenebrist movement of the late 17th century, of which Zanchi was a leading figure. The dramatic use of chiaroscuro (strong contrast between light and dark) is typical of his work.
-> *   **Collection:** I cannot identify the current collection of this painting from the image alone. The label visible in one of the cropped images with the number "1048" and the artist's name is likely an old inventory or collection tag, but it does not name the institution.
+> ```json
+> {
+>   "recognized": true,
+>   "artist": "Antonio Zanchi",
+>   "title": "The Philosophers (Pythagoras and his pupils)",
+>   "date": "c. 1665",
+>   "collection": "Accademia Carrara, Bergamo"
+> }
+> ```
 
 ### Probe B-plain — Open identification, no context
 
@@ -114,4 +117,89 @@ _Run: 2026-06-18T08:06:42+00:00_
 **Response (verbatim):**
 
 > Belshazzar's Feast
+
+## Model: `gemini:gemini-3.5-flash`
+
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
+
+_Run: 2026-06-18T13:51:51+00:00_
+
+**Prompt:**
+
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
+
+**Response (verbatim):**
+
+> {
+>   "recognized": true,
+>   "artist": "Antonio Zanchi",
+>   "title": "Archimedes",
+>   "date": "ca. 1670",
+>   "collection": null
+> }
+
+### Probe B-plain — Open identification, no context
+
+_Run: 2026-06-18T13:19:30+00:00_
+
+**Prompt:**
+
+> What is depicted in this image?
+
+**Response (verbatim):**
+
+> Based on the visual details and the label at the bottom of the image, this is a photograph of a Baroque painting by the Venetian artist **Antonio Zanchi** (1631–1722). 
+> 
+> The painting depicts **an astronomy lesson or a gathering of philosophers/cosmographers** (often identified as **Archimedes** or an **Allegory of Astronomy**):
+> 
+> * **Central Action:** An elderly, bearded philosopher or astronomer on the left is using a pair of dividers (compasses) to measure a large globe situated in the center of the composition.
+> * **Key Figures:** 
+>   * On the right, a muscular, semi-nude young man is seated with his back partially turned, holding a tablet or slate containing diagrams or calculations.
+>   * Behind the globe, another figure stands with an arm raised, holding a plumb line or pointing upward.
+>   * Several other onlookers (men and women) surround the globe, watching the demonstration with intense curiosity.
+> * **Style:** The work is executed in a dramatic Venetian Baroque style, characterized by strong *chiaroscuro* (the stark contrast between deep shadows and bright highlights) and dynamic, expressive figures.
+
+### Probe B-framed — Open identification, cultural framing
+
+_Run: 2026-06-18T13:19:41+00:00_
+
+**Prompt:**
+
+> This is a European oil painting. What scene or subject is depicted? Name the episode and the figures if you can.
+
+**Response (verbatim):**
+
+> This painting by the Venetian Baroque artist **Antonio Zanchi** (1631–1722) depicts the historical/philosophical episode of **Anaxarchus and Alexander the Great** (specifically, *Anaxarchus explaining the multiplicity of worlds to Alexander*).
+> 
+> ### Key Figures and Details:
+> * **Anaxarchus** (on the left): The ancient Greek philosopher is shown as an elderly, bearded man seated with a pair of compasses (dividers) over a large globe, illustrating his cosmological theory that there are infinite worlds.
+> * **Alexander the Great** (on the right): Depicted as a muscular, athletic young man, listening intently to the philosopher. According to historical anecdotes (recorded by Valerius Maximus and Plutarch), upon hearing from Anaxarchus that there was an infinite number of worlds, Alexander wept because he had not yet conquered even one.
+
+### Probe B-forced-choice — Closed identification
+
+_Run: 2026-06-18T13:19:51+00:00_
+
+**Prompt:**
+
+> This painting depicts one of the following subjects. Which one is it?
+> — The finding of Moses: Pharaoh's daughter discovers the child floating on the river
+> — The sacrifice of Isaac (Abraham and Isaac)
+> — Potiphar's wife catches Joseph by his robe; Joseph escapes
+> — Balaam strikes his ass; the ass lies down and starts to speak
+> — Isaac blesses Jacob disguised in Esau's clothes
+> — Samson breaks the pillars; the temple of Dagon collapses
+> — The drunkenness of Noah
+> — Feast of Esther
+> — Belshazzar's Feast
+> — Bathsheba receives a letter from David
+> — The Gathering of Manna
+> — Hagar, Ishmael and the Angel in the Wilderness
+> — The Prodigal Son chased from the brothel (Luke 15:13)
+> — Jephtha welcomed by his daughter (Judges 11:29-40)
+> — Judah's love-affair with Tamar; he gives her his signet-ring and staff
+> Answer with the subject only.
+
+**Response (verbatim):**
+
+> The sacrifice of Isaac (Abraham and Isaac)
 

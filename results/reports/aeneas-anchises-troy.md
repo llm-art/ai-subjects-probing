@@ -12,28 +12,29 @@ _Image served from IIIF (click for full resolution) — [info.json](https://medi
 - **Probe battery version:** 1.2
 - **System instruction (all sessions):** You are looking at a single image. Answer only from what is visible in the image and your own internal knowledge. Do not use web search, retrieval, external tools, or any internet resources to answer.
 
-_Each probe ran in a separate stateless session. Probe A is a logged covariate — record only, never score. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
+_Each probe ran in a separate stateless session. Probe A returns structured JSON and is scored per element (artist/title/date/collection) by an LLM judge against institutional ground truth; the collection element is low-confidence. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
 
 ## Model: `gemini:gemini-2.5-pro`
 
-### Probe A — Recognition (logged covariate — record only, do not score)
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
 
-_Run: 2026-06-11T13:02:32+00:00_
+_Run: 2026-06-18T13:43:45+00:00_
 
 **Prompt:**
 
-> What artwork is this? If you can, name the artist, title, approximate date, and collection. If you don't recognise the specific work, say so explicitly.
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
 
 **Response (verbatim):**
 
-> Based on the visual evidence and my internal knowledge, this artwork is:
-> 
-> *   **Artist:** Frans Francken the Younger
-> *   **Title:** *The Fall of Troy* (or *The Burning of Troy*)
-> *   **Approximate Date:** c. 1630-1635
-> *   **Collection:** I cannot identify the specific collection for this painting.
-> 
-> The painting depicts the mythological sack of the city of Troy. Key elements from the story are visible: the city is engulfed in flames under a dark, smoky sky. In the middle ground,
+> ```json
+> {
+>   "recognized": true,
+>   "artist": "El Greco (Doménikos Theotokópoulos)",
+>   "title": "The Fall of Troy",
+>   "date": "c. 1596-1600",
+>   "collection": "National Gallery of Greece"
+> }
+> ```
 
 ### Probe B-plain — Open identification, no context
 
@@ -186,6 +187,174 @@ Q: Is there an animal in the image? If so, describe it and its position.
 > 
 > *   **Description:** The horse is a colossal structure, appearing to be made of wood planks. It is much larger than the surrounding people and buildings. It is depicted in a stylized, somewhat blocky form.
 > *   **Position:** It is located in the middle ground, to the left of the center of the painting. It stands on a wide bridge or ramp that leads into the city, and it is surrounded by a crowd of people who appear to be pulling it towards the city gates.
+
+_Reference:_ Small dog, lower right — iconographically non-obvious; reporting it is strong evidence of genuine visual processing
+
+- [ ] Expert score (1 = correctly identified, semantic match)
+
+## Model: `gemini:gemini-3.5-flash`
+
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
+
+_Run: 2026-06-18T13:47:50+00:00_
+
+**Prompt:**
+
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
+
+**Response (verbatim):**
+
+> {
+>   "recognized": true,
+>   "artist": "Gillis van Valckenborch",
+>   "title": "The Burning of Troy",
+>   "date": "c. 1600",
+>   "collection": null
+> }
+
+### Probe B-plain — Open identification, no context
+
+_Run: 2026-06-18T13:07:47+00:00_
+
+**Prompt:**
+
+> What is depicted in this image?
+
+**Response (verbatim):**
+
+> This painting depicts the **Fall of Troy** (or the **Sack of Troy**), a famous event from Greek mythology and Virgil's epic poem, the *Aeneid*. 
+> 
+> Key elements visible in the scene include:
+> 
+> *   **The Trojan Horse:** Located in the middle-left, the large wooden horse stands near the city walls as the Greek soldiers invade.
+> *   **The Burning City:** The grand classical architecture of Troy is engulfed in raging fires, with thick, dramatic plumes of red and black smoke filling the night sky.
+> *   **Aeneas Fleeing Troy:** In the bottom right foreground, the Trojan hero **Aeneas** is shown escaping the destruction. He is carrying his elderly father, **Anchises**, on his back and is accompanied by his young son, **Ascanius** (holding his hand), and his wife, Creusa, following behind.
+> *   **Fleeing Citizens:** In the foreground and throughout the city, terrified citizens are shown panicking, fleeing, and seeking shelter amidst the ruins.
+> *   **The Harbor:** On the right side, ships are docked in the harbor, representing either the returning Greek fleet or the means of escape for the survivors.
+
+### Probe B-framed — Open identification, cultural framing
+
+_Run: 2026-06-18T13:07:54+00:00_
+
+**Prompt:**
+
+> This is a European oil painting. What scene or subject is depicted? Name the episode and the figures if you can.
+
+**Response (verbatim):**
+
+> This painting depicts the **Sack of Troy** (also known as the *Burning of Troy* or the *Fall of Troy*), a famous episode from Greek mythology and Virgil's epic poem, the *Aeneid*. 
+> 
+> ### Key Figures and Details:
+> * **Aeneas, Anchises, and Ascanius (bottom right):** The prominent group fleeing in the lower right corner represents the Trojan hero **Aeneas** escaping the burning city. He is carrying his elderly, paralyzed father, **Anchises**, on his back, while leading his young son, **Ascanius** (Iulus), by the hand. His wife, **Creusa**, follows closely behind them.
+> * **The Trojan Horse (middle-left background):** The giant wooden horse used by the Greeks to infiltrate and destroy the city is clearly visible standing near the city walls.
+
+### Probe B-forced-choice — Closed identification
+
+_Run: 2026-06-18T13:08:04+00:00_
+
+**Prompt:**
+
+> This painting depicts one of the following subjects. Which one is it?
+> — Prometheus chained by Vulcan
+> — Aeneas rescues his father Anchises from the burning Troy
+> — Abduction of Amphitrite by Poseidon
+> — The wedding of Peleus and Thetis
+> — The Competition of Apollo and Pan and the judgment of Midas
+> — Marriage of Cupid and Psyche
+> — The Triumph of Bacchus
+> — Apollo in Vulcan's forge revealing Venus' love-affair with Mars
+> — The Triumph of Mars: an Allegory of War
+> — The meeting of Nausicaa and Ulysses
+> — The meeting of Dido and Aeneas
+> — The sacrifice of Iphigenia
+> — The goddess Pallas Athena and the horse Pegasus
+> — Dido's sacrifice to Juno
+> — Sacrifice to Venus in a temple
+> Answer with the subject only.
+
+**Response (verbatim):**
+
+> Aeneas rescues his father Anchises from the burning Troy
+
+### Probe C — Closed verification checklist (expert-scored, semantic match)
+
+_Run: 2026-06-18T13:08:18+00:00_
+
+**Element 1: Pietas motif**
+
+Q: Is there a figure carrying another person on their back? Describe the two figures.
+
+> Yes, there is a figure carrying another person on their back. This group is located in the **lower right foreground** of the painting, depicting the classical scene of Aeneas fleeing the burning city of Troy with his family.
+> 
+> Here is a description of the two figures:
+> 
+> *   **The Carrier (Aeneas):** He is a strong, younger man shown in profile, moving toward the right. He is wearing a light blue-grey short tunic or classical armor and is bent forward slightly to support the weight of the person on his back. 
+> *   **The Person Being Carried (Anchises):** He is an elderly man with white hair and a white beard. He is draped over the younger man's shoulders, clinging to him for safety, and is dressed in a light-colored robe. 
+> 
+> Directly behind them, a smaller figure (representing Aeneas's young son, Ascanius) follows closely.
+
+_Reference:_ Yes — young adult male carrying older male
+
+- [ ] Expert score (1 = correctly identified, semantic match)
+
+**Element 2: Child present**
+
+Q: Is there a child accompanying the central group? Where is the child positioned relative to the carrying figure?
+
+> Yes, there is a small child-sized figure accompanying them (traditionally representing Aeneas's young son, Ascanius). 
+> 
+> The child is positioned **directly to the right (in front of)** the carrying figure, walking ahead of him toward the right edge of the painting while looking back.
+
+_Reference:_ Yes — small child beside/holding hand of carrier
+
+- [ ] Expert score (1 = correctly identified, semantic match)
+
+**Element 3: Burning setting**
+
+Q: What is happening in the background? Is there fire, smoke, or destruction visible?
+
+> Yes, there is widespread fire, smoke, and destruction depicted throughout the background, illustrating the dramatic fall and burning of the city:
+> 
+> *   **Fire and Smoke:** The entire upper half of the painting is dominated by a dramatic, apocalyptic sky. A massive, glowing orange and red firestorm rages behind the city, casting a hellish light over the buildings. Thick, billowing plumes of dark black smoke rise from the flames, completely choking out the sky at the top and on the right side.
+> *   **The Trojan Horse:** In the middle ground to the left of center, the wooden Trojan Horse stands near the city walls, surrounded by tiny figures of soldiers and citizens running in panic and chaos.
+> *   **Ruined Architecture:** On the far left, a large, classical stone structure with arches is heavily damaged, darkened, and crumbling, symbolizing the physical destruction of the city. 
+> *   **Chaos in the Harbor:** To the right, ships are packed into the harbor as people desperately try to escape by water, set against the backdrop of the burning city.
+
+_Reference:_ Yes — burning city, smoke, ruins
+
+- [ ] Expert score (1 = correctly identified, semantic match)
+
+**Element 4: Classical architecture**
+
+Q: Describe the architectural setting visible in the image.
+
+> The architectural setting is a grand, sprawling cityscape that blends classical antiquity with Italian Renaissance and medieval styles, creating an anachronistic depiction of ancient Troy:
+> 
+> *   **Crumbling Classical Ruins (Foreground Left):** On the far left stands a massive, dark, and ruined classical structure. It features heavy, fluted columns with ornate capitals (resembling the Corinthian order), a thick entablature, and a crumbling brick archway above, emphasizing the theme of destruction.
+> *   **Medieval Fortifications (Middle Ground):** In the center, a dark stone fortress wall with crenellated towers and ramparts divides the foreground from the inner city. A ramp or bridge leads up to these defensive walls.
+> *   **Renaissance-Style Palaces and Domes (Background):** 
+>     *   Behind the walls lies a vast public square (piazza) lined with grand, white-facaded buildings featuring classical columns, pediments, and arches reminiscent of Renaissance *palazzi*.
+>     *   Several prominent domes dot the skyline. Most notable is a large, highly detailed blue-and-white dome on the far right, resembling a Renaissance cathedral or baptistery.
+> *   **Towers and Obelisks:** Tall, square medieval-style towers and turrets rise above the city center, while a monumental, free-standing triumphal column (similar to Trajan's Column in Rome) stands near the harbor on the right.
+> *   **The Harbor (Right):** The city meets the water with stone docks, embankments, and waterfront buildings where ships are moored, framing the escape route.
+
+_Reference:_ Arches, columns, stone — classical/ancient city
+
+- [ ] Expert score (1 = correctly identified, semantic match)
+
+**Element 5: Small dog**
+
+Q: Is there an animal in the image? If so, describe it and its position.
+
+> Yes, there are animals depicted in the image, both as a monumental object and as living creatures:
+> 
+> 1.  **The Trojan Horse (Wooden Statue):** 
+>     *   **Description:** This is the most prominent animal figure in the painting. It is a large, stylized, brown wooden statue of a horse standing on a wheeled platform.
+>     *   **Position:** It is located in the middle ground, slightly to the left of the center, positioned on a ramp or plaza just outside the inner city walls.
+> 
+> 2.  **Living Horses (Cavalry):**
+>     *   **Description:** There are several tiny, active horses being ridden by soldiers. 
+>     *   **Position:** They are located in the middle ground, clustered around the base of the Trojan Horse and on the ramp below it, caught up in the chaotic battle and panic.
 
 _Reference:_ Small dog, lower right — iconographically non-obvious; reporting it is strong evidence of genuine visual processing
 

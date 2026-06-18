@@ -12,38 +12,29 @@ _Image served from IIIF (click for full resolution) — [info.json](https://hert
 - **Probe battery version:** 1.2
 - **System instruction (all sessions):** You are looking at a single image. Answer only from what is visible in the image and your own internal knowledge. Do not use web search, retrieval, external tools, or any internet resources to answer.
 
-_Each probe ran in a separate stateless session. Probe A is a logged covariate — record only, never score. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
+_Each probe ran in a separate stateless session. Probe A returns structured JSON and is scored per element (artist/title/date/collection) by an LLM judge against institutional ground truth; the collection element is low-confidence. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
 
 ## Model: `gemini:gemini-2.5-pro`
 
-### Probe A — Recognition (logged covariate — record only, do not score)
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
 
-_Run: 2026-06-15T07:45:47+00:00_
+_Run: 2026-06-18T13:44:43+00:00_
 
 **Prompt:**
 
-> What artwork is this? If you can, name the artist, title, approximate date, and collection. If you don't recognise the specific work, say so explicitly.
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
 
 **Response (verbatim):**
 
-> Based on the visual evidence in the image and my internal knowledge, here is an analysis of the artwork.
-> 
-> I do not recognize this specific work by a known artist. However, I can identify its subject, style, and likely period.
-> 
-> **Title:** The subject of the painting is almost certainly **"The Finding of Moses."** This is a well-known story from the Old Testament (Book of Exodus 2:1-10). The key iconographic elements are present:
-> *   A royal or noble woman, identifiable by her crown and fine clothing, who represents the Pharaoh's daughter.
-> *   A newborn baby being presented to her by her attendants. The baby, Moses, was placed in a basket in the reeds of the Nile to save him from the Pharaoh's decree to kill all newborn Hebrew boys.
-> *   A group of female attendants or handmaidens reacting to the discovery.
-> *   The setting on what appears to be a riverbank, with a bridge and water visible in the background, representing the Nile River.
-> 
-> **Artist and Style:** The painting is executed in the **Baroque style**, likely from the **Italian school of the 17th century**. The characteristics supporting this are:
-> *   **Dramatic Lighting (Chiaroscuro):** There is a strong contrast between light and shadow, which models the figures and creates a sense of drama.
-> *   **Composition:** The figures are arranged in a dynamic, somewhat theatrical grouping. The central figure of the princess creates a focal point, and the other figures guide the viewer's eye around the scene.
-> *   **Classical Influences:** The architecture in the background, including round temples, towers, and a prominent column, evokes ancient Rome. This classicizing landscape is typical of artists working in Rome during the Baroque period, such as Nicolas Poussin and his followers, or artists of the Bolognese school like Domenichino. The artist of this work was likely influenced by this classicizing trend within the Italian Baroque.
-> 
-> **Approximate Date:** Based on the style of painting, the composition, and the clothing, the work was likely created in the **mid-17th century (circa 1640-1670)**.
-> 
-> **Collection:** The text at the bottom left of the image reads "BIBLIOTHECA HERTZIANA - MAX-PLANCK-INSTITUT FÜR KUNSTGESCHICHTE" along with an inventory number. This indicates that the *photograph* of the artwork is held in the photographic archive of the Bibliotheca Hertziana
+> ```json
+> {
+>   "recognized": false,
+>   "artist": "Unknown",
+>   "title": "The Finding of Moses",
+>   "date": "17th century",
+>   "collection": "Unknown"
+> }
+> ```
 
 ### Probe B-plain — Open identification, no context
 
@@ -101,6 +92,91 @@ _Run: 2026-06-15T07:46:28+00:00_
 ### Probe B-forced-choice — Closed identification
 
 _Run: 2026-06-15T07:46:46+00:00_
+
+**Prompt:**
+
+> This painting depicts one of the following subjects. Which one is it?
+> — The finding of Moses: Pharaoh's daughter discovers the child floating on the river
+> — The sacrifice of Isaac (Abraham and Isaac)
+> — Potiphar's wife catches Joseph by his robe; Joseph escapes
+> — Balaam strikes his ass; the ass lies down and starts to speak
+> — Isaac blesses Jacob disguised in Esau's clothes
+> — Samson breaks the pillars; the temple of Dagon collapses
+> — The drunkenness of Noah
+> — Feast of Esther
+> — Belshazzar's Feast
+> — Bathsheba receives a letter from David
+> — The Gathering of Manna
+> — Hagar, Ishmael and the Angel in the Wilderness
+> — The Prodigal Son chased from the brothel (Luke 15:13)
+> — Jephtha welcomed by his daughter (Judges 11:29-40)
+> — Judah's love-affair with Tamar; he gives her his signet-ring and staff
+> Answer with the subject only.
+
+**Response (verbatim):**
+
+> The finding of Moses: Pharaoh's daughter discovers the child floating on the river
+
+## Model: `gemini:gemini-3.5-flash`
+
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
+
+_Run: 2026-06-18T13:48:55+00:00_
+
+**Prompt:**
+
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
+
+**Response (verbatim):**
+
+> {
+>   "recognized": true,
+>   "artist": "Giovanni Francesco Romanelli",
+>   "title": "The Finding of Moses",
+>   "date": "17th century",
+>   "collection": "Galleria Nazionale d'Arte Antica, Rome"
+> }
+
+### Probe B-plain — Open identification, no context
+
+_Run: 2026-06-18T13:11:05+00:00_
+
+**Prompt:**
+
+> What is depicted in this image?
+
+**Response (verbatim):**
+
+> This painting depicts the biblical scene of **The Finding of Moses** (also known as *Moses Saved from the Water*), from the Book of Exodus. 
+> 
+> Key elements shown in the image include:
+> 
+> * **Pharaoh's Daughter:** The central, prominent figure dressed in royal attire, wearing a crown with a white feather and a yellow-orange mantle. She is gesturing toward the baby.
+> * **Baby Moses:** Located on the right side, the infant is lying in a basket/cradle on the riverbank, surrounded and tended to by the princess's handmaidens.
+> * **Miriam (Moses' sister):** The woman kneeling on the left, looking up at Pharaoh's daughter. In the biblical narrative, she approaches the princess to suggest hiring a Hebrew nurse (who would be Moses' biological mother, Jochebed) to care for the baby.
+> * **The Setting:** A riverbank (representing the Nile) with classical-style architecture, a bridge, and a tall column in the background, characteristic of 17th-century European depictions of historical and biblical scenes.
+
+### Probe B-framed — Open identification, cultural framing
+
+_Run: 2026-06-18T13:11:12+00:00_
+
+**Prompt:**
+
+> This is a European oil painting. What scene or subject is depicted? Name the episode and the figures if you can.
+
+**Response (verbatim):**
+
+> Based on the visual elements, this painting depicts the biblical scene of **The Finding of Moses** (also known as *Moses Saved from the Water*), from the Book of Exodus. 
+> 
+> The key figures depicted in the scene are:
+> * **Pharaoh's Daughter:** The central, elegantly dressed royal figure wearing a crown/tiara with a feather, who has discovered the child.
+> * **The Infant Moses:** The baby lying in the basket/cradle on the right, being tended to by the princess's handmaidens.
+> * **Miriam (Moses' sister):** The young woman kneeling on the left, gesturing as she speaks to Pharaoh's daughter, offering to find a Hebrew nurse (their mother, Jochebed) to care for the baby.
+> * **The Handmaidens:** The other women on the right who have retrieved the basket from the River Nile (visible in the background).
+
+### Probe B-forced-choice — Closed identification
+
+_Run: 2026-06-18T13:11:27+00:00_
 
 **Prompt:**
 

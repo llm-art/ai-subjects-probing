@@ -12,28 +12,29 @@ _Image served from IIIF (click for full resolution) — [info.json](https://medi
 - **Probe battery version:** 1.2
 - **System instruction (all sessions):** You are looking at a single image. Answer only from what is visible in the image and your own internal knowledge. Do not use web search, retrieval, external tools, or any internet resources to answer.
 
-_Each probe ran in a separate stateless session. Probe A is a logged covariate — record only, never score. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
+_Each probe ran in a separate stateless session. Probe A returns structured JSON and is scored per element (artist/title/date/collection) by an LLM judge against institutional ground truth; the collection element is low-confidence. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
 
 ## Model: `gemini:gemini-2.5-pro`
 
-### Probe A — Recognition (logged covariate — record only, do not score)
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
 
-_Run: 2026-06-15T07:51:22+00:00_
+_Run: 2026-06-18T13:44:03+00:00_
 
 **Prompt:**
 
-> What artwork is this? If you can, name the artist, title, approximate date, and collection. If you don't recognise the specific work, say so explicitly.
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
 
 **Response (verbatim):**
 
-> Based on the visual evidence and my internal knowledge, this artwork is:
-> 
-> *   **Artist:** Eustache Le Sueur
-> *   **Title:** *The Marriage of Cupid and Psyche*
-> *   **Approximate Date:** c. 1640s
-> *   **Collection:** Musée du Louvre, Paris
-> 
-> This painting depicts a scene from the mythological story of Cupid and Psyche, as told by Apuleius in *The Golden Ass*. The central figures are Psyche (the bride) and Cupid (the winged youth placing a ring on her finger). Presiding over the ceremony is Hymen, the god of marriage, who holds the nuptial torch. On the left, Cupid's mother, Venus, sits in her golden chariot, holding a bow and seemingly giving her consent or bearing witness to the union she once opposed. At the bottom, two doves yoked together symbolize love and marriage. This work was part of a larger decorative cycle illustrating the story of Cupid and Psyche, originally created for the Hôtel Lambert in Paris.
+> ```json
+> {
+>   "recognized": true,
+>   "artist": "Pompeo Batoni",
+>   "title": "The Marriage of Cupid and Psyche",
+>   "date": "1756",
+>   "collection": "Gemäldegalerie, Berlin"
+> }
+> ```
 
 ### Probe B-plain — Open identification, no context
 
@@ -83,6 +84,95 @@ _Run: 2026-06-15T07:43:49+00:00_
 ### Probe B-forced-choice — Closed identification
 
 _Run: 2026-06-15T07:44:08+00:00_
+
+**Prompt:**
+
+> This painting depicts one of the following subjects. Which one is it?
+> — Prometheus chained by Vulcan
+> — Aeneas rescues his father Anchises from the burning Troy
+> — Abduction of Amphitrite by Poseidon
+> — The wedding of Peleus and Thetis
+> — The Competition of Apollo and Pan and the judgment of Midas
+> — Marriage of Cupid and Psyche
+> — The Triumph of Bacchus
+> — Apollo in Vulcan's forge revealing Venus' love-affair with Mars
+> — The Triumph of Mars: an Allegory of War
+> — The meeting of Nausicaa and Ulysses
+> — The meeting of Dido and Aeneas
+> — The sacrifice of Iphigenia
+> — The goddess Pallas Athena and the horse Pegasus
+> — Dido's sacrifice to Juno
+> — Sacrifice to Venus in a temple
+> Answer with the subject only.
+
+**Response (verbatim):**
+
+> Marriage of Cupid and Psyche
+
+## Model: `gemini:gemini-3.5-flash`
+
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
+
+_Run: 2026-06-18T13:48:04+00:00_
+
+**Prompt:**
+
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
+
+**Response (verbatim):**
+
+> {
+>   "recognized": true,
+>   "artist": "Eustache Le Sueur",
+>   "title": "The Marriage of Cupid and Psyche",
+>   "date": "c. 1645",
+>   "collection": "Musée du Louvre"
+> }
+
+### Probe B-plain — Open identification, no context
+
+_Run: 2026-06-18T13:08:43+00:00_
+
+**Prompt:**
+
+> What is depicted in this image?
+
+**Response (verbatim):**
+
+> This image depicts the painting ***The Marriage of Cupid and Psyche*** (also known as *L'Amour épouse Psyché*), created around 1645 by the French Baroque artist **Eustache Le Sueur**. 
+> 
+> ### Key Figures and Elements Depicted:
+> * **Cupid (Amor) and Psyche (Center):** Cupid, depicted as a winged youth with a quiver at his hip, is placing a wedding ring onto the finger of Psyche, who is dressed in white and saffron-yellow robes.
+> * **Venus (Left):** Cupid's mother, Venus, is seated on the left in her golden chariot, holding a bow and gesturing in approval of the union.
+> * **Hymen (Center-Background):** The winged god of marriage stands behind the couple, holding a burning torch aloft to bless their wedding.
+> * **Zephyr (Right):** The god of the west wind is shown on the right, reclining on a cloud and blowing a gentle breeze.
+> * **Doves (Bottom):** Two billing doves, traditional symbols of Venus and love, rest at the feet of the couple.
+
+### Probe B-framed — Open identification, cultural framing
+
+_Run: 2026-06-18T13:08:58+00:00_
+
+**Prompt:**
+
+> This is a European oil painting. What scene or subject is depicted? Name the episode and the figures if you can.
+
+**Response (verbatim):**
+
+> This painting depicts **The Marriage of Cupid and Psyche** (also known as *The Nuptials of Cupid and Psyche*), a famous episode from Apuleius's *The Golden Ass*. 
+> 
+> This specific work is by the French Baroque/Classicist painter **Eustache Le Sueur** (painted circa 1645 for the *Cabinet de l'Amour* in the Hôtel Lambert, Paris).
+> 
+> ### Figures Depicted:
+> * **Cupid (Eros)** (center-left): The winged youth/boy exchanging a wedding ring with Psyche.
+> * **Psyche** (center-right): The mortal princess, dressed in a white chemise and golden-yellow drapery, receiving the ring.
+> * **Venus** (far left): Cupid's mother, seated in her golden chariot on a cloud, holding Cupid's bow and gesturing in approval of the union.
+> * **Hymen (Hymenaeus)** (center background): The winged god of marriage standing between the couple, holding a burning nuptial torch to bless their union.
+> * **Zephyr** (far right): The wind god reclining on a cloud, blowing a pipe to celebrate the wedding.
+> * **Two Doves** (bottom center): A traditional symbol of Venus, love, and fidelity, shown billing at the couple's feet.
+
+### Probe B-forced-choice — Closed identification
+
+_Run: 2026-06-18T13:09:08+00:00_
 
 **Prompt:**
 

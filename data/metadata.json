@@ -1,0 +1,1008 @@
+{
+  "prometheus-chained-vulcan": {
+    "subject_uri": "https://data.rkd.nl/images/981",
+    "title": "Prometheus chained by Vulcan",
+    "artist": "Baburen, Dirck van",
+    "artist_names": [
+      "Baburen, Dirck van",
+      "Dirck van Baburen"
+    ],
+    "date": "1623",
+    "date_begin": "1623",
+    "date_end": "1623",
+    "date_label": "1623",
+    "collection": "Rijksmuseum",
+    "collection_uri": "http://www.wikidata.org/entity/Q190804",
+    "collection_source": "manual",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "aeneas-anchises-troy": {
+    "subject_uri": "https://data.rkd.nl/images/8359",
+    "title": "Aeneas rescues his father Anchises from the burning Troy",
+    "artist": "Suavius, Lambert",
+    "artist_names": [
+      "Suavius, Lambert",
+      "Lambert Suavius"
+    ],
+    "date": "1550",
+    "date_begin": "1550",
+    "date_end": "1550",
+    "date_label": "1550",
+    "collection": "Centraal Museum",
+    "collection_uri": "http://www.wikidata.org/entity/Q260913",
+    "collection_source": "manual",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "abduction-amphitrite": {
+    "subject_uri": "https://data.rkd.nl/images/7800",
+    "title": "Abduction of Amphitrite by Poseidon",
+    "artist": "Terwesten, Mattheus",
+    "artist_names": [
+      "Terwesten, Mattheus",
+      "Mattheus Terwesten"
+    ],
+    "date": "1685 - 1757",
+    "date_begin": "1685",
+    "date_end": "1757",
+    "date_label": "1685 - 1757",
+    "collection": "Instituut Collectie Nederland",
+    "collection_uri": "https://data.rkd.nl/collectors/2866",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "wedding-peleus-thetis": {
+    "subject_uri": "https://data.rkd.nl/images/749",
+    "title": "The wedding of Peleus and Thetis",
+    "artist": "Cornelisz. van Haarlem, Cornelis",
+    "artist_names": [
+      "Cornelisz. van Haarlem, Cornelis",
+      "Cornelis Cornelisz. van Haarlem"
+    ],
+    "date": "1592-1593",
+    "date_begin": "1592",
+    "date_end": "1593",
+    "date_label": "1592-1593",
+    "collection": "Frans Hals Museum",
+    "collection_uri": "https://data.rkd.nl/collectors/239",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "apollo-pan-midas": {
+    "subject_uri": "https://data.rkd.nl/images/71945",
+    "title": "The Competition of Apollo and Pan and the judgment of Midas",
+    "artist": null,
+    "artist_names": [],
+    "date": "c. 1620",
+    "date_begin": "1620",
+    "date_end": "1620",
+    "date_label": "c. 1620",
+    "collection": "Museum Schloss Wilhelmshöhe",
+    "collection_uri": "https://data.rkd.nl/collectors/10448",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "marriage-cupid-psyche": {
+    "subject_uri": "https://data.rkd.nl/images/70894",
+    "title": "Marriage of Cupid and Psyche",
+    "artist": null,
+    "artist_names": [],
+    "date": "19th century",
+    "date_begin": "1800",
+    "date_end": "1899",
+    "date_label": "19th century",
+    "collection": "Private collection",
+    "collection_uri": "https://data.rkd.nl/collectors/2250",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "triumph-bacchus": {
+    "subject_uri": "https://data.rkd.nl/images/70736",
+    "title": "The triumph of Bacchus",
+    "artist": "Mont, Deodat van der",
+    "artist_names": [
+      "Mont, Deodat van der",
+      "Deodat van der Mont"
+    ],
+    "date": "first half 17th century",
+    "date_begin": "1600",
+    "date_end": "1649",
+    "date_label": "first half 17th century",
+    "collection": null,
+    "collection_uri": null,
+    "collection_source": null,
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "apollo-vulcan-forge": {
+    "subject_uri": "https://data.rkd.nl/images/67185",
+    "title": "Apollo in Vulcan's forge revealing Venus' love-affair with Mars",
+    "artist": "Maes, Godfried (II)",
+    "artist_names": [
+      "Maes, Godfried (II)",
+      "Godfried (II) Maes"
+    ],
+    "date": "1664 - 1700",
+    "date_begin": "1664",
+    "date_end": "1700",
+    "date_label": "1664 - 1700",
+    "collection": "Baulme Fine Arts, F.",
+    "collection_uri": "https://data.rkd.nl/collectors/30880",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "triumph-mars": {
+    "subject_uri": "https://data.rkd.nl/images/66158",
+    "title": "The triumph of Mars: an Allegory of War",
+    "artist": "Nieulandt, Guilliam van (II)",
+    "artist_names": [
+      "Nieulandt, Guilliam van (II)",
+      "Guilliam van (II) Nieulandt"
+    ],
+    "date": "1627 (dated)",
+    "date_begin": "1627",
+    "date_end": "1627",
+    "date_label": "1627 (dated)",
+    "collection": "Portovano, Enrico baron",
+    "collection_uri": "https://data.rkd.nl/collectors/15319",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "nausicaa-ulysses": {
+    "subject_uri": "https://data.rkd.nl/images/63230",
+    "title": "The meeting of Nausicaa and Ulysses",
+    "artist": "Lastman, Pieter",
+    "artist_names": [
+      "Lastman, Pieter",
+      "Pieter Lastman"
+    ],
+    "date": "dated 1619",
+    "date_begin": "1619",
+    "date_end": "1619",
+    "date_label": "dated 1619",
+    "collection": "Alte Pinakothek",
+    "collection_uri": "https://data.rkd.nl/collectors/151",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "meeting-dido-aeneas": {
+    "subject_uri": "https://data.rkd.nl/images/62758",
+    "title": "The meeting of Dido and Aeneas",
+    "artist": "Coignet, Michiel (II)",
+    "artist_names": [
+      "Coignet, Michiel (II)",
+      "Michiel (II) Coignet"
+    ],
+    "date": "1648 (dated)",
+    "date_begin": "1648",
+    "date_end": "1648",
+    "date_label": "1648 (dated)",
+    "collection": null,
+    "collection_uri": null,
+    "collection_source": null,
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "sacrifice-iphigenia": {
+    "subject_uri": "https://data.rkd.nl/images/62589",
+    "title": "The sacrifice of Iphigenia",
+    "artist": "Wet, Jacob de (I)",
+    "artist_names": [
+      "Wet, Jacob de (I)",
+      "Jacob de (I) Wet"
+    ],
+    "date": "1635 - 1672",
+    "date_begin": "1635",
+    "date_end": "1672",
+    "date_label": "1635 - 1672",
+    "collection": "Mautner-Markhof",
+    "collection_uri": "https://data.rkd.nl/collectors/1586",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "athena-pegasus": {
+    "subject_uri": "https://data.rkd.nl/images/40243",
+    "title": "The goddess Pallas Athena and the horse Pegasus",
+    "artist": "Thulden, Theodoor van",
+    "artist_names": [
+      "Thulden, Theodoor van",
+      "Theodoor van Thulden"
+    ],
+    "date": "1644 (dated)",
+    "date_begin": "1644",
+    "date_end": "1644",
+    "date_label": "1644 (dated)",
+    "collection": "J. Paul Getty Museum",
+    "collection_uri": "https://data.rkd.nl/collectors/3823",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "dido-sacrifice-juno": {
+    "subject_uri": "https://data.rkd.nl/images/313569",
+    "title": "Dido's sacrifice to Juno",
+    "artist": "Romanelli, Giovanni Francesco",
+    "artist_names": [
+      "Romanelli, Giovanni Francesco",
+      "Giovanni Francesco Romanelli"
+    ],
+    "date": "1655",
+    "date_begin": "1655",
+    "date_end": "1655",
+    "date_label": "1655",
+    "collection": "Norton Simon Museum",
+    "collection_uri": "http://www.wikidata.org/entity/Q1752085",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "sacrifice-venus-temple": {
+    "subject_uri": "https://data.rkd.nl/images/308982",
+    "title": "Sacrifice to Venus in a temple",
+    "artist": "Rubens, Peter Paul",
+    "artist_names": [
+      "Rubens, Peter Paul",
+      "Peter Paul Rubens"
+    ],
+    "date": "c. 1630",
+    "date_begin": "1630",
+    "date_end": "1630",
+    "date_label": "c. 1630",
+    "collection": "Courtauld Gallery",
+    "collection_uri": "https://data.rkd.nl/collectors/39873",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "finding-moses": {
+    "subject_uri": null,
+    "title": null,
+    "artist": null,
+    "artist_names": [],
+    "date": null,
+    "date_begin": null,
+    "date_end": null,
+    "date_label": null,
+    "collection": null,
+    "collection_uri": null,
+    "collection_source": null,
+    "status": "no_source",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "abraham-isaac": {
+    "subject_uri": null,
+    "title": null,
+    "artist": null,
+    "artist_names": [],
+    "date": null,
+    "date_begin": null,
+    "date_end": null,
+    "date_label": null,
+    "collection": null,
+    "collection_uri": null,
+    "collection_source": null,
+    "status": "no_source",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "potiphar-wife": {
+    "subject_uri": "https://artresearch.net/resource/midas/work/08109559",
+    "title": "Josephs Keuschheit",
+    "artist": "Bilivert, Giovanni",
+    "artist_names": [
+      "Bilivert, Giovanni",
+      "Giovanni Bilivert"
+    ],
+    "date": null,
+    "date_begin": null,
+    "date_end": null,
+    "date_label": null,
+    "collection": "Galleria Nazionale d'arte Antica",
+    "collection_uri": "http://www.wikidata.org/entity/Q1136614",
+    "collection_source": "manual",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "balaam-ass": {
+    "subject_uri": "https://data.rkd.nl/images/302922",
+    "title": "Balaam and his ass",
+    "artist": "Lastman, Pieter",
+    "artist_names": [
+      "Lastman, Pieter",
+      "Pieter Lastman"
+    ],
+    "date": "dated 1622",
+    "date_begin": "1622",
+    "date_end": "1622",
+    "date_label": "dated 1622",
+    "collection": "The Israel Museum",
+    "collection_uri": "https://data.rkd.nl/collectors/28277",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "isaac-blesses-jacob": {
+    "subject_uri": "https://data.rkd.nl/images/287664",
+    "title": "Isaac blessing Jacob",
+    "artist": "Horst, Gerrit Willemsz.",
+    "artist_names": [
+      "Horst, Gerrit Willemsz.",
+      "Gerrit Willemsz. Horst"
+    ],
+    "date": "1638",
+    "date_begin": "1638",
+    "date_end": "1638",
+    "date_label": "1638",
+    "collection": "Dulwich Picture Gallery",
+    "collection_uri": "https://data.rkd.nl/collectors/18715",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "samson-pillars": {
+    "subject_uri": "https://data.rkd.nl/images/40236",
+    "title": "Samson breaks the pillars; the temple of Dagon collapses, killing all that are in it (Judges 16:29-31)",
+    "artist": "Rubens, Peter Paul [manner of/after]",
+    "artist_names": [
+      "Rubens, Peter Paul [manner of/after]",
+      "Rubens, Peter Paul",
+      "Peter Paul Rubens"
+    ],
+    "date": "first half 17th century",
+    "date_begin": "1600",
+    "date_end": "1650",
+    "date_label": "first half 17th century",
+    "collection": "J. Paul Getty Museum",
+    "collection_uri": "https://data.rkd.nl/collectors/3823",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "drunkenness-noah": {
+    "subject_uri": "https://data.rkd.nl/images/272531",
+    "title": "The drunkenness of Noah",
+    "artist": "Floris, Frans (I) [circle of]",
+    "artist_names": [
+      "Floris, Frans (I) [circle of]",
+      "Floris, Frans (I)",
+      "Frans (I) Floris"
+    ],
+    "date": "c. 1550-1574",
+    "date_begin": "1550",
+    "date_end": "1574",
+    "date_label": "c. 1550-1574",
+    "collection": null,
+    "collection_uri": null,
+    "collection_source": null,
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "feast-esther": {
+    "subject_uri": "https://artresearch.net/resource/frick/work/991013381249707141",
+    "title": "Feast of Esther.",
+    "artist": "Cortona, Pietro da",
+    "artist_names": [
+      "Cortona, Pietro da",
+      "Pietro da Cortona"
+    ],
+    "date": "1622-1678",
+    "date_begin": "1622",
+    "date_end": "1678",
+    "date_label": "1622-1678",
+    "collection": "J .Paul Getty Museum, Malibu",
+    "collection_uri": "https://artresearch.net/resource/frick/place/country/united_states/region/california/city/malibu/actor/repository_actor/j_paul_getty_museum",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "belshazzar-feast": {
+    "subject_uri": null,
+    "title": null,
+    "artist": null,
+    "artist_names": [],
+    "date": null,
+    "date_begin": null,
+    "date_end": null,
+    "date_label": null,
+    "collection": null,
+    "collection_uri": null,
+    "collection_source": null,
+    "status": "no_source",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "bathsheba-letter": {
+    "subject_uri": "https://data.rkd.nl/images/269073",
+    "title": "Bathsheba receives a letter from David (2 Samuel 11:4)",
+    "artist": "Rubens, Peter Paul [free after]",
+    "artist_names": [
+      "Rubens, Peter Paul [free after]",
+      "Rubens, Peter Paul",
+      "Peter Paul Rubens"
+    ],
+    "date": "after 1635",
+    "date_begin": "1635",
+    "date_end": "1635",
+    "date_label": "after 1635",
+    "collection": null,
+    "collection_uri": null,
+    "collection_source": null,
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "gathering-manna": {
+    "subject_uri": "https://artresearch.net/resource/frick/work/991012200759707141",
+    "title": "The Gathering of Manna.",
+    "artist": "Bramantino",
+    "artist_names": [
+      "Bramantino"
+    ],
+    "date": "1503-1506",
+    "date_begin": "1503",
+    "date_end": "1506",
+    "date_label": "1503-1506",
+    "collection": "Samuel H. Kress Foundation, New York",
+    "collection_uri": "https://artresearch.net/resource/frick/place/country/united_states/region/new_york/city/new_york/actor/repository_actor/samuel_h_kress_foundation",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "hagar-ishmael": {
+    "subject_uri": "https://artresearch.net/resource/zeri/work/51672",
+    "title": "Hagar, Ishmael and the Angel in the Wilderness.",
+    "artist": "Cortona, Pietro da",
+    "artist_names": [
+      "Cortona, Pietro da",
+      "Pietro da Cortona"
+    ],
+    "date": "1637 - 1638",
+    "date_begin": "1637",
+    "date_end": "1638",
+    "date_label": "1637 - 1638",
+    "collection": "John and Mable Ringling Museum of Art",
+    "collection_uri": "http://www.wikidata.org/entity/Q612530",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "prodigal-son-brothel": {
+    "subject_uri": "https://data.rkd.nl/images/195192",
+    "title": "The Prodigal Son is being chased from the brotherl after spending all his money (Luke 15:13)",
+    "artist": "Bredael, Peeter van",
+    "artist_names": [
+      "Bredael, Peeter van",
+      "Peeter van Bredael"
+    ],
+    "date": "after 1658",
+    "date_begin": "1658",
+    "date_end": "1658",
+    "date_label": "after 1658",
+    "collection": null,
+    "collection_uri": null,
+    "collection_source": null,
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "jephtha-daughter": {
+    "subject_uri": "https://data.rkd.nl/images/208955",
+    "title": "Jephtha welcomed by his daughter (Judges 11:29-40)",
+    "artist": "Francken, Hieronymus (III)",
+    "artist_names": [
+      "Francken, Hieronymus (III)",
+      "Hieronymus (III) Francken"
+    ],
+    "date": "1626 - 1661",
+    "date_begin": "1626",
+    "date_end": "1661",
+    "date_label": "1626 - 1661",
+    "collection": null,
+    "collection_uri": null,
+    "collection_source": null,
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "judah-tamar": {
+    "subject_uri": "https://data.rkd.nl/images/55524",
+    "title": "Judah's love-affair with Tamar; he gives her his signet-ring (Genesis 38:18)",
+    "artist": "Hemessen, Jan Sanders van",
+    "artist_names": [
+      "Hemessen, Jan Sanders van",
+      "Jan Sanders van Hemessen"
+    ],
+    "date": "second or third quarter 16th century",
+    "date_begin": "1526",
+    "date_end": "1574",
+    "date_label": "second or third quarter 16th century",
+    "collection": "Private collection",
+    "collection_uri": "https://data.rkd.nl/collectors/2250",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "diana-actaeon": {
+    "subject_uri": "https://artresearch.net/resource/frick/work/991013309749707141",
+    "title": "Diana and Actaeon.",
+    "artist": "Titian",
+    "artist_names": [
+      "Titian",
+      "Titiaan",
+      "Tiziano Vecellio"
+    ],
+    "date": "1559",
+    "date_begin": "1559",
+    "date_end": "1559",
+    "date_label": "1559",
+    "collection": "Earl of Ellesmere, London",
+    "collection_uri": "https://artresearch.net/resource/frick/place/country/england/city/london/actor/repository_actor/earl_of_ellesmere",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "jupiter-mercury": {
+    "subject_uri": "https://artresearch.net/resource/frick/work/991012831439707141",
+    "title": "Jupiter and Mercury.",
+    "artist": "Dossi, Dosso",
+    "artist_names": [
+      "Dossi, Dosso",
+      "Dosso Dossi"
+    ],
+    "date": "1499-1542",
+    "date_begin": "1499",
+    "date_end": "1542",
+    "date_label": "1499-1542",
+    "collection": "Kunsthistorisches Museum Wien",
+    "collection_uri": "http://www.wikidata.org/entity/Q95569",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "judgement-midas": {
+    "subject_uri": "https://artresearch.net/resource/frick/work/991012521729707141",
+    "title": "The Judgement of Midas.",
+    "artist": "Cima da Conegliano, Giovanni Battista",
+    "artist_names": [
+      "Cima da Conegliano, Giovanni Battista",
+      "Giovanni Battista Cima da Conegliano"
+    ],
+    "date": "1459-1518",
+    "date_begin": "1459",
+    "date_end": "1518",
+    "date_label": "1459-1518",
+    "collection": "Pinacoteca di Parma, Parma",
+    "collection_uri": "https://artresearch.net/resource/frick/place/country/italy/city/parma/actor/repository_actor/pinacoteca_di_parma",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "embassy-hippolyta": {
+    "subject_uri": "https://artresearch.net/resource/frick/work/991012154549707141",
+    "title": "The Embassy of Hippolyta, Queen of the Amazons, to Theseus, King of Athens.",
+    "artist": "Carpaccio, Vittore",
+    "artist_names": [
+      "Carpaccio, Vittore",
+      "Vittore Carpaccio"
+    ],
+    "date": "1475-1525",
+    "date_begin": "1475",
+    "date_end": "1525",
+    "date_label": "1475-1525",
+    "collection": "Musée Jacquemart-André",
+    "collection_uri": "http://www.wikidata.org/entity/Q1165526",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "jason-dragon": {
+    "subject_uri": "https://artresearch.net/resource/pharos/artwork/397538fdbf2e8604799315523c98a9b8585771f2",
+    "title": "Episode from the Legend of the Argonauts: Jason Slaying the Sleepless Dragon.",
+    "artist": "Roberti, Ercole de'",
+    "artist_names": [
+      "Roberti, Ercole de'",
+      "Ercole de' Roberti"
+    ],
+    "date": "1460-1496",
+    "date_begin": "1460",
+    "date_end": "1496",
+    "date_label": "1460-1496",
+    "collection": "Phoebe Timpson",
+    "collection_uri": "https://artresearch.net/resource/frick/place/country/england/region/oxfordshire/city/north_abingdon/actor/repository_actor/phoebe_timpson",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "circe-sorceress": {
+    "subject_uri": "https://artresearch.net/resource/frick/work/991013381109707141",
+    "title": "The Sorceress Circe.",
+    "artist": "Vassallo, Anton Maria",
+    "artist_names": [
+      "Vassallo, Anton Maria",
+      "Anton Maria Vassallo",
+      "Vassallo, Antonio Maria"
+    ],
+    "date": "1577-1657",
+    "date_begin": "1577",
+    "date_end": "1657",
+    "date_label": "1577-1657",
+    "collection": "Uffizi Gallery",
+    "collection_uri": "http://www.wikidata.org/entity/Q51252",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "apollo-muses": {
+    "subject_uri": "https://artresearch.net/resource/frick/work/991013294649707141",
+    "title": "Apollo and the Muses.",
+    "artist": "Tintoretto",
+    "artist_names": [
+      "Tintoretto",
+      "Tintoretto, Jacopo"
+    ],
+    "date": "1532-1594",
+    "date_begin": "1532",
+    "date_end": "1594",
+    "date_label": "1532-1594",
+    "collection": "Dr. G.H.A. Clowes, Indianapolis",
+    "collection_uri": "https://artresearch.net/resource/frick/place/country/united_states/region/indiana/city/indianapolis/actor/repository_actor/dr_g_h_a_clowes",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "rape-deianira": {
+    "subject_uri": "https://artresearch.net/resource/frick/work/991013086649707141",
+    "title": "The Rape of Deianira.",
+    "artist": "Pollaiolo, Antonio",
+    "artist_names": [
+      "Pollaiolo, Antonio",
+      "Antonio Pollaiolo",
+      "Pollaiolo, Antonio del",
+      "Pollaiuolo, Antonio"
+    ],
+    "date": "1473",
+    "date_begin": "1473",
+    "date_end": "1473",
+    "date_label": "1473",
+    "collection": "Yale University Art Gallery",
+    "collection_uri": "http://www.wikidata.org/entity/Q1568434",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "taking-athens-minos": {
+    "subject_uri": "https://artresearch.net/resource/frick/work/991013059519707141",
+    "title": "The Taking of Athens by Minos.",
+    "artist": "Master of the Campana Cassoni",
+    "artist_names": [
+      "Master of the Campana Cassoni"
+    ],
+    "date": "1515-1519",
+    "date_begin": "1515",
+    "date_end": "1519",
+    "date_label": "1515-1519",
+    "collection": "Musee du Petit Palais, Avignon",
+    "collection_uri": "https://artresearch.net/resource/frick/place/country/france/city/avignon/actor/repository_actor/musee_du_petit_palais",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "flood-deucalion": {
+    "subject_uri": "https://artresearch.net/resource/frick/work/991012638879707141",
+    "title": "A Scene from Greek Mythology: The Flood of the Age of Deucalion.",
+    "artist": "Carpioni, Giulio",
+    "artist_names": [
+      "Carpioni, Giulio",
+      "Giulio Carpioni",
+      "Carpione, Giulio"
+    ],
+    "date": "1633-1678",
+    "date_begin": "1633",
+    "date_end": "1678",
+    "date_label": "1633-1678",
+    "collection": "Academy of fine Arts, Siena",
+    "collection_uri": "https://artresearch.net/resource/frick/place/country/italy/city/siena/actor/repository_actor/academy_of_fine_arts",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "abduction-helen": {
+    "subject_uri": "https://artresearch.net/resource/frick/work/991012626099707141",
+    "title": "The Abduction of Helen.",
+    "artist": "Campana, Giacinto",
+    "artist_names": [
+      "Campana, Giacinto",
+      "Giacinto Campana"
+    ],
+    "date": "1600-1650",
+    "date_begin": "1600",
+    "date_end": "1650",
+    "date_label": "1600-1650",
+    "collection": "Palazzo spada, Roma",
+    "collection_uri": "https://artresearch.net/resource/frick/place/country/italy/city/rome/actor/repository_actor/palazzo_spada",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "lot-daughters": {
+    "subject_uri": "https://artresearch.net/resource/frick/work/991013499629707141",
+    "title": "Lot and His Daughters.",
+    "artist": "Guercino",
+    "artist_names": [
+      "Guercino",
+      "Guercino (Barbieri, Giovanni Francesco) (after)",
+      "Guercino (Barbieri, Giovanni Francesco)"
+    ],
+    "date": "1611-1666",
+    "date_begin": "1611",
+    "date_end": "1666",
+    "date_label": "1611-1666",
+    "collection": "Toledo Museum of Art, Toledo",
+    "collection_uri": "https://artresearch.net/resource/frick/place/country/united_states/region/ohio/city/toledo/actor/repository_actor/toledo_museum_of_art",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "joseph-cup-dream": {
+    "subject_uri": "https://artresearch.net/resource/frick/work/991013469279707141",
+    "title": "Two Scenes in the Life of Joseph: \"The Discovery of Joseph's Cup in Benjamin's Sack\" and \"Joseph Interpreting Pharaoh's Dream\".",
+    "artist": "Carlone, Giovanni Battista",
+    "artist_names": [
+      "Carlone, Giovanni Battista",
+      "Giovanni Battista Carlone"
+    ],
+    "date": "1612-1677",
+    "date_begin": "1612",
+    "date_end": "1677",
+    "date_label": "1612-1677",
+    "collection": "Finch College, New York",
+    "collection_uri": "https://artresearch.net/resource/frick/place/country/united_states/region/new_york/city/new_york/actor/repository_actor/finch_college",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "abraham-melchizedek": {
+    "subject_uri": "https://artresearch.net/resource/frick/work/991013415829707141",
+    "title": "Abraham Meeting Melchizedek.",
+    "artist": "Bleker, Gerrit Claesz",
+    "artist_names": [
+      "Bleker, Gerrit Claesz",
+      "Gerrit Claesz Bleker"
+    ],
+    "date": "1625-1656",
+    "date_begin": "1625",
+    "date_end": "1656",
+    "date_label": "1625-1656",
+    "collection": "Private collection (Confidential File)",
+    "collection_uri": "https://artresearch.net/resource/frick/actor/repository_actor/private_collection_confidential_file",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "abigail-david": {
+    "subject_uri": "https://artresearch.net/resource/frick/work/991013399629707141",
+    "title": "Abigail in Supplication before David.",
+    "artist": "Cornelisz van Oostsanen, Jacob",
+    "artist_names": [
+      "Cornelisz van Oostsanen, Jacob",
+      "Jacob Cornelisz van Oostsanen",
+      "Cornelisz, Jacob",
+      "Cornelisz. van Oostsanen, Jacob"
+    ],
+    "date": "1453-1533",
+    "date_begin": "1453",
+    "date_end": "1533",
+    "date_label": "1453-1533",
+    "collection": "kunstmuseum, København",
+    "collection_uri": "https://artresearch.net/resource/frick/place/country/denmark/city/copenhagen/actor/repository_actor/kunstmuseum",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "saul-witch-endor": {
+    "subject_uri": "https://artresearch.net/resource/frick/work/991013399579707141",
+    "title": "Saul Coming to Consult the Witch of Endor.",
+    "artist": "Cornelisz van Oostsanen, Jacob",
+    "artist_names": [
+      "Cornelisz van Oostsanen, Jacob",
+      "Jacob Cornelisz van Oostsanen",
+      "Cornelisz, Jacob",
+      "Cornelisz. van Oostsanen, Jacob"
+    ],
+    "date": "1500",
+    "date_begin": "1500",
+    "date_end": "1500",
+    "date_label": "1500",
+    "collection": "Rijksmuseum",
+    "collection_uri": "http://www.wikidata.org/entity/Q190804",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "naaman-syrian": {
+    "subject_uri": "https://artresearch.net/resource/frick/work/991000104979707141",
+    "title": "The Story of the Syrian Captain Naaman.",
+    "artist": "Engelbrechtszoon, Cornelis",
+    "artist_names": [
+      "Engelbrechtszoon, Cornelis",
+      "Cornelis Engelbrechtszoon",
+      "Engebrechtsz., Cornelis",
+      "Engebrechtsz., Cornelius"
+    ],
+    "date": "1488-1533",
+    "date_begin": "1488",
+    "date_end": "1533",
+    "date_label": "1488-1533",
+    "collection": "Kunsthistorisches Museum Wien",
+    "collection_uri": "http://www.wikidata.org/entity/Q95569",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "abram-lot-divide": {
+    "subject_uri": "https://artresearch.net/resource/frick/work/991013358939707141",
+    "title": "Abram and Iot Dividing up the World between Them.",
+    "artist": "Zanchi, Antonio",
+    "artist_names": [
+      "Zanchi, Antonio",
+      "Antonio Zanchi"
+    ],
+    "date": "1651-1722",
+    "date_begin": "1651",
+    "date_end": "1722",
+    "date_label": "1651-1722",
+    "collection": "Sta. Maria Zobenigo, Venezia",
+    "collection_uri": "https://artresearch.net/resource/frick/place/country/italy/city/venice/actor/repository_actor/sta_maria_zobenigo",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "jeremiah-baruch": {
+    "subject_uri": "https://artresearch.net/resource/frick/work/991013328429707141",
+    "title": "Jeremiah Dictating His Prophecy of the Destruction of Jerusalem to Baruch the Scribe.",
+    "artist": "Allston, Washington",
+    "artist_names": [
+      "Allston, Washington",
+      "Washington Allston"
+    ],
+    "date": "1799-1843",
+    "date_begin": "1799",
+    "date_end": "1843",
+    "date_label": "1799-1843",
+    "collection": "Yale University Art Gallery",
+    "collection_uri": "http://www.wikidata.org/entity/Q1568434",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "sennacherib-angel": {
+    "subject_uri": "https://artresearch.net/resource/frick/work/991013324789707141",
+    "title": "The Forces of Sennacherib put to Rout by the Angel.",
+    "artist": "Tanzio da Varallo",
+    "artist_names": [
+      "Tanzio da Varallo"
+    ],
+    "date": "1574-1635",
+    "date_begin": "1574",
+    "date_end": "1635",
+    "date_label": "1574-1635",
+    "collection": null,
+    "collection_uri": "http://www.wikidata.org/entity/Q55172300",
+    "collection_source": null,
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "moses-crown-pharaoh": {
+    "subject_uri": "https://artresearch.net/resource/frick/work/991013286479707141",
+    "title": "The Child Moses Trampling on the Crown of the Pharoahs.",
+    "artist": "Tiepolo, Giovanni Battista",
+    "artist_names": [
+      "Tiepolo, Giovanni Battista",
+      "Giovanni Battista Tiepolo"
+    ],
+    "date": "1716-1770",
+    "date_begin": "1716",
+    "date_end": "1770",
+    "date_label": "1716-1770",
+    "collection": "Amherst College, Amherst",
+    "collection_uri": "https://artresearch.net/resource/frick/place/country/united_states/region/massachusetts/city/amherst/actor/repository_actor/amherst_college",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "sacrifice-jephthah": {
+    "subject_uri": "https://artresearch.net/resource/frick/work/991013122489707141",
+    "title": "Sacrifice of Jephthah.",
+    "artist": "Mazzoni, Sebastiano",
+    "artist_names": [
+      "Mazzoni, Sebastiano",
+      "Sebastiano Mazzoni"
+    ],
+    "date": "1631-1678",
+    "date_begin": "1631",
+    "date_end": "1678",
+    "date_label": "1631-1678",
+    "collection": "William Rockhill Nelson Gallery of Art, Kansas City",
+    "collection_uri": "https://artresearch.net/resource/frick/place/country/united_states/region/missouri/city/kansas_city/actor/repository_actor/william_rockhill_nelson_gallery_of_art",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "judgement-solomon": {
+    "subject_uri": "https://artresearch.net/resource/frick/work/991013107979707141",
+    "title": "Judgement of Solomon.",
+    "artist": "Cresti, Domenico",
+    "artist_names": [
+      "Cresti, Domenico",
+      "Domenico Cresti",
+      "Passignano, Domenico"
+    ],
+    "date": "1578-1638",
+    "date_begin": "1578",
+    "date_end": "1638",
+    "date_label": "1578-1638",
+    "collection": "Gallerie Borghese, Roma",
+    "collection_uri": "https://artresearch.net/resource/frick/place/country/italy/city/rome/actor/repository_actor/gallerie_borghese",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "tobit-tobias": {
+    "subject_uri": "https://artresearch.net/resource/frick/work/991013096529707141",
+    "title": "Tobit Blessing Tobias.",
+    "artist": "Preti, Mattia",
+    "artist_names": [
+      "Preti, Mattia",
+      "Mattia Preti"
+    ],
+    "date": "1633-1699",
+    "date_begin": "1633",
+    "date_end": "1699",
+    "date_label": "1633-1699",
+    "collection": "Montreal Museum of Fine Arts",
+    "collection_uri": "http://www.wikidata.org/entity/Q860812",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "jacob-esau-reconcile": {
+    "subject_uri": "https://artresearch.net/resource/frick/work/991013070669707141",
+    "title": "Reconciliation of Jacob and Esau.",
+    "artist": "Cortona, Pietro da",
+    "artist_names": [
+      "Cortona, Pietro da",
+      "Pietro da Cortona"
+    ],
+    "date": "1616-1669",
+    "date_begin": "1616",
+    "date_end": "1669",
+    "date_label": "1616-1669",
+    "collection": "Palazzo dei Conservatori, Roma",
+    "collection_uri": "https://artresearch.net/resource/frick/place/country/italy/city/rome/actor/repository_actor/palazzo_dei_conservatori",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  },
+  "elisha-shunem-woman": {
+    "subject_uri": "https://artresearch.net/resource/frick/work/991013023559707141",
+    "title": "The Prophet Elisha and the Rich Woman of Shunem.",
+    "artist": "Mola, Pier Francesco",
+    "artist_names": [
+      "Mola, Pier Francesco",
+      "Pier Francesco Mola"
+    ],
+    "date": "1648-1650",
+    "date_begin": "1648",
+    "date_end": "1650",
+    "date_label": "1648-1650",
+    "collection": "Ringling Museum, Sarasota",
+    "collection_uri": "https://artresearch.net/resource/frick/place/country/united_states/region/florida/city/sarasota/actor/repository_actor/ringling_museum",
+    "collection_source": "sparql",
+    "status": "ok",
+    "ground_truth_source": "manual (artist/title/date) + sparql (collection/variants)"
+  }
+}

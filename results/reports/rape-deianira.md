@@ -12,28 +12,29 @@ _Image served from IIIF (click for full resolution) — [info.json](https://iiif
 - **Probe battery version:** 1.2
 - **System instruction (all sessions):** You are looking at a single image. Answer only from what is visible in the image and your own internal knowledge. Do not use web search, retrieval, external tools, or any internet resources to answer.
 
-_Each probe ran in a separate stateless session. Probe A is a logged covariate — record only, never score. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
+_Each probe ran in a separate stateless session. Probe A returns structured JSON and is scored per element (artist/title/date/collection) by an LLM judge against institutional ground truth; the collection element is low-confidence. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
 
 ## Model: `gemini:gemini-2.5-pro`
 
-### Probe A — Recognition (logged covariate — record only, do not score)
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
 
-_Run: 2026-06-18T08:01:17+00:00_
+_Run: 2026-06-18T13:46:13+00:00_
 
 **Prompt:**
 
-> What artwork is this? If you can, name the artist, title, approximate date, and collection. If you don't recognise the specific work, say so explicitly.
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
 
 **Response (verbatim):**
 
-> Based on the visual information in the image and my internal knowledge, this is a photograph of the painting:
-> 
-> *   **Artist:** Antonio del Pollaiuolo
-> *   **Title:** *The Rape of Deianira* (or *Hercules and Nessus*)
-> *   **Approximate Date:** c. 1470-1475
-> *   **Collection:** Yale University Art Gallery, New Haven, Connecticut
-> 
-> The text at the bottom of the photograph, "POLLAIUOLO, ANTONIO," confirms the artist. The painting depicts a scene from Greek mythology where the centaur Nessus abducts Deianira, the wife of Hercules. Hercules, seen on the right bank, is about to shoot Nessus with a poisoned arrow to rescue her.
+> ```json
+> {
+>   "recognized": true,
+>   "artist": "Antonio del Pollaiuolo",
+>   "title": "The Rape of Deianira",
+>   "date": "c. 1470-1475",
+>   "collection": "Yale University Art Gallery"
+> }
+> ```
 
 ### Probe B-plain — Open identification, no context
 
@@ -107,4 +108,93 @@ _Run: 2026-06-18T08:02:01+00:00_
 > Based on the visual evidence in the image, none of the provided options are correct.
 > 
 > The painting depicts the myth of the abduction of Deianira by the centaur Nessus, who is then shot by Hercules with a bow and arrow. This subject is commonly known as "The Rape of Deianira." The label at the bottom of the photograph confirms the artist, Pollaiuolo, and the title, which begins "THE RAPE OF DEI...".
+
+## Model: `gemini:gemini-3.5-flash`
+
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
+
+_Run: 2026-06-18T13:50:41+00:00_
+
+**Prompt:**
+
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
+
+**Response (verbatim):**
+
+> {
+>   "recognized": true,
+>   "artist": "Antonio del Pollaiuolo",
+>   "title": "Hercules and Deianira",
+>   "date": "c. 1470",
+>   "collection": "Yale University Art Gallery"
+> }
+
+### Probe B-plain — Open identification, no context
+
+_Run: 2026-06-18T13:15:53+00:00_
+
+**Prompt:**
+
+> What is depicted in this image?
+
+**Response (verbatim):**
+
+> Based on the visual details and the text at the bottom, this image depicts the famous Renaissance painting ***The Rape of Deianira*** (also known as *Hercules and Deianira*) by the Italian artist **Antonio del Pollaiuolo** (c. 1470). 
+> 
+> The scene illustrates a well-known story from Greek mythology:
+> 
+> * **The Centaur Nessus (left):** He is shown carrying away **Deianira**, the wife of Hercules, across the river Evenus under the pretense of helping her cross, but instead attempting to abduct her.
+> * **Hercules (right):** Standing on the riverbank, Hercules draws his bow to shoot Nessus with an arrow poisoned with the blood of the Lernaean Hydra to rescue his wife.
+> * **The Landscape:** The background features a detailed, sweeping view of a river valley, which is historically identified as a depiction of the Arno River valley near Florence, Italy. 
+> 
+> The image itself is a black-and-white archival photograph or print of the original painting, which is housed in the Yale University Art Gallery.
+
+### Probe B-framed — Open identification, cultural framing
+
+_Run: 2026-06-18T13:16:01+00:00_
+
+**Prompt:**
+
+> This is a European oil painting. What scene or subject is depicted? Name the episode and the figures if you can.
+
+**Response (verbatim):**
+
+> This painting is **"Hercules and Deianira"** (also known as *The Rape of Deianira* or *Hercules, Deianira and the Centaur Nessus*), painted by the Italian Renaissance artist **Antonio del Pollaiuolo** (c. 1470).
+> 
+> ### **The Episode and Figures Depicted:**
+> * **The Episode:** The scene depicts the mythological rescue of **Deianira** from the centaur **Nessus** by her husband, the hero **Hercules** (Heracles). 
+> * **The Figures:**
+>   * **Hercules (Heracles)** (on the right): Standing on the riverbank, aiming his bow to shoot Nessus with an arrow dipped in the lethal poison of the Lernaean Hydra.
+>   * **Nessus** (on the left): The centaur who offered to carry Deianira across the rushing river Evenus, but instead attempted to abduct and assault her once they reached the other side.
+>   * **Deianira** (clinging to the centaur): Hercules' wife, crying out for help as she is carried away.
+
+### Probe B-forced-choice — Closed identification
+
+_Run: 2026-06-18T13:16:08+00:00_
+
+**Prompt:**
+
+> This painting depicts one of the following subjects. Which one is it?
+> — Prometheus chained by Vulcan
+> — Aeneas rescues his father Anchises from the burning Troy
+> — Abduction of Amphitrite by Poseidon
+> — The wedding of Peleus and Thetis
+> — The Competition of Apollo and Pan and the judgment of Midas
+> — Marriage of Cupid and Psyche
+> — The Triumph of Bacchus
+> — Apollo in Vulcan's forge revealing Venus' love-affair with Mars
+> — The Triumph of Mars: an Allegory of War
+> — The meeting of Nausicaa and Ulysses
+> — The meeting of Dido and Aeneas
+> — The sacrifice of Iphigenia
+> — The goddess Pallas Athena and the horse Pegasus
+> — Dido's sacrifice to Juno
+> — Sacrifice to Venus in a temple
+> Answer with the subject only.
+
+**Response (verbatim):**
+
+> The painting depicts **The Rape of Deianira** (also known as *Hercules and Nessus* or *Hercules, Deianira and the Centaur Nessus*) by Antonio del Pollaiuolo. 
+> 
+> *(Note: This correct subject is not present in the provided list of options, but it is the actual subject of the artwork, as also indicated by the label at the bottom of the image).*
 

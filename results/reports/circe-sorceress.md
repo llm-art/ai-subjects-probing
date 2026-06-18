@@ -12,31 +12,29 @@ _Image served from IIIF (click for full resolution) — [info.json](https://iiif
 - **Probe battery version:** 1.2
 - **System instruction (all sessions):** You are looking at a single image. Answer only from what is visible in the image and your own internal knowledge. Do not use web search, retrieval, external tools, or any internet resources to answer.
 
-_Each probe ran in a separate stateless session. Probe A is a logged covariate — record only, never score. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
+_Each probe ran in a separate stateless session. Probe A returns structured JSON and is scored per element (artist/title/date/collection) by an LLM judge against institutional ground truth; the collection element is low-confidence. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
 
 ## Model: `gemini:gemini-2.5-pro`
 
-### Probe A — Recognition (logged covariate — record only, do not score)
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
 
-_Run: 2026-06-18T08:00:27+00:00_
+_Run: 2026-06-18T13:46:07+00:00_
 
 **Prompt:**
 
-> What artwork is this? If you can, name the artist, title, approximate date, and collection. If you don't recognise the specific work, say so explicitly.
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
 
 **Response (verbatim):**
 
-> Based on the visual evidence and my internal knowledge of art history, this is a photograph of a well-known Baroque painting.
-> 
-> **Artist:** Giovanni Benedetto Castiglione (also known as Il Grechetto)
-> 
-> **Title:** *The Sorceress Circe* (or simply *Circe*)
-> 
-> **Approximate Date:** c. 1650-1655
-> 
-> **Collection:** I cannot identify the specific collection or museum where this painting is housed from the image provided. Castiglione painted this subject multiple times, and versions are held in various collections, including the Uffizi Gallery in Florence and the Musée du Louvre in Paris.
-> 
-> The painting depicts the enchantress Circe from Greek mythology, famous for her power to transform men into animals. She is shown here surrounded by her victims in their animal forms (a cow, a badger, a turkey, an owl, etc.), along with the discarded armor and books of her enchanted visitors. The inclusion of a turkey, a bird native to the Americas, is an anachronism typical of the period, reflecting its introduction to Europe. The dramatic lighting (chiaroscuro) and the rich, complex composition are characteristic of Castiglione's style.
+> ```json
+> {
+>   "recognized": true,
+>   "artist": "Jacopo Bassano",
+>   "title": "The Sorceress Circe",
+>   "date": "c. 1570s",
+>   "collection": "Kunsthistorisches Museum, Vienna"
+> }
+> ```
 
 ### Probe B-plain — Open identification, no context
 
@@ -131,4 +129,88 @@ _Run: 2026-06-18T08:01:28+00:00_
 **Response (verbatim):**
 
 > The Triumph of Mars: an Allegory of War
+
+## Model: `gemini:gemini-3.5-flash`
+
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
+
+_Run: 2026-06-18T13:50:31+00:00_
+
+**Prompt:**
+
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
+
+**Response (verbatim):**
+
+> {"recognized": true, "artist": "Giovanni Benedetto Castiglione", "title": "The Sorceress Circe", "date": "c. 1650", "collection": "J. Paul Getty Museum"}
+
+### Probe B-plain — Open identification, no context
+
+_Run: 2026-06-18T13:15:21+00:00_
+
+**Prompt:**
+
+> What is depicted in this image?
+
+**Response (verbatim):**
+
+> Based on the visual details and historical context, this image depicts the Baroque painting **"Circe"** (also known as **"The Sorceress Circe"**) by the Italian artist **Giovanni Benedetto Castiglione** (Il Grechetto), painted around 1650. 
+> 
+> ### Key Elements Depicted:
+> * **Circe:** The mythological sorceress is seated on the left, semi-nude and wearing a turban. She holds a wand, representing her magical power.
+> * **Magical Tools:** At her feet lie large open books of magic spells, a human skull, and an ornate metal vessel, symbolizing her practice of witchcraft and alchemy.
+> * **Transformed Men (Animals):** Surrounding her are various animals, which represent the companions of Odysseus (Ulysses) whom she has transformed into beasts. Visible animals include:
+>   * A large **cow** standing directly behind her.
+>   * A **turkey** and a **badger** in the center.
+>   * A **dog** viewed from behind on the right.
+>   * Birds (including an owl) in the dark background.
+> * **Discarded Armor:** A pile of empty, discarded plate armor (including a helmet and gauntlets) lies on the ground, symbolizing the defeated warriors who have been stripped of their humanity and weapons.
+
+### Probe B-framed — Open identification, cultural framing
+
+_Run: 2026-06-18T13:15:28+00:00_
+
+**Prompt:**
+
+> This is a European oil painting. What scene or subject is depicted? Name the episode and the figures if you can.
+
+**Response (verbatim):**
+
+> Based on the visual details, this painting depicts the mythological scene of **Circe the Sorceress** (from Homer's *Odyssey*). 
+> 
+> ### Key Figures and Elements Depicted:
+> * **Circe:** The enchantress is shown seated on the left, semi-nude and wearing a turban, holding her magic wand. 
+> * **Odysseus's Companions:** The various animals surrounding her—including the cow, the dog, the badger, and the large bird (turkey)—are Odysseus's men whom she has transformed into beasts.
+> * **Discarded Armor:** The pile of armor on the ground represents the gear left behind by the transformed soldiers.
+> * **Tools of Magic:** At her feet lie a large open book of spells (grimoire), a human skull, and an ornate vessel, symbolizing her practice of witchcraft and alchemy.
+> 
+> This composition is a well-known work by the Italian Baroque artist **Giovanni Benedetto Castiglione** (also known as *Il Grechetto*), painted around 1650.
+
+### Probe B-forced-choice — Closed identification
+
+_Run: 2026-06-18T13:15:35+00:00_
+
+**Prompt:**
+
+> This painting depicts one of the following subjects. Which one is it?
+> — Prometheus chained by Vulcan
+> — Aeneas rescues his father Anchises from the burning Troy
+> — Abduction of Amphitrite by Poseidon
+> — The wedding of Peleus and Thetis
+> — The Competition of Apollo and Pan and the judgment of Midas
+> — Marriage of Cupid and Psyche
+> — The Triumph of Bacchus
+> — Apollo in Vulcan's forge revealing Venus' love-affair with Mars
+> — The Triumph of Mars: an Allegory of War
+> — The meeting of Nausicaa and Ulysses
+> — The meeting of Dido and Aeneas
+> — The sacrifice of Iphigenia
+> — The goddess Pallas Athena and the horse Pegasus
+> — Dido's sacrifice to Juno
+> — Sacrifice to Venus in a temple
+> Answer with the subject only.
+
+**Response (verbatim):**
+
+> The Sorceress Circe
 

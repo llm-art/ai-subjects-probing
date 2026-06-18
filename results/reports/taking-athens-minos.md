@@ -12,28 +12,29 @@ _Image served from IIIF (click for full resolution) — [info.json](https://iiif
 - **Probe battery version:** 1.2
 - **System instruction (all sessions):** You are looking at a single image. Answer only from what is visible in the image and your own internal knowledge. Do not use web search, retrieval, external tools, or any internet resources to answer.
 
-_Each probe ran in a separate stateless session. Probe A is a logged covariate — record only, never score. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
+_Each probe ran in a separate stateless session. Probe A returns structured JSON and is scored per element (artist/title/date/collection) by an LLM judge against institutional ground truth; the collection element is low-confidence. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
 
 ## Model: `gemini:gemini-2.5-pro`
 
-### Probe A — Recognition (logged covariate — record only, do not score)
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
 
-_Run: 2026-06-18T08:02:00+00:00_
+_Run: 2026-06-18T13:46:21+00:00_
 
 **Prompt:**
 
-> What artwork is this? If you can, name the artist, title, approximate date, and collection. If you don't recognise the specific work, say so explicitly.
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
 
 **Response (verbatim):**
 
-> Based on the style and composition of the artwork, I can identify it.
-> 
-> **Artist:** Albrecht Altdorfer
-> **Title:** This is a scene from the painted version of the *Triumphal Procession of Emperor Maximilian I*. This specific section is often identified as depicting the **Burgundian War** or the **Return of the Imperial Army**. It is part of a larger, unfinished series of miniatures.
-> **Approximate Date:** c. 1512–1515
-> **Collection:** The surviving fragments of this work are housed in the Albertina Museum in Vienna, Austria.
-> 
-> The artwork is a highly detailed miniature, likely executed in watercolor and gouache on parchment, although the provided image is a black-and-white reproduction. It showcases Altdorfer's mastery of complex, crowded compositions and his characteristic Danube School style, with a strong emphasis on landscape and atmospheric effects. In the foreground, a vast army with knights on horseback, foot soldiers, and standard-bearers proceeds through a rocky landscape. In the background on the left, a city is being besieged, with soldiers scaling the walls, adding a narrative layer to the triumphal procession. The number "202" in the top left corner is not part of the original artwork but is likely an inventory or photographic plate number.
+> ```json
+> {
+>   "recognized": true,
+>   "artist": "Albrecht Altdorfer",
+>   "title": "The Victory of Charlemagne over the Avars near Regensburg",
+>   "date": "c. 1518",
+>   "collection": "Gabinetto dei Disegni e delle Stampe, Uffizi Gallery"
+> }
+> ```
 
 ### Probe B-plain — Open identification, no context
 
@@ -114,4 +115,88 @@ _Run: 2026-06-18T08:03:31+00:00_
 **Response (verbatim):**
 
 > The Triumph of Mars: an Allegory of War
+
+## Model: `gemini:gemini-3.5-flash`
+
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
+
+_Run: 2026-06-18T13:50:45+00:00_
+
+**Prompt:**
+
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
+
+**Response (verbatim):**
+
+> ```json
+> {
+>   "recognized": false,
+>   "artist": null,
+>   "title": null,
+>   "date": null,
+>   "collection": null
+> }
+> ```
+
+### Probe B-plain — Open identification, no context
+
+_Run: 2026-06-18T13:17:23+00:00_
+
+**Prompt:**
+
+> What is depicted in this image?
+
+**Response (verbatim):**
+
+> Based on the visual details in this Renaissance-style narrative painting (likely a cassone panel or similar historical/biblical depiction), the image depicts a continuous narrative of a military campaign or biblical/classical story:
+> 
+> * **On the left:** A city is under siege, with soldiers scaling the walls using ladders, tents pitched outside, and active combat taking place.
+> * **In the center:** A large army of knights and soldiers on horseback and on foot is marching. A prominent banner displays the letters **"MISS..."** (possibly referring to a mission, messenger, or a specific historical name/motto). A knight on a white horse raises a weapon, while another figure on foot is being apprehended or guided.
+> * **On the right:** A group of figures, including soldiers and captives, is shown moving toward a rocky cave opening in the hillside, while a horseman on the far right observes the procession.
+
+### Probe B-framed — Open identification, cultural framing
+
+_Run: 2026-06-18T13:18:29+00:00_
+
+**Prompt:**
+
+> This is a European oil painting. What scene or subject is depicted? Name the episode and the figures if you can.
+
+**Response (verbatim):**
+
+> Based on the visual details, style, and iconography, this painting depicts the **Justice of Trajan** (specifically, the legendary episode of the Roman Emperor Trajan and the widow).
+> 
+> ### **Episode and Figures Depicted:**
+> * **The Justice of Trajan:** According to medieval legend (popularized in Dante's *Purgatorio*), as Emperor Trajan was setting out with his army for a military campaign (indicated by the city under siege on the left and the marching soldiers), a widow stopped him to demand justice for her son, who had been murdered. 
+> * **The Widow and Trajan:** In the center-left, the **widow** (or a figure representing her) stands pleading on foot, pointing downwards, while **Emperor Trajan**, clad in armor and riding a rearing white horse, halts his march to listen to her plea and grant her justice.
+> * **The Army:** Surrounding them are Roman soldiers, horsemen, and standard-bearers. The banner flying above the army bears the inscription **"MISS"** (likely referring to *Mission* or a specific military legion/motto).
+> * **The Cave/Chasm (Right):** On the far right, soldiers are shown entering a rocky cave or mountain pass, representing the continuation of the military expedition.
+
+### Probe B-forced-choice — Closed identification
+
+_Run: 2026-06-18T13:19:35+00:00_
+
+**Prompt:**
+
+> This painting depicts one of the following subjects. Which one is it?
+> — Prometheus chained by Vulcan
+> — Aeneas rescues his father Anchises from the burning Troy
+> — Abduction of Amphitrite by Poseidon
+> — The wedding of Peleus and Thetis
+> — The Competition of Apollo and Pan and the judgment of Midas
+> — Marriage of Cupid and Psyche
+> — The Triumph of Bacchus
+> — Apollo in Vulcan's forge revealing Venus' love-affair with Mars
+> — The Triumph of Mars: an Allegory of War
+> — The meeting of Nausicaa and Ulysses
+> — The meeting of Dido and Aeneas
+> — The sacrifice of Iphigenia
+> — The goddess Pallas Athena and the horse Pegasus
+> — Dido's sacrifice to Juno
+> — Sacrifice to Venus in a temple
+> Answer with the subject only.
+
+**Response (verbatim):**
+
+> The meeting of Dido and Aeneas
 

@@ -12,32 +12,29 @@ _Image served from IIIF (click for full resolution) — [info.json](https://iiif
 - **Probe battery version:** 1.2
 - **System instruction (all sessions):** You are looking at a single image. Answer only from what is visible in the image and your own internal knowledge. Do not use web search, retrieval, external tools, or any internet resources to answer.
 
-_Each probe ran in a separate stateless session. Probe A is a logged covariate — record only, never score. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
+_Each probe ran in a separate stateless session. Probe A returns structured JSON and is scored per element (artist/title/date/collection) by an LLM judge against institutional ground truth; the collection element is low-confidence. Probe C is expert-scored with semantic matching (e.g. "a burning building", "fire and smoke" and "Troy in flames" all match a burning-city reference)._
 
 ## Model: `gemini:gemini-2.5-pro`
 
-### Probe A — Recognition (logged covariate — record only, do not score)
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
 
-_Run: 2026-06-18T08:00:22+00:00_
+_Run: 2026-06-18T13:46:02+00:00_
 
 **Prompt:**
 
-> What artwork is this? If you can, name the artist, title, approximate date, and collection. If you don't recognise the specific work, say so explicitly.
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
 
 **Response (verbatim):**
 
-> Based on the visual evidence and my internal knowledge, I can identify this artwork.
-> 
-> **Artist:** Stefano da Ferrara (Stefano di Benedetto)
-> The artist's name, "STEPHANO DA FERRARA," is inscribed at the bottom of the painting.
-> 
-> **Title:** *A Miracle of St. Maurelius* (sometimes referred to as *An Exorcism*)
-> 
-> **Approximate Date:** c. 1480
-> 
-> **Collection:** The Walters Art Museum, Baltimore
-> 
-> This painting depicts a miracle performed by Saint Maurelius, a patron saint of Ferrara, Italy. The scene is an exorcism. On the right, a possessed man is shown in a violent struggle, wrestling with a demon or embodying a demonic, bestial force. A crowd of onlookers, including a seated, pensive figure on the left, witnesses the event in a classical architectural setting. The figure in the white robe in the center appears to be directing or presiding over the miracle. The style is characteristic of the Ferrarese school of painting in the 15th century.
+> ```json
+> {
+>   "recognized": true,
+>   "artist": "Stefano da Ferrara",
+>   "title": "Miracle of Saint Maurelius",
+>   "date": "c. 1480",
+>   "collection": "Pinacoteca Nazionale, Ferrara"
+> }
+> ```
 
 ### Probe B-plain — Open identification, no context
 
@@ -120,4 +117,95 @@ _Run: 2026-06-18T08:01:40+00:00_
 **Response (verbatim):**
 
 > The Competition of Apollo and Pan and the judgment of Midas
+
+## Model: `gemini:gemini-3.5-flash`
+
+### Probe A — Recognition (structured JSON; per-element LLM-judge scored)
+
+_Run: 2026-06-18T13:50:30+00:00_
+
+**Prompt:**
+
+> What artwork is this? Answer with a SINGLE JSON object and nothing else (no markdown fences), with these keys: "recognized" (true or false — do you recognise this specific work), "artist", "title", "date", "collection". Give your best value for each field as a string, or null if unknown. Answer only from the image and your own knowledge.
+
+**Response (verbatim):**
+
+> {
+>   "recognized": true,
+>   "artist": "Stefano da Ferrara",
+>   "title": "Jason and the Golden Fleece",
+>   "date": "c. 1490",
+>   "collection": null
+> }
+
+### Probe B-plain — Open identification, no context
+
+_Run: 2026-06-18T13:15:35+00:00_
+
+**Prompt:**
+
+> What is depicted in this image?
+
+**Response (verbatim):**
+
+> Based on the visual details and the inscription at the bottom, this image depicts the mythological story of **Jason and the Golden Fleece** (specifically, Jason subduing or slaying the dragon guarding the Golden Fleece), attributed to the 15th-century Italian painter **Stefano da Ferrara** (as inscribed: *"STEPHANO DA FERRARA"*).
+> 
+> ### Key Elements Depicted:
+> * **Jason and the Dragon:** On the right, Jason is shown in mid-strike, raising a weapon to slay the serpent/dragon coiled around a tree.
+> * **The Golden Fleece:** Next to the tree, the Golden Fleece is represented by a ram standing atop a classical stone altar. 
+> * **The Altar and Skull:** Beneath the ram, inside the arched niche of the altar, a human skull is visible.
+> * **The Onlookers:** On the left, a crowd of spectators in Renaissance-style clothing watches the event. A prominent seated man in the lower-left foreground looks on.
+> * **Background:** Classical architectural ruins, arches, and distant figures set the scene in an ancient landscape.
+
+### Probe B-framed — Open identification, cultural framing
+
+_Run: 2026-06-18T13:15:48+00:00_
+
+**Prompt:**
+
+> This is a European oil painting. What scene or subject is depicted? Name the episode and the figures if you can.
+
+**Response (verbatim):**
+
+> Based on the visual details and historical context, this painting depicts the mythological story of **Jason and the Golden Fleece** (specifically, Jason slaying or taming the dragon guarding the Golden Fleece). 
+> 
+> ### **The Scene and Figures Depicted:**
+> 
+> * **Jason:** The central heroic figure on the right, shown in mid-swing wielding a weapon (a club or sword) to defeat the guardian serpent.
+> * **The Dragon/Serpent:** Coiled around the tree trunk, guarding the prize.
+> * **The Golden Fleece (The Ram):** Represented here as a living ram standing on a stone altar/pedestal to the right of the tree.
+> * **King Aeëtes of Colchis:** The seated ruler on the far left, wearing a hat and robes, watching Jason perform this seemingly impossible task.
+> * **Medea:** The young woman standing in the crowd on the left, looking on. In the myth, she is Aeëtes' daughter who fell in love with Jason and gave him the magical herbs/potions necessary to subdue the dragon.
+> * **The Colchian Court / Spectators:** The crowd of onlookers on the left dressed in Renaissance-era and exoticized Eastern costumes (turbans and hats), watching the trial.
+> 
+> ### **Artist Attribution:**
+> As inscribed at the bottom of the frame, the painting is historically attributed to **Stefano da Ferrara** (Stefano di Benedetto), a 15th-century Italian painter of the Ferrarese School.
+
+### Probe B-forced-choice — Closed identification
+
+_Run: 2026-06-18T13:16:01+00:00_
+
+**Prompt:**
+
+> This painting depicts one of the following subjects. Which one is it?
+> — Prometheus chained by Vulcan
+> — Aeneas rescues his father Anchises from the burning Troy
+> — Abduction of Amphitrite by Poseidon
+> — The wedding of Peleus and Thetis
+> — The Competition of Apollo and Pan and the judgment of Midas
+> — Marriage of Cupid and Psyche
+> — The Triumph of Bacchus
+> — Apollo in Vulcan's forge revealing Venus' love-affair with Mars
+> — The Triumph of Mars: an Allegory of War
+> — The meeting of Nausicaa and Ulysses
+> — The meeting of Dido and Aeneas
+> — The sacrifice of Iphigenia
+> — The goddess Pallas Athena and the horse Pegasus
+> — Dido's sacrifice to Juno
+> — Sacrifice to Venus in a temple
+> Answer with the subject only.
+
+**Response (verbatim):**
+
+> The sacrifice of Iphigenia
 
