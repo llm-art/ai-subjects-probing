@@ -1,0 +1,3838 @@
+{
+  "gemini_gemini-2.5-pro": {
+    "abduction-amphitrite": {
+      "image_id": "abduction-amphitrite",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Giorgio Vasari",
+          "ground_truth": [
+            "Terwesten, Mattheus",
+            "Mattheus Terwesten"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Giorgio Vasari' is incorrect and does not match the ground truth artist 'Mattheus Terwesten'."
+        },
+        "title": {
+          "model_answer": "Perseus and Andromeda",
+          "ground_truth": "Abduction of Amphitrite by Poseidon",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different mythological subject ('Perseus and Andromeda') than the ground truth ('Abduction of Amphitrite by Poseidon')."
+        },
+        "date": {
+          "model_answer": "c. 1570-1572",
+          "ground_truth": "1685 - 1757 (range 1685–1757)",
+          "score": 0,
+          "reason": "The model's date range of 1570-1572 does not overlap with the ground truth range of 1685-1757."
+        },
+        "collection": {
+          "model_answer": "Palazzo Vecchio, Florence",
+          "ground_truth": "Instituut Collectie Nederland",
+          "score": 0,
+          "reason": "The model's answer 'Palazzo Vecchio, Florence' is a completely different institution and location from the ground truth 'Instituut Collectie Nederland'.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 0,
+      "n_scored": 4
+    },
+    "abduction-helen": {
+      "image_id": "abduction-helen",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Tintoretto (Jacopo Robusti)",
+          "ground_truth": [
+            "Campana, Giacinto",
+            "Giacinto Campana"
+          ],
+          "score": 0,
+          "reason": "The model's answer refers to Tintoretto (Jacopo Robusti), which is a completely different artist from Giacinto Campana."
+        },
+        "title": {
+          "model_answer": "The Rape of Helen",
+          "ground_truth": "The Abduction of Helen.",
+          "score": 1,
+          "reason": "'The Rape of Helen' is a widely accepted synonymous title for 'The Abduction of Helen' in art history."
+        },
+        "date": {
+          "model_answer": "c. 1578-1579",
+          "ground_truth": "1600-1650 (range 1600–1650)",
+          "score": 0,
+          "reason": "The model's date of c. 1578-1579 does not overlap with the ground truth range of 1600-1650 and is not within a few years of it."
+        },
+        "collection": {
+          "model_answer": "Museo Nacional del Prado",
+          "ground_truth": "Palazzo spada, Roma",
+          "score": 0,
+          "reason": "The model's answer 'Museo Nacional del Prado' is a completely different museum in Madrid, Spain, whereas the ground truth is 'Palazzo spada, Roma' in Rome, Italy.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 1,
+      "n_scored": 4
+    },
+    "abigail-david": {
+      "image_id": "abigail-david",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Master of the von Groote Adoration",
+          "ground_truth": [
+            "Cornelisz van Oostsanen, Jacob",
+            "Jacob Cornelisz van Oostsanen",
+            "Cornelisz, Jacob",
+            "Cornelisz. van Oostsanen, Jacob"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Master of the von Groote Adoration' refers to a different artistic identity than the ground truth 'Jacob Cornelisz van Oostsanen'."
+        },
+        "title": {
+          "model_answer": "The Meeting of David and Abigail",
+          "ground_truth": "Abigail in Supplication before David.",
+          "score": 1,
+          "reason": "The model's answer is a widely accepted alternative title for the same biblical scene depicted in the painting."
+        },
+        "date": {
+          "model_answer": "c. 1515-1520",
+          "ground_truth": "1453-1533 (range 1453–1533)",
+          "score": 1,
+          "reason": "The model's date range of c. 1515-1520 is entirely within the institutional ground truth range of 1453-1533."
+        },
+        "collection": {
+          "model_answer": "Städel Museum, Frankfurt am Main",
+          "ground_truth": "kunstmuseum, København",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different museum in Frankfurt, while the ground truth is the Kunstmuseum in Copenhagen.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 2,
+      "n_scored": 4
+    },
+    "abraham-isaac": {
+      "image_id": "abraham-isaac",
+      "status": "scored",
+      "recognized": true,
+      "elements": {},
+      "score_sum": 0,
+      "n_scored": 0
+    },
+    "abraham-melchizedek": {
+      "image_id": "abraham-melchizedek",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Peter Paul Rubens",
+          "ground_truth": [
+            "Bleker, Gerrit Claesz",
+            "Gerrit Claesz Bleker"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Peter Paul Rubens' is incorrect; the correct artist is Gerrit Claesz Bleker."
+        },
+        "title": {
+          "model_answer": "The Meeting of Abraham and Melchizedek",
+          "ground_truth": "Abraham Meeting Melchizedek.",
+          "score": 1,
+          "reason": "The model's answer is a very close phrasing variant of the ground truth title."
+        },
+        "date": {
+          "model_answer": "c. 1626",
+          "ground_truth": "1625-1656 (range 1625–1656)",
+          "score": 1,
+          "reason": "The model's answer of c. 1626 falls within the institutional ground truth range of 1625-1656."
+        },
+        "collection": {
+          "model_answer": "National Gallery of Art, Washington D.C.",
+          "ground_truth": "Private collection (Confidential File)",
+          "score": 0,
+          "reason": "The model's answer refers to a public museum (National Gallery of Art, Washington D.C.), whereas the ground truth indicates the painting is in a private collection.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 2,
+      "n_scored": 4
+    },
+    "abram-lot-divide": {
+      "image_id": "abram-lot-divide",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Antonio Zanchi",
+          "ground_truth": [
+            "Zanchi, Antonio",
+            "Antonio Zanchi"
+          ],
+          "score": 1,
+          "reason": "The model's answer matches the institutional ground truth exactly."
+        },
+        "title": {
+          "model_answer": "The Philosophers (Pythagoras and his pupils)",
+          "ground_truth": "Abram and Iot Dividing up the World between Them.",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different subject (The Philosophers/Pythagoras) than the ground truth (Abram and Lot dividing the world)."
+        },
+        "date": {
+          "model_answer": "c. 1665",
+          "ground_truth": "1651-1722 (range 1651–1722)",
+          "score": 1,
+          "reason": "The model's answer 'c. 1665' falls within the institutional ground truth range of 1651-1722."
+        },
+        "collection": {
+          "model_answer": "Accademia Carrara, Bergamo",
+          "ground_truth": "Sta. Maria Zobenigo, Venezia",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different institution in Bergamo, whereas the ground truth is a church in Venice.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 2,
+      "n_scored": 4
+    },
+    "aeneas-anchises-troy": {
+      "image_id": "aeneas-anchises-troy",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "El Greco (Doménikos Theotokópoulos)",
+          "ground_truth": [
+            "Suavius, Lambert",
+            "Lambert Suavius"
+          ],
+          "score": 0,
+          "reason": "The model's answer refers to El Greco, whereas the ground truth artist is Lambert Suavius."
+        },
+        "title": {
+          "model_answer": "The Fall of Troy",
+          "ground_truth": "Aeneas rescues his father Anchises from the burning Troy",
+          "score": 0,
+          "reason": "The model's answer 'The Fall of Troy' is too generic and does not capture the specific subject of the painting, which is Aeneas rescuing his father Anchises."
+        },
+        "date": {
+          "model_answer": "c. 1596-1600",
+          "ground_truth": "1550 (range 1550–1550)",
+          "score": 0,
+          "reason": "The model's date range of 1596-1600 does not overlap with the ground truth of 1550 and is not within a few years."
+        },
+        "collection": {
+          "model_answer": "National Gallery of Greece",
+          "ground_truth": "Centraal Museum",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different institution in a different country than the ground truth.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 0,
+      "n_scored": 4
+    },
+    "apollo-muses": {
+      "image_id": "apollo-muses",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Annibale Carracci",
+          "ground_truth": [
+            "Tintoretto",
+            "Tintoretto, Jacopo"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Annibale Carracci' is a completely different artist from the ground truth 'Tintoretto'."
+        },
+        "title": {
+          "model_answer": "An Allegory of Truth and Time",
+          "ground_truth": "Apollo and the Muses.",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different subject matter ('An Allegory of Truth and Time') than the ground truth ('Apollo and the Muses')."
+        },
+        "date": {
+          "model_answer": "c. 1600-1601",
+          "ground_truth": "1532-1594 (range 1532–1594)",
+          "score": 0,
+          "reason": "The model's date of c. 1600-1601 does not overlap with the ground truth range of 1532-1594."
+        },
+        "collection": {
+          "model_answer": "Royal Collection Trust",
+          "ground_truth": "Dr. G.H.A. Clowes, Indianapolis",
+          "score": 0,
+          "reason": "The Royal Collection Trust is a different collection from the Clowes Collection (Indianapolis Museum of Art).",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 0,
+      "n_scored": 4
+    },
+    "apollo-pan-midas": {
+      "image_id": "apollo-pan-midas",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "title": {
+          "model_answer": "The Judgment of Midas",
+          "ground_truth": "The Competition of Apollo and Pan and the judgment of Midas",
+          "score": 1,
+          "reason": "The model's answer is a widely accepted alternative title and shorthand for the full title."
+        },
+        "date": {
+          "model_answer": "c. 1605 - c. 1608",
+          "ground_truth": "c. 1620 (range 1620–1620)",
+          "score": 0,
+          "reason": "The model's date range of c. 1605 - c. 1608 does not overlap with the ground truth of c. 1620 and is off by more than a few years."
+        },
+        "collection": {
+          "model_answer": "Rijksmuseum",
+          "ground_truth": "Museum Schloss Wilhelmshöhe",
+          "score": 0,
+          "reason": "The model's answer 'Rijksmuseum' is a completely different museum from the ground truth 'Museum Schloss Wilhelmshöhe'.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 1,
+      "n_scored": 3
+    },
+    "apollo-vulcan-forge": {
+      "image_id": "apollo-vulcan-forge",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Antoine Coypel",
+          "ground_truth": [
+            "Maes, Godfried (II)",
+            "Godfried (II) Maes"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Antoine Coypel' is a completely different artist from the ground truth 'Godfried Maes (II)'."
+        },
+        "title": {
+          "model_answer": "Vulcan Presenting the Arms of Aeneas to Venus",
+          "ground_truth": "Apollo in Vulcan's forge revealing Venus' love-affair with Mars",
+          "score": 0,
+          "reason": "The model's answer describes a completely different mythological subject (Vulcan presenting arms for Aeneas) than the ground truth (Apollo revealing Venus's affair with Mars)."
+        },
+        "date": {
+          "model_answer": "c. 1700-1704",
+          "ground_truth": "1664 - 1700 (range 1664–1700)",
+          "score": 1,
+          "reason": "The model's date range of c. 1700-1704 overlaps with the institutional ground truth range of 1664-1700 at the year 1700."
+        },
+        "collection": {
+          "model_answer": "Louvre Museum",
+          "ground_truth": "Baulme Fine Arts, F.",
+          "score": 0,
+          "reason": "The model's answer 'Louvre Museum' is a different institution/collection from the ground truth 'Baulme Fine Arts, F.'",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 1,
+      "n_scored": 4
+    },
+    "athena-pegasus": {
+      "image_id": "athena-pegasus",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Cornelis Schut I",
+          "ground_truth": [
+            "Thulden, Theodoor van",
+            "Theodoor van Thulden"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Cornelis Schut I' is a different artist from the ground truth 'Theodoor van Thulden'."
+        },
+        "title": {
+          "model_answer": "Minerva with Pegasus",
+          "ground_truth": "The goddess Pallas Athena and the horse Pegasus",
+          "score": 1,
+          "reason": "'Minerva' is the Roman equivalent of the Greek goddess 'Pallas Athena', making the titles synonymous."
+        },
+        "date": {
+          "model_answer": "1644",
+          "ground_truth": "1644 (dated) (range 1644–1644)",
+          "score": 1,
+          "reason": "The model's answer matches the ground truth date exactly."
+        },
+        "collection": {
+          "model_answer": null,
+          "ground_truth": "J. Paul Getty Museum",
+          "score": 0,
+          "reason": "model gave no value",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 2,
+      "n_scored": 3
+    },
+    "balaam-ass": {
+      "image_id": "balaam-ass",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Rembrandt van Rijn",
+          "ground_truth": [
+            "Lastman, Pieter",
+            "Pieter Lastman"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Rembrandt van Rijn' is incorrect; the correct artist is Pieter Lastman."
+        },
+        "title": {
+          "model_answer": "Balaam and the Ass",
+          "ground_truth": "Balaam and his ass",
+          "score": 1,
+          "reason": "The model's answer is a minor variation of the ground truth title, replacing 'his' with 'the'."
+        },
+        "date": {
+          "model_answer": "1626",
+          "ground_truth": "dated 1622 (range 1622–1622)",
+          "score": 1,
+          "reason": "The model's answer of 1626 is within a few years of the ground truth date of 1622."
+        },
+        "collection": {
+          "model_answer": "Musée Cognacq-Jay",
+          "ground_truth": "The Israel Museum",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different museum (Musée Cognacq-Jay in Paris) than the ground truth (The Israel Museum in Jerusalem).",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 2,
+      "n_scored": 4
+    },
+    "bathsheba-letter": {
+      "image_id": "bathsheba-letter",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Hieronymus Francken the Younger",
+          "ground_truth": [
+            "Rubens, Peter Paul [free after]",
+            "Rubens, Peter Paul",
+            "Peter Paul Rubens"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Hieronymus Francken the Younger' does not match the ground truth of 'Peter Paul Rubens' or 'after Rubens'."
+        },
+        "title": {
+          "model_answer": "Bathsheba at her Fountain",
+          "ground_truth": "Bathsheba receives a letter from David (2 Samuel 11:4)",
+          "score": 0,
+          "reason": "The model's title 'Bathsheba at her Fountain' is not a recognized equivalent or translation of the institutional title 'Bathsheba receives a letter from David (2 Samuel 11:4)', which describes a specific narrative event."
+        },
+        "date": {
+          "model_answer": "c. 1625-1635",
+          "ground_truth": "after 1635 (range 1635–1635)",
+          "score": 1,
+          "reason": "The model's date range of c. 1625-1635 overlaps with the ground truth date of after 1635."
+        }
+      },
+      "score_sum": 1,
+      "n_scored": 3
+    },
+    "belshazzar-feast": {
+      "image_id": "belshazzar-feast",
+      "status": "scored",
+      "recognized": true,
+      "elements": {},
+      "score_sum": 0,
+      "n_scored": 0
+    },
+    "circe-sorceress": {
+      "image_id": "circe-sorceress",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Jacopo Bassano",
+          "ground_truth": [
+            "Vassallo, Anton Maria",
+            "Anton Maria Vassallo",
+            "Vassallo, Antonio Maria"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Jacopo Bassano' is a completely different artist from the ground truth 'Anton Maria Vassallo'."
+        },
+        "title": {
+          "model_answer": "The Sorceress Circe",
+          "ground_truth": "The Sorceress Circe.",
+          "score": 1,
+          "reason": "The model's answer matches the institutional ground truth exactly."
+        },
+        "date": {
+          "model_answer": "c. 1570s",
+          "ground_truth": "1577-1657 (range 1577–1657)",
+          "score": 1,
+          "reason": "The model's answer 'c. 1570s' overlaps with the institutional ground truth range of 1577-1657."
+        },
+        "collection": {
+          "model_answer": "Kunsthistorisches Museum, Vienna",
+          "ground_truth": "Uffizi Gallery",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different museum (Kunsthistorisches Museum, Vienna) than the ground truth (Uffizi Gallery).",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 2,
+      "n_scored": 4
+    },
+    "diana-actaeon": {
+      "image_id": "diana-actaeon",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Titian",
+          "ground_truth": [
+            "Titian",
+            "Titiaan",
+            "Tiziano Vecellio"
+          ],
+          "score": 1,
+          "reason": "The model's answer matches one of the accepted name variants in the ground truth."
+        },
+        "title": {
+          "model_answer": "Diana and Actaeon",
+          "ground_truth": "Diana and Actaeon.",
+          "score": 1,
+          "reason": "The model's answer matches the ground truth exactly."
+        },
+        "date": {
+          "model_answer": "1556–1559",
+          "ground_truth": "1559 (range 1559–1559)",
+          "score": 1,
+          "reason": "The model's date range of 1556–1559 overlaps with the ground truth date of 1559."
+        },
+        "collection": {
+          "model_answer": "National Gallery, London and National Galleries of Scotland",
+          "ground_truth": "Earl of Ellesmere, London",
+          "score": 1,
+          "reason": "The model's answer correctly identifies the current museums holding the collection/works formerly belonging to the Earl of Ellesmere (Bridgewater Collection).",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 4,
+      "n_scored": 4
+    },
+    "dido-sacrifice-juno": {
+      "image_id": "dido-sacrifice-juno",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Jacob Jordaens",
+          "ground_truth": [
+            "Romanelli, Giovanni Francesco",
+            "Giovanni Francesco Romanelli"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Jacob Jordaens' is incorrect; the correct artist is 'Giovanni Francesco Romanelli'."
+        },
+        "title": {
+          "model_answer": "Dido's Sacrifice to Juno",
+          "ground_truth": "Dido's sacrifice to Juno",
+          "score": 1,
+          "reason": "The model's answer matches the ground truth exactly, with only minor capitalization differences."
+        },
+        "date": {
+          "model_answer": "c. 1650",
+          "ground_truth": "1655 (range 1655–1655)",
+          "score": 1,
+          "reason": "'c. 1650' is within a few years of the ground truth of 1655."
+        },
+        "collection": {
+          "model_answer": null,
+          "ground_truth": "Norton Simon Museum",
+          "score": 0,
+          "reason": "model gave no value",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 2,
+      "n_scored": 3
+    },
+    "drunkenness-noah": {
+      "image_id": "drunkenness-noah",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Jacopo Tintoretto",
+          "ground_truth": [
+            "Floris, Frans (I) [circle of]",
+            "Floris, Frans (I)",
+            "Frans (I) Floris"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Jacopo Tintoretto' is a completely different artist from the ground truth 'Frans Floris (I)'."
+        },
+        "title": {
+          "model_answer": "The Drunkenness of Noah",
+          "ground_truth": "The drunkenness of Noah",
+          "score": 1,
+          "reason": "The model's answer matches the ground truth exactly, ignoring capitalization and quotation marks."
+        },
+        "date": {
+          "model_answer": "c. 1550-1560",
+          "ground_truth": "c. 1550-1574 (range 1550–1574)",
+          "score": 1,
+          "reason": "The model's date range of 1550-1560 overlaps with the institutional ground truth range of 1550-1574."
+        }
+      },
+      "score_sum": 2,
+      "n_scored": 3
+    },
+    "elisha-shunem-woman": {
+      "image_id": "elisha-shunem-woman",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Gaspard Dughet",
+          "ground_truth": [
+            "Mola, Pier Francesco",
+            "Pier Francesco Mola"
+          ],
+          "score": 0,
+          "reason": "The model's answer refers to Gaspard Dughet, who is a different artist from Pier Francesco Mola."
+        },
+        "title": {
+          "model_answer": "Landscape with Elijah and the Angel",
+          "ground_truth": "The Prophet Elisha and the Rich Woman of Shunem.",
+          "score": 0,
+          "reason": "The model's answer refers to a different biblical subject (Elijah and the Angel) than the ground truth (Elisha and the Rich Woman of Shunem)."
+        },
+        "date": {
+          "model_answer": "c. 1650-1660",
+          "ground_truth": "1648-1650 (range 1648–1650)",
+          "score": 1,
+          "reason": "The model's date range of c. 1650-1660 overlaps with the ground truth range of 1648-1650 at the year 1650."
+        },
+        "collection": {
+          "model_answer": "The National Gallery, London",
+          "ground_truth": "Ringling Museum, Sarasota",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different museum (The National Gallery, London) than the ground truth (Ringling Museum, Sarasota).",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 1,
+      "n_scored": 4
+    },
+    "embassy-hippolyta": {
+      "image_id": "embassy-hippolyta",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Antonio Pisanello",
+          "ground_truth": [
+            "Carpaccio, Vittore",
+            "Vittore Carpaccio"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Antonio Pisanello' is a completely different artist from the ground truth 'Vittore Carpaccio'."
+        },
+        "title": {
+          "model_answer": "The Tournament of Louvezerp",
+          "ground_truth": "The Embassy of Hippolyta, Queen of the Amazons, to Theseus, King of Athens.",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different subject and title ('The Tournament of Louvezerp') than the ground truth ('The Embassy of Hippolyta, Queen of the Amazons, to Theseus, King of Athens')."
+        },
+        "date": {
+          "model_answer": "c. 1447-1448",
+          "ground_truth": "1475-1525 (range 1475–1525)",
+          "score": 0,
+          "reason": "The model's date range of c. 1447-1448 does not overlap with the ground truth range of 1475-1525 and is not within a few years of it."
+        },
+        "collection": {
+          "model_answer": "Palazzo Ducale, Mantua",
+          "ground_truth": "Musée Jacquemart-André",
+          "score": 0,
+          "reason": "The model's answer 'Palazzo Ducale, Mantua' is a completely different location and collection from the ground truth 'Musée Jacquemart-André'.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 0,
+      "n_scored": 4
+    },
+    "feast-esther": {
+      "image_id": "feast-esther",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Pietro della Vecchia",
+          "ground_truth": [
+            "Cortona, Pietro da",
+            "Pietro da Cortona"
+          ],
+          "score": 0,
+          "reason": "Pietro della Vecchia is a different artist from Pietro da Cortona."
+        },
+        "title": {
+          "model_answer": "The Feast of Esther",
+          "ground_truth": "Feast of Esther.",
+          "score": 1,
+          "reason": "The model's answer is identical to the ground truth, with only the addition of the leading definite article 'The'."
+        },
+        "date": {
+          "model_answer": "c. 1645-1650",
+          "ground_truth": "1622-1678 (range 1622–1678)",
+          "score": 1,
+          "reason": "The model's date range of c. 1645-1650 is entirely within the institutional ground truth range of 1622-1678."
+        },
+        "collection": {
+          "model_answer": "J. Paul Getty Museum",
+          "ground_truth": "J .Paul Getty Museum, Malibu",
+          "score": 1,
+          "reason": "The model correctly identifies the museum, omitting only the location.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 3,
+      "n_scored": 4
+    },
+    "finding-moses": {
+      "image_id": "finding-moses",
+      "status": "scored",
+      "recognized": false,
+      "elements": {},
+      "score_sum": 0,
+      "n_scored": 0
+    },
+    "flood-deucalion": {
+      "image_id": "flood-deucalion",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "José Aparicio Inglada",
+          "ground_truth": [
+            "Carpioni, Giulio",
+            "Giulio Carpioni",
+            "Carpione, Giulio"
+          ],
+          "score": 0,
+          "reason": "The model's answer refers to a completely different artist (José Aparicio Inglada) than the ground truth (Giulio Carpioni)."
+        },
+        "title": {
+          "model_answer": "The Flood (El Diluvio)",
+          "ground_truth": "A Scene from Greek Mythology: The Flood of the Age of Deucalion.",
+          "score": 1,
+          "reason": "The model's answer 'The Flood (El Diluvio)' is a correct translation and simplified title for the work depicting the Flood of Deucalion."
+        },
+        "date": {
+          "model_answer": "1827",
+          "ground_truth": "1633-1678 (range 1633–1678)",
+          "score": 0,
+          "reason": "The model's answer of 1827 is far outside the ground truth range of 1633-1678."
+        },
+        "collection": {
+          "model_answer": "Real Academia de Bellas Artes de San Fernando",
+          "ground_truth": "Academy of fine Arts, Siena",
+          "score": 0,
+          "reason": "The model's answer refers to an institution in Madrid, Spain, whereas the ground truth is in Siena, Italy.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 1,
+      "n_scored": 4
+    },
+    "gathering-manna": {
+      "image_id": "gathering-manna",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Ercole de' Roberti",
+          "ground_truth": [
+            "Bramantino"
+          ],
+          "score": 0,
+          "reason": "The model's answer refers to a different artist (Ercole de' Roberti) than the ground truth (Bramantino)."
+        },
+        "title": {
+          "model_answer": "The Israelites Gathering Manna",
+          "ground_truth": "The Gathering of Manna.",
+          "score": 1,
+          "reason": "The model's answer is a correct and common variant title for the painting."
+        },
+        "date": {
+          "model_answer": "c. 1490",
+          "ground_truth": "1503-1506 (range 1503–1506)",
+          "score": 0,
+          "reason": "The model's answer of c. 1490 is not within a few years of the ground truth range of 1503-1506."
+        },
+        "collection": {
+          "model_answer": "The National Gallery, London",
+          "ground_truth": "Samuel H. Kress Foundation, New York",
+          "score": 0,
+          "reason": "The model's answer 'The National Gallery, London' is a different institution located in a different country than the ground truth 'Samuel H. Kress Foundation, New York'.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 1,
+      "n_scored": 4
+    },
+    "hagar-ishmael": {
+      "image_id": "hagar-ishmael",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Pompeo Batoni",
+          "ground_truth": [
+            "Cortona, Pietro da",
+            "Pietro da Cortona"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Pompeo Batoni' is a completely different artist from the ground truth 'Pietro da Cortona'."
+        },
+        "title": {
+          "model_answer": "Hagar and the Angel",
+          "ground_truth": "Hagar, Ishmael and the Angel in the Wilderness.",
+          "score": 1,
+          "reason": "The model's answer is a widely accepted shorter title variant for this subject."
+        },
+        "date": {
+          "model_answer": "1776",
+          "ground_truth": "1637 - 1638 (range 1637–1638)",
+          "score": 0,
+          "reason": "The model's answer of 1776 is incorrect and does not overlap with the ground truth range of 1637-1638."
+        },
+        "collection": {
+          "model_answer": "Galleria Nazionale d'Arte Antica - Palazzo Corsini",
+          "ground_truth": "John and Mable Ringling Museum of Art",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different museum (Galleria Nazionale d'Arte Antica - Palazzo Corsini in Rome) than the ground truth (John and Mable Ringling Museum of Art in Florida).",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 1,
+      "n_scored": 4
+    },
+    "isaac-blesses-jacob": {
+      "image_id": "isaac-blesses-jacob",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Govert Flinck",
+          "ground_truth": [
+            "Horst, Gerrit Willemsz.",
+            "Gerrit Willemsz. Horst"
+          ],
+          "score": 0,
+          "reason": "Govert Flinck and Gerrit Willemsz. Horst are two different Dutch Golden Age painters."
+        },
+        "title": {
+          "model_answer": "Isaac Blessing Jacob",
+          "ground_truth": "Isaac blessing Jacob",
+          "score": 1,
+          "reason": "The model's answer matches the ground truth exactly, with only minor differences in capitalization and quotation marks."
+        },
+        "date": {
+          "model_answer": "c. 1638",
+          "ground_truth": "1638 (range 1638–1638)",
+          "score": 1,
+          "reason": "The model's answer 'c. 1638' matches the ground truth year of 1638."
+        },
+        "collection": {
+          "model_answer": "Rijksmuseum",
+          "ground_truth": "Dulwich Picture Gallery",
+          "score": 0,
+          "reason": "The model's answer 'Rijksmuseum' is a completely different institution from the ground truth 'Dulwich Picture Gallery'.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 2,
+      "n_scored": 4
+    },
+    "jacob-esau-reconcile": {
+      "image_id": "jacob-esau-reconcile",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Pietro da Cortona",
+          "ground_truth": [
+            "Cortona, Pietro da",
+            "Pietro da Cortona"
+          ],
+          "score": 1,
+          "reason": "The model's answer matches one of the accepted name variants in the ground truth."
+        },
+        "title": {
+          "model_answer": "The Rape of the Sabine Women",
+          "ground_truth": "Reconciliation of Jacob and Esau.",
+          "score": 0,
+          "reason": "The model's answer refers to an entirely different subject and title ('The Rape of the Sabine Women') than the ground truth ('Reconciliation of Jacob and Esau')."
+        },
+        "date": {
+          "model_answer": "c. 1629-1631",
+          "ground_truth": "1616-1669 (range 1616–1669)",
+          "score": 1,
+          "reason": "The model's date range of 1629-1631 falls entirely within the institutional ground truth range of 1616-1669."
+        },
+        "collection": {
+          "model_answer": "Capitoline Museums, Rome",
+          "ground_truth": "Palazzo dei Conservatori, Roma",
+          "score": 1,
+          "reason": "The Palazzo dei Conservatori is part of the Capitoline Museums in Rome.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 3,
+      "n_scored": 4
+    },
+    "jason-dragon": {
+      "image_id": "jason-dragon",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Stefano da Ferrara",
+          "ground_truth": [
+            "Roberti, Ercole de'",
+            "Ercole de' Roberti"
+          ],
+          "score": 0,
+          "reason": "'Stefano da Ferrara' is a different artist from 'Ercole de' Roberti', although they are from the same school and period."
+        },
+        "title": {
+          "model_answer": "Miracle of Saint Maurelius",
+          "ground_truth": "Episode from the Legend of the Argonauts: Jason Slaying the Sleepless Dragon.",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different subject and painting ('Miracle of Saint Maurelius') than the ground truth ('Episode from the Legend of the Argonauts: Jason Slaying the Sleepless Dragon')."
+        },
+        "date": {
+          "model_answer": "c. 1480",
+          "ground_truth": "1460-1496 (range 1460–1496)",
+          "score": 1,
+          "reason": "The model's answer 'c. 1480' falls within the institutional ground truth range of 1460-1496."
+        },
+        "collection": {
+          "model_answer": "Pinacoteca Nazionale, Ferrara",
+          "ground_truth": "Phoebe Timpson",
+          "score": 0,
+          "reason": "The model's answer 'Pinacoteca Nazionale, Ferrara' does not match the institutional ground truth 'Phoebe Timpson', and there is no evidence that this work has been transferred to or is currently held by the Pinacoteca Nazionale in Ferrara.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 1,
+      "n_scored": 4
+    },
+    "jephtha-daughter": {
+      "image_id": "jephtha-daughter",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Frans Francken the Younger",
+          "ground_truth": [
+            "Francken, Hieronymus (III)",
+            "Hieronymus (III) Francken"
+          ],
+          "score": 0,
+          "reason": "Frans Francken the Younger is a different artist from Hieronymus Francken III, although they belong to the same family of painters."
+        },
+        "title": {
+          "model_answer": "The Meeting of Jephthah and His Daughter",
+          "ground_truth": "Jephtha welcomed by his daughter (Judges 11:29-40)",
+          "score": 1,
+          "reason": "The model's answer is a correct title variant for the same biblical scene."
+        },
+        "date": {
+          "model_answer": "c. 1630-1635",
+          "ground_truth": "1626 - 1661 (range 1626–1661)",
+          "score": 1,
+          "reason": "The model's date range of c. 1630-1635 falls entirely within the institutional ground truth range of 1626-1661."
+        }
+      },
+      "score_sum": 2,
+      "n_scored": 3
+    },
+    "jeremiah-baruch": {
+      "image_id": "jeremiah-baruch",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Washington Allston",
+          "ground_truth": [
+            "Allston, Washington",
+            "Washington Allston"
+          ],
+          "score": 1,
+          "reason": "The model's answer matches one of the accepted name variants in the ground truth."
+        },
+        "title": {
+          "model_answer": "Jeremiah Dictating His Prophecy of the Destruction of Jerusalem to Baruch the Scribe",
+          "ground_truth": "Jeremiah Dictating His Prophecy of the Destruction of Jerusalem to Baruch the Scribe.",
+          "score": 1,
+          "reason": "The model's answer matches the ground truth exactly, with only minor quotation marks added."
+        },
+        "date": {
+          "model_answer": "1820",
+          "ground_truth": "1799-1843 (range 1799–1843)",
+          "score": 1,
+          "reason": "The model's answer '1820' falls within the institutional ground truth range of 1799-1843."
+        },
+        "collection": {
+          "model_answer": "Yale University Art Gallery",
+          "ground_truth": "Yale University Art Gallery",
+          "score": 1,
+          "reason": "The model's answer matches the institutional ground truth exactly.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 4,
+      "n_scored": 4
+    },
+    "joseph-cup-dream": {
+      "image_id": "joseph-cup-dream",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Jan Cossiers",
+          "ground_truth": [
+            "Carlone, Giovanni Battista",
+            "Giovanni Battista Carlone"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Jan Cossiers' refers to a completely different artist than 'Giovanni Battista Carlone'."
+        },
+        "title": {
+          "model_answer": "The Discovery of the Stolen Cup in Benjamin's Sack",
+          "ground_truth": "Two Scenes in the Life of Joseph: \"The Discovery of Joseph's Cup in Benjamin's Sack\" and \"Joseph Interpreting Pharaoh's Dream\".",
+          "score": 0,
+          "reason": "The model's answer only identifies one of the two scenes depicted in the painting's title, omitting 'Joseph Interpreting Pharaoh's Dream'."
+        },
+        "date": {
+          "model_answer": "c. 1650s",
+          "ground_truth": "1612-1677 (range 1612–1677)",
+          "score": 1,
+          "reason": "The model's answer of 'c. 1650s' falls entirely within the institutional ground truth range of 1612-1677."
+        },
+        "collection": {
+          "model_answer": "Royal Museums of Fine Arts of Belgium",
+          "ground_truth": "Finch College, New York",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different institution (Royal Museums of Fine Arts of Belgium) than the ground truth (Finch College, New York).",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 1,
+      "n_scored": 4
+    },
+    "judah-tamar": {
+      "image_id": "judah-tamar",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Jan van Scorel",
+          "ground_truth": [
+            "Hemessen, Jan Sanders van",
+            "Jan Sanders van Hemessen"
+          ],
+          "score": 0,
+          "reason": "Jan van Scorel is a different artist from Jan Sanders van Hemessen."
+        },
+        "title": {
+          "model_answer": "Vertumnus and Pomona",
+          "ground_truth": "Judah's love-affair with Tamar; he gives her his signet-ring (Genesis 38:18)",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different mythological subject (Vertumnus and Pomona) instead of the biblical subject (Judah and Tamar)."
+        },
+        "date": {
+          "model_answer": "c. 1524",
+          "ground_truth": "second or third quarter 16th century (range 1526–1574)",
+          "score": 1,
+          "reason": "The model's answer of 'c. 1524' is within a few years of the institutional ground truth range of 1526–1574."
+        },
+        "collection": {
+          "model_answer": "Museum Boijmans Van Beuningen",
+          "ground_truth": "Private collection",
+          "score": 0,
+          "reason": "The model's answer 'Museum Boijmans Van Beuningen' is a public museum, which does not match the ground truth 'Private collection'.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 1,
+      "n_scored": 4
+    },
+    "judgement-midas": {
+      "image_id": "judgement-midas",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Cima da Conegliano",
+          "ground_truth": [
+            "Cima da Conegliano, Giovanni Battista",
+            "Giovanni Battista Cima da Conegliano"
+          ],
+          "score": 1,
+          "reason": "The model's answer is a widely accepted name variant of the artist."
+        },
+        "title": {
+          "model_answer": "The Judgment of Midas (The Contest between Apollo and Marsyas)",
+          "ground_truth": "The Judgement of Midas.",
+          "score": 1,
+          "reason": "The model's answer contains the correct title with a minor spelling variation and includes a common alternative title in parentheses."
+        },
+        "date": {
+          "model_answer": "c. 1505-1510",
+          "ground_truth": "1459-1518 (range 1459–1518)",
+          "score": 1,
+          "reason": "The model's date range of c. 1505-1510 falls entirely within the institutional ground truth range of 1459-1518."
+        },
+        "collection": {
+          "model_answer": "Statens Museum for Kunst, Copenhagen",
+          "ground_truth": "Pinacoteca di Parma, Parma",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different museum in Copenhagen, whereas the ground truth is the Pinacoteca di Parma in Italy.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 3,
+      "n_scored": 4
+    },
+    "judgement-solomon": {
+      "image_id": "judgement-solomon",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Matthias Stom",
+          "ground_truth": [
+            "Cresti, Domenico",
+            "Domenico Cresti",
+            "Passignano, Domenico"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Matthias Stom' is a completely different artist from the ground truth 'Domenico Cresti' (Passignano)."
+        },
+        "title": {
+          "model_answer": "The Judgment of Solomon",
+          "ground_truth": "Judgement of Solomon.",
+          "score": 1,
+          "reason": "The model's answer is correct, with only minor differences in spelling ('Judgment' vs 'Judgement') and the inclusion of the leading article 'The'."
+        },
+        "date": {
+          "model_answer": "c. 1640",
+          "ground_truth": "1578-1638 (range 1578–1638)",
+          "score": 1,
+          "reason": "The model's answer of 'c. 1640' is within a few years of the institutional ground truth range of 1578-1638."
+        },
+        "collection": {
+          "model_answer": "Museum of Fine Arts, Houston",
+          "ground_truth": "Gallerie Borghese, Roma",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different museum (Museum of Fine Arts, Houston) than the ground truth (Gallerie Borghese, Roma).",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 2,
+      "n_scored": 4
+    },
+    "jupiter-mercury": {
+      "image_id": "jupiter-mercury",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Dosso Dossi (Giovanni di Niccolò de Luteri)",
+          "ground_truth": [
+            "Dossi, Dosso",
+            "Dosso Dossi"
+          ],
+          "score": 1,
+          "reason": "The model's answer correctly identifies the artist as Dosso Dossi, including his real name in parentheses."
+        },
+        "title": {
+          "model_answer": "Jupiter, Mercury and Virtue",
+          "ground_truth": "Jupiter and Mercury.",
+          "score": 1,
+          "reason": "The model's answer is a more complete and widely recognized title for the same painting by Dosso Dossi."
+        },
+        "date": {
+          "model_answer": "c. 1524",
+          "ground_truth": "1499-1542 (range 1499–1542)",
+          "score": 1,
+          "reason": "The model's answer 'c. 1524' falls within the institutional ground truth range of 1499-1542."
+        },
+        "collection": {
+          "model_answer": "Kunsthistorisches Museum, Vienna",
+          "ground_truth": "Kunsthistorisches Museum Wien",
+          "score": 1,
+          "reason": "The model's answer is the English translation of the German name of the museum, which is correct.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 4,
+      "n_scored": 4
+    },
+    "lot-daughters": {
+      "image_id": "lot-daughters",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Guido Reni",
+          "ground_truth": [
+            "Guercino",
+            "Guercino (Barbieri, Giovanni Francesco) (after)",
+            "Guercino (Barbieri, Giovanni Francesco)"
+          ],
+          "score": 0,
+          "reason": "Guido Reni is a different Italian Baroque painter than Guercino (Giovanni Francesco Barbieri)."
+        },
+        "title": {
+          "model_answer": "Lot and His Daughters",
+          "ground_truth": "Lot and His Daughters.",
+          "score": 1,
+          "reason": "The model's answer matches the institutional ground truth exactly."
+        },
+        "date": {
+          "model_answer": "c. 1615-1616",
+          "ground_truth": "1611-1666 (range 1611–1666)",
+          "score": 1,
+          "reason": "The model's date range of 1615-1616 falls entirely within the institutional ground truth range of 1611-1666."
+        },
+        "collection": {
+          "model_answer": "National Gallery, London",
+          "ground_truth": "Toledo Museum of Art, Toledo",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different museum (National Gallery, London) than the ground truth (Toledo Museum of Art).",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 2,
+      "n_scored": 4
+    },
+    "marriage-cupid-psyche": {
+      "image_id": "marriage-cupid-psyche",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "title": {
+          "model_answer": "The Marriage of Cupid and Psyche",
+          "ground_truth": "Marriage of Cupid and Psyche",
+          "score": 1,
+          "reason": "The model's answer is identical to the ground truth, with only the addition of the leading article 'The'."
+        },
+        "date": {
+          "model_answer": "1756",
+          "ground_truth": "19th century (range 1800–1899)",
+          "score": 0,
+          "reason": "The model's answer of 1756 is in the 18th century, which does not overlap with the ground truth range of the 19th century (1800–1899)."
+        },
+        "collection": {
+          "model_answer": "Gemäldegalerie, Berlin",
+          "ground_truth": "Private collection",
+          "score": 0,
+          "reason": "The model's answer 'Gemäldegalerie, Berlin' is a public museum, which contradicts the ground truth of 'Private collection'.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 1,
+      "n_scored": 3
+    },
+    "meeting-dido-aeneas": {
+      "image_id": "meeting-dido-aeneas",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Giovanni Battista Tiepolo",
+          "ground_truth": [
+            "Coignet, Michiel (II)",
+            "Michiel (II) Coignet"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Giovanni Battista Tiepolo' is incorrect and does not match the ground truth artist 'Michiel (II) Coignet'."
+        },
+        "title": {
+          "model_answer": "The Meeting of Dido and Aeneas",
+          "ground_truth": "The meeting of Dido and Aeneas",
+          "score": 1,
+          "reason": "The model's answer matches the ground truth exactly, with only minor differences in capitalization and quotation marks."
+        },
+        "date": {
+          "model_answer": "c. 1757",
+          "ground_truth": "1648 (dated) (range 1648–1648)",
+          "score": 0,
+          "reason": "The model's answer of c. 1757 is incorrect as it is more than a century off from the ground truth date of 1648."
+        }
+      },
+      "score_sum": 1,
+      "n_scored": 3
+    },
+    "moses-crown-pharaoh": {
+      "image_id": "moses-crown-pharaoh",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Giovanni Battista Tiepolo",
+          "ground_truth": [
+            "Tiepolo, Giovanni Battista",
+            "Giovanni Battista Tiepolo"
+          ],
+          "score": 1,
+          "reason": "The model's answer matches the institutional ground truth exactly."
+        },
+        "title": {
+          "model_answer": "The Adoration of the Magi",
+          "ground_truth": "The Child Moses Trampling on the Crown of the Pharoahs.",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different subject and title ('The Adoration of the Magi') than the ground truth ('The Child Moses Trampling on the Crown of the Pharoahs')."
+        },
+        "date": {
+          "model_answer": "ca. 1753",
+          "ground_truth": "1716-1770 (range 1716–1770)",
+          "score": 1,
+          "reason": "The model's answer of 'ca. 1753' falls within the institutional ground truth range of 1716-1770."
+        },
+        "collection": {
+          "model_answer": "The Metropolitan Museum of Art",
+          "ground_truth": "Amherst College, Amherst",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different institution than the ground truth.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 2,
+      "n_scored": 4
+    },
+    "naaman-syrian": {
+      "image_id": "naaman-syrian",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Hieronymus Bosch",
+          "ground_truth": [
+            "Engelbrechtszoon, Cornelis",
+            "Cornelis Engelbrechtszoon",
+            "Engebrechtsz., Cornelis",
+            "Engebrechtsz., Cornelius"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Hieronymus Bosch' is a completely different artist from the ground truth 'Cornelis Engelbrechtszoon'."
+        },
+        "title": {
+          "model_answer": "Triptych of the Baptism of Christ",
+          "ground_truth": "The Story of the Syrian Captain Naaman.",
+          "score": 0,
+          "reason": "The model's answer refers to a different subject/entire triptych ('Triptych of the Baptism of Christ') rather than the specific scene/panel title ('The Story of the Syrian Captain Naaman')."
+        },
+        "date": {
+          "model_answer": "c. 1500",
+          "ground_truth": "1488-1533 (range 1488–1533)",
+          "score": 1,
+          "reason": "The model's answer 'c. 1500' falls within the institutional ground truth range of 1488-1533."
+        },
+        "collection": {
+          "model_answer": "Royal Museums of Fine Arts of Belgium",
+          "ground_truth": "Kunsthistorisches Museum Wien",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different museum in Belgium, whereas the ground truth is the Kunsthistorisches Museum in Vienna.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 1,
+      "n_scored": 4
+    },
+    "nausicaa-ulysses": {
+      "image_id": "nausicaa-ulysses",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Hendrik van Balen the Elder and Jan Brueghel the Elder",
+          "ground_truth": [
+            "Lastman, Pieter",
+            "Pieter Lastman"
+          ],
+          "score": 0,
+          "reason": "The model's answer identifies different artists (Hendrik van Balen the Elder and Jan Brueghel the Elder) than the ground truth (Pieter Lastman)."
+        },
+        "title": {
+          "model_answer": "The Feast of the Gods",
+          "ground_truth": "The meeting of Nausicaa and Ulysses",
+          "score": 0,
+          "reason": "The model's answer 'The Feast of the Gods' is a completely different title and subject from the ground truth 'The meeting of Nausicaa and Ulysses'."
+        },
+        "date": {
+          "model_answer": "c. 1608-1610",
+          "ground_truth": "dated 1619 (range 1619–1619)",
+          "score": 0,
+          "reason": "The model's date range of c. 1608-1610 does not overlap with the ground truth date of 1619 and is not within a few years of it."
+        },
+        "collection": {
+          "model_answer": null,
+          "ground_truth": "Alte Pinakothek",
+          "score": 0,
+          "reason": "model gave no value",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 0,
+      "n_scored": 3
+    },
+    "potiphar-wife": {
+      "image_id": "potiphar-wife",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Giovanni Biliverti",
+          "ground_truth": [
+            "Bilivert, Giovanni",
+            "Giovanni Bilivert"
+          ],
+          "score": 1,
+          "reason": "Giovanni Biliverti is a well-known variant spelling of Giovanni Bilivert."
+        },
+        "title": {
+          "model_answer": "La castità di Giuseppe (The Chastity of Joseph)",
+          "ground_truth": "Josephs Keuschheit",
+          "score": 1,
+          "reason": "The model's answer is a correct translation of the German title into Italian and English."
+        },
+        "collection": {
+          "model_answer": "Galleria Barberini",
+          "ground_truth": "Galleria Nazionale d'arte Antica",
+          "score": 1,
+          "reason": "'Galleria Barberini' (Palazzo Barberini) is one of the two main sites of the Galleria Nazionale d'arte Antica and is commonly used to refer to this collection.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 3,
+      "n_scored": 3
+    },
+    "prodigal-son-brothel": {
+      "image_id": "prodigal-son-brothel",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Jan Miel",
+          "ground_truth": [
+            "Bredael, Peeter van",
+            "Peeter van Bredael"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Jan Miel' is a completely different artist from the ground truth 'Peeter van Bredael'."
+        },
+        "title": {
+          "model_answer": "The Charlatan",
+          "ground_truth": "The Prodigal Son is being chased from the brotherl after spending all his money (Luke 15:13)",
+          "score": 0,
+          "reason": "The model's answer 'The Charlatan' is completely different from the ground truth title 'The Prodigal Son is being chased from the brotherl after spending all his money (Luke 15:13)'."
+        },
+        "date": {
+          "model_answer": "c. 1650",
+          "ground_truth": "after 1658 (range 1658–1658)",
+          "score": 0,
+          "reason": "The model's answer of c. 1650 is outside the ground truth range of after 1658 and is not within a few years of it."
+        }
+      },
+      "score_sum": 0,
+      "n_scored": 3
+    },
+    "prometheus-chained-vulcan": {
+      "image_id": "prometheus-chained-vulcan",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Dirck van Baburen",
+          "ground_truth": [
+            "Baburen, Dirck van",
+            "Dirck van Baburen"
+          ],
+          "score": 1,
+          "reason": "The model's answer matches the ground truth name variant exactly."
+        },
+        "title": {
+          "model_answer": "Prometheus Being Chained by Vulcan",
+          "ground_truth": "Prometheus chained by Vulcan",
+          "score": 1,
+          "reason": "The model's answer is a very close variation of the ground truth title, adding only the word 'Being' which does not change the meaning."
+        },
+        "date": {
+          "model_answer": "c. 1623",
+          "ground_truth": "1623 (range 1623–1623)",
+          "score": 1,
+          "reason": "The model's answer 'c. 1623' is correct as it matches the ground truth year of 1623."
+        },
+        "collection": {
+          "model_answer": "Rijksmuseum",
+          "ground_truth": "Rijksmuseum",
+          "score": 1,
+          "reason": "The model's answer matches the institutional ground truth exactly.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 4,
+      "n_scored": 4
+    },
+    "rape-deianira": {
+      "image_id": "rape-deianira",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Antonio del Pollaiuolo",
+          "ground_truth": [
+            "Pollaiolo, Antonio",
+            "Antonio Pollaiolo",
+            "Pollaiolo, Antonio del",
+            "Pollaiuolo, Antonio"
+          ],
+          "score": 1,
+          "reason": "The model's answer is a correct spelling variant of the artist's name."
+        },
+        "title": {
+          "model_answer": "The Rape of Deianira",
+          "ground_truth": "The Rape of Deianira.",
+          "score": 1,
+          "reason": "The model's answer matches the institutional ground truth exactly, ignoring quotation marks."
+        },
+        "date": {
+          "model_answer": "c. 1470-1475",
+          "ground_truth": "1473 (range 1473–1473)",
+          "score": 1,
+          "reason": "The model's date range of c. 1470-1475 overlaps with and includes the ground truth date of 1473."
+        },
+        "collection": {
+          "model_answer": "Yale University Art Gallery",
+          "ground_truth": "Yale University Art Gallery",
+          "score": 1,
+          "reason": "The model's answer matches the institutional ground truth exactly.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 4,
+      "n_scored": 4
+    },
+    "sacrifice-iphigenia": {
+      "image_id": "sacrifice-iphigenia",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Jan Victors",
+          "ground_truth": [
+            "Wet, Jacob de (I)",
+            "Jacob de (I) Wet"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Jan Victors' is a different artist than the ground truth 'Jacob de Wet (I)'."
+        },
+        "title": {
+          "model_answer": "The Sacrifice of Iphigenia",
+          "ground_truth": "The sacrifice of Iphigenia",
+          "score": 1,
+          "reason": "The model's answer matches the ground truth exactly, ignoring capitalization and quotation marks."
+        },
+        "date": {
+          "model_answer": "c. 1640-1650",
+          "ground_truth": "1635 - 1672 (range 1635–1672)",
+          "score": 1,
+          "reason": "The model's date range of c. 1640-1650 is entirely within the institutional ground truth range of 1635-1672."
+        },
+        "collection": {
+          "model_answer": "Rijksmuseum",
+          "ground_truth": "Mautner-Markhof",
+          "score": 0,
+          "reason": "The model's answer 'Rijksmuseum' does not match the ground truth collection 'Mautner-Markhof', and there is no indication that this work is currently held by the Rijksmuseum.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 2,
+      "n_scored": 4
+    },
+    "sacrifice-jephthah": {
+      "image_id": "sacrifice-jephthah",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Peter Paul Rubens",
+          "ground_truth": [
+            "Mazzoni, Sebastiano",
+            "Sebastiano Mazzoni"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Peter Paul Rubens' is incorrect; the correct artist is Sebastiano Mazzoni."
+        },
+        "title": {
+          "model_answer": "The Massacre of the Innocents",
+          "ground_truth": "Sacrifice of Jephthah.",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different biblical event than the ground truth."
+        },
+        "date": {
+          "model_answer": "c. 1636-1638",
+          "ground_truth": "1631-1678 (range 1631–1678)",
+          "score": 1,
+          "reason": "The model's date range of c. 1636-1638 is entirely within the institutional ground truth range of 1631-1678."
+        },
+        "collection": {
+          "model_answer": "Alte Pinakothek, Munich",
+          "ground_truth": "William Rockhill Nelson Gallery of Art, Kansas City",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different museum in Munich, Germany, whereas the ground truth is in Kansas City, USA.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 1,
+      "n_scored": 4
+    },
+    "sacrifice-venus-temple": {
+      "image_id": "sacrifice-venus-temple",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Peter Paul Rubens",
+          "ground_truth": [
+            "Rubens, Peter Paul",
+            "Peter Paul Rubens"
+          ],
+          "score": 1,
+          "reason": "The model's answer matches the institutional ground truth exactly."
+        },
+        "title": {
+          "model_answer": "The Worship of Venus",
+          "ground_truth": "Sacrifice to Venus in a temple",
+          "score": 1,
+          "reason": "The model's answer 'The Worship of Venus' is a highly synonymous and acceptable alternative title for 'Sacrifice to Venus in a temple'."
+        },
+        "date": {
+          "model_answer": "c. 1636-1637",
+          "ground_truth": "c. 1630 (range 1630–1630)",
+          "score": 0,
+          "reason": "The model's date of c. 1636-1637 is 6 to 7 years off from the ground truth of c. 1630, which is outside the acceptable range of a few years."
+        },
+        "collection": {
+          "model_answer": "Museo Nacional del Prado",
+          "ground_truth": "Courtauld Gallery",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different museum (Museo Nacional del Prado) than the ground truth (Courtauld Gallery).",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 2,
+      "n_scored": 4
+    },
+    "samson-pillars": {
+      "image_id": "samson-pillars",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Peter Paul Rubens",
+          "ground_truth": [
+            "Rubens, Peter Paul [manner of/after]",
+            "Rubens, Peter Paul",
+            "Peter Paul Rubens"
+          ],
+          "score": 1,
+          "reason": "The model's answer matches one of the accepted variants in the ground truth."
+        },
+        "title": {
+          "model_answer": "The Death of Samson",
+          "ground_truth": "Samson breaks the pillars; the temple of Dagon collapses, killing all that are in it (Judges 16:29-31)",
+          "score": 1,
+          "reason": "The model's answer 'The Death of Samson' is a common and correct alternative title for the biblical scene described in the ground truth."
+        },
+        "date": {
+          "model_answer": "c. 1605",
+          "ground_truth": "first half 17th century (range 1600–1650)",
+          "score": 1,
+          "reason": "The model's answer of 'c. 1605' falls within the ground truth range of 1600–1650 (first half of the 17th century)."
+        },
+        "collection": {
+          "model_answer": "J. Paul Getty Museum",
+          "ground_truth": "J. Paul Getty Museum",
+          "score": 1,
+          "reason": "The model's answer matches the institutional ground truth exactly.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 4,
+      "n_scored": 4
+    },
+    "saul-witch-endor": {
+      "image_id": "saul-witch-endor",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Follower of Hieronymus Bosch",
+          "ground_truth": [
+            "Cornelisz van Oostsanen, Jacob",
+            "Jacob Cornelisz van Oostsanen",
+            "Cornelisz, Jacob",
+            "Cornelisz. van Oostsanen, Jacob"
+          ],
+          "score": 0,
+          "reason": "The model's answer attributes the work to a follower of Hieronymus Bosch, whereas the ground truth identifies the artist as Jacob Cornelisz van Oostsanen."
+        },
+        "title": {
+          "model_answer": "The Dream of the Doctor (Allegory of the Transience of Life)",
+          "ground_truth": "Saul Coming to Consult the Witch of Endor.",
+          "score": 0,
+          "reason": "The model's answer is a completely different title and subject from the ground truth."
+        },
+        "date": {
+          "model_answer": "c. 1500",
+          "ground_truth": "1500 (range 1500–1500)",
+          "score": 1,
+          "reason": "The model's answer 'c. 1500' is correct as it matches the ground truth date of 1500."
+        },
+        "collection": {
+          "model_answer": "The Courtauld, London",
+          "ground_truth": "Rijksmuseum",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different museum (The Courtauld, London) than the ground truth (Rijksmuseum).",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 1,
+      "n_scored": 4
+    },
+    "sennacherib-angel": {
+      "image_id": "sennacherib-angel",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Peter Paul Rubens",
+          "ground_truth": [
+            "Tanzio da Varallo"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Peter Paul Rubens' is incorrect; the correct artist is 'Tanzio da Varallo'."
+        },
+        "title": {
+          "model_answer": "The Defeat of Sennacherib",
+          "ground_truth": "The Forces of Sennacherib put to Rout by the Angel.",
+          "score": 1,
+          "reason": "The model's answer is a widely accepted alternative title for this artwork."
+        },
+        "date": {
+          "model_answer": "c. 1612-1614",
+          "ground_truth": "1574-1635 (range 1574–1635)",
+          "score": 1,
+          "reason": "The model's date range of c. 1612-1614 is entirely within the institutional ground truth range of 1574-1635."
+        },
+        "collection": {
+          "model_answer": "Alte Pinakothek, Munich",
+          "ground_truth": "http://www.wikidata.org/entity/Q55172300",
+          "score": 1,
+          "reason": "The Alte Pinakothek in Munich is part of the Bayerische Staatsgemäldesammlungen (Q55172300).",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 3,
+      "n_scored": 4
+    },
+    "taking-athens-minos": {
+      "image_id": "taking-athens-minos",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Albrecht Altdorfer",
+          "ground_truth": [
+            "Master of the Campana Cassoni"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Albrecht Altdorfer' is incorrect and refers to a completely different artist than the 'Master of the Campana Cassoni'."
+        },
+        "title": {
+          "model_answer": "The Victory of Charlemagne over the Avars near Regensburg",
+          "ground_truth": "The Taking of Athens by Minos.",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different historical event and title than the ground truth."
+        },
+        "date": {
+          "model_answer": "c. 1518",
+          "ground_truth": "1515-1519 (range 1515–1519)",
+          "score": 1,
+          "reason": "The model's answer of 'c. 1518' falls within the institutional ground truth range of 1515-1519."
+        },
+        "collection": {
+          "model_answer": "Gabinetto dei Disegni e delle Stampe, Uffizi Gallery",
+          "ground_truth": "Musee du Petit Palais, Avignon",
+          "score": 0,
+          "reason": "The model's answer refers to the Uffizi Gallery in Florence, whereas the ground truth is the Musée du Petit Palais in Avignon.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 1,
+      "n_scored": 4
+    },
+    "tobit-tobias": {
+      "image_id": "tobit-tobias",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Bernardo Strozzi",
+          "ground_truth": [
+            "Preti, Mattia",
+            "Mattia Preti"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Bernardo Strozzi' is a completely different artist from the ground truth 'Mattia Preti'."
+        },
+        "title": {
+          "model_answer": "Tobit Blessing his Son",
+          "ground_truth": "Tobit Blessing Tobias.",
+          "score": 1,
+          "reason": "The model's answer 'Tobit Blessing his Son' is a correct alternative title for 'Tobit Blessing Tobias', as Tobias is Tobit's son."
+        },
+        "date": {
+          "model_answer": "c. 1630-1635",
+          "ground_truth": "1633-1699 (range 1633–1699)",
+          "score": 1,
+          "reason": "The model's date range of c. 1630-1635 overlaps with the institutional ground truth range of 1633-1699."
+        },
+        "collection": {
+          "model_answer": "The State Hermitage Museum, St. Petersburg",
+          "ground_truth": "Montreal Museum of Fine Arts",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different museum (The State Hermitage Museum) than the ground truth (Montreal Museum of Fine Arts).",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 2,
+      "n_scored": 4
+    },
+    "triumph-bacchus": {
+      "image_id": "triumph-bacchus",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Cornelis de Vos",
+          "ground_truth": [
+            "Mont, Deodat van der",
+            "Deodat van der Mont"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Cornelis de Vos' is a completely different artist from the ground truth 'Deodat van der Mont'."
+        },
+        "title": {
+          "model_answer": "The Triumph of Bacchus",
+          "ground_truth": "The triumph of Bacchus",
+          "score": 1,
+          "reason": "The model's answer matches the ground truth title exactly, ignoring minor capitalization and quotation marks."
+        },
+        "date": {
+          "model_answer": "c. 1636",
+          "ground_truth": "first half 17th century (range 1600–1649)",
+          "score": 1,
+          "reason": "The model's answer of c. 1636 falls within the institutional ground truth range of 1600–1649."
+        }
+      },
+      "score_sum": 2,
+      "n_scored": 3
+    },
+    "triumph-mars": {
+      "image_id": "triumph-mars",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Willem van Nieulandt II",
+          "ground_truth": [
+            "Nieulandt, Guilliam van (II)",
+            "Guilliam van (II) Nieulandt"
+          ],
+          "score": 1,
+          "reason": "'Willem van Nieulandt II' is a well-known variant of 'Guilliam van Nieulandt (II)'."
+        },
+        "title": {
+          "model_answer": "The Triumph of a Roman General",
+          "ground_truth": "The triumph of Mars: an Allegory of War",
+          "score": 0,
+          "reason": "The model's answer refers to a 'Roman General', which is a different subject and title from 'Mars' (the god of war) in the ground truth."
+        },
+        "date": {
+          "model_answer": "c. 1620",
+          "ground_truth": "1627 (dated) (range 1627–1627)",
+          "score": 0,
+          "reason": "The model's answer of 'c. 1620' is 7 years off from the firmly dated ground truth of 1627, which is outside the acceptable range of a few years."
+        },
+        "collection": {
+          "model_answer": "Herzog Anton Ulrich-Museum",
+          "ground_truth": "Portovano, Enrico baron",
+          "score": 1,
+          "reason": "The Herzog Anton Ulrich-Museum is the current repository of the artwork formerly in the collection of Baron Enrico Portovano.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 2,
+      "n_scored": 4
+    },
+    "wedding-peleus-thetis": {
+      "image_id": "wedding-peleus-thetis",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Joachim Wtewael",
+          "ground_truth": [
+            "Cornelisz. van Haarlem, Cornelis",
+            "Cornelis Cornelisz. van Haarlem"
+          ],
+          "score": 0,
+          "reason": "The model's answer refers to a different Dutch Mannerist painter (Joachim Wtewael) than the ground truth artist (Cornelis Cornelisz. van Haarlem)."
+        },
+        "title": {
+          "model_answer": "The Wedding of Peleus and Thetis",
+          "ground_truth": "The wedding of Peleus and Thetis",
+          "score": 1,
+          "reason": "The model's answer matches the ground truth exactly, ignoring capitalization and quotation marks."
+        },
+        "date": {
+          "model_answer": "c. 1612",
+          "ground_truth": "1592-1593 (range 1592–1593)",
+          "score": 0,
+          "reason": "The model's date of c. 1612 is not within a few years of the ground truth range of 1592-1593."
+        },
+        "collection": {
+          "model_answer": "Alte Pinakothek, Munich",
+          "ground_truth": "Frans Hals Museum",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different museum (Alte Pinakothek, Munich) than the ground truth (Frans Hals Museum).",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 1,
+      "n_scored": 4
+    }
+  },
+  "gemini_gemini-3.5-flash": {
+    "abduction-amphitrite": {
+      "image_id": "abduction-amphitrite",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Hendrick de Clerck",
+          "ground_truth": [
+            "Terwesten, Mattheus",
+            "Mattheus Terwesten"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Hendrick de Clerck' is a completely different artist from the ground truth 'Mattheus Terwesten'."
+        },
+        "title": {
+          "model_answer": "The Triumph of Amphitrite",
+          "ground_truth": "Abduction of Amphitrite by Poseidon",
+          "score": 0,
+          "reason": "The model's answer 'The Triumph of Amphitrite' represents a different iconographical theme and title from the ground truth 'Abduction of Amphitrite by Poseidon'."
+        },
+        "date": {
+          "model_answer": "c. 1610",
+          "ground_truth": "1685 - 1757 (range 1685–1757)",
+          "score": 0,
+          "reason": "The model's answer of c. 1610 does not overlap with the ground truth range of 1685-1757."
+        },
+        "collection": {
+          "model_answer": "Museo del Prado",
+          "ground_truth": "Instituut Collectie Nederland",
+          "score": 0,
+          "reason": "The model's answer 'Museo del Prado' is a completely different institution from the ground truth 'Instituut Collectie Nederland'.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 0,
+      "n_scored": 4
+    },
+    "abduction-helen": {
+      "image_id": "abduction-helen",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Guido Reni",
+          "ground_truth": [
+            "Campana, Giacinto",
+            "Giacinto Campana"
+          ],
+          "score": 0,
+          "reason": "Guido Reni is a different artist, although Giacinto Campana was associated with him."
+        },
+        "title": {
+          "model_answer": "The Abduction of Helen",
+          "ground_truth": "The Abduction of Helen.",
+          "score": 1,
+          "reason": "The model's answer matches the institutional ground truth exactly."
+        },
+        "date": {
+          "model_answer": "1631",
+          "ground_truth": "1600-1650 (range 1600–1650)",
+          "score": 1,
+          "reason": "The model's answer '1631' falls within the institutional ground truth range of 1600-1650."
+        },
+        "collection": {
+          "model_answer": "Louvre Museum",
+          "ground_truth": "Palazzo spada, Roma",
+          "score": 0,
+          "reason": "The model's answer 'Louvre Museum' is incorrect and does not match the ground truth 'Palazzo spada, Roma'.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 2,
+      "n_scored": 4
+    },
+    "abigail-david": {
+      "image_id": "abigail-david",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Lucas van Leyden",
+          "ground_truth": [
+            "Cornelisz van Oostsanen, Jacob",
+            "Jacob Cornelisz van Oostsanen",
+            "Cornelisz, Jacob",
+            "Cornelisz. van Oostsanen, Jacob"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Lucas van Leyden' is a different artist from the ground truth 'Jacob Cornelisz van Oostsanen'."
+        },
+        "title": {
+          "model_answer": "The Meeting of David and Abigail",
+          "ground_truth": "Abigail in Supplication before David.",
+          "score": 1,
+          "reason": "The model's answer is a widely accepted alternative title for the same biblical scene depicted in the painting."
+        },
+        "date": {
+          "model_answer": "c. 1515-1520",
+          "ground_truth": "1453-1533 (range 1453–1533)",
+          "score": 1,
+          "reason": "The model's date range of c. 1515-1520 is entirely within the institutional ground truth range of 1453-1533."
+        },
+        "collection": {
+          "model_answer": "Detroit Institute of Arts",
+          "ground_truth": "kunstmuseum, København",
+          "score": 0,
+          "reason": "The model's answer 'Detroit Institute of Arts' is a completely different institution from the ground truth 'kunstmuseum, København'.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 2,
+      "n_scored": 4
+    },
+    "abraham-isaac": {
+      "image_id": "abraham-isaac",
+      "status": "scored",
+      "recognized": true,
+      "elements": {},
+      "score_sum": 0,
+      "n_scored": 0
+    },
+    "abraham-melchizedek": {
+      "image_id": "abraham-melchizedek",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Gaspar de Crayer",
+          "ground_truth": [
+            "Bleker, Gerrit Claesz",
+            "Gerrit Claesz Bleker"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Gaspar de Crayer' is a completely different artist from the ground truth 'Gerrit Claesz Bleker'."
+        },
+        "title": {
+          "model_answer": "The Conversion of Saint Bavo",
+          "ground_truth": "Abraham Meeting Melchizedek.",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different subject and painting."
+        },
+        "date": {
+          "model_answer": "c. 1630-1650",
+          "ground_truth": "1625-1656 (range 1625–1656)",
+          "score": 1,
+          "reason": "The model's date range of c. 1630-1650 is entirely within the ground truth range of 1625-1656."
+        },
+        "collection": {
+          "model_answer": "Museum of Fine Arts, Ghent",
+          "ground_truth": "Private collection (Confidential File)",
+          "score": 0,
+          "reason": "The model's answer 'Museum of Fine Arts, Ghent' does not match the ground truth 'Private collection'.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 1,
+      "n_scored": 4
+    },
+    "abram-lot-divide": {
+      "image_id": "abram-lot-divide",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Antonio Zanchi",
+          "ground_truth": [
+            "Zanchi, Antonio",
+            "Antonio Zanchi"
+          ],
+          "score": 1,
+          "reason": "The model's answer matches the institutional ground truth exactly."
+        },
+        "title": {
+          "model_answer": "Archimedes",
+          "ground_truth": "Abram and Iot Dividing up the World between Them.",
+          "score": 0,
+          "reason": "The model's answer 'Archimedes' is completely different from the ground truth 'Abram and Iot Dividing up the World between Them.'"
+        },
+        "date": {
+          "model_answer": "ca. 1670",
+          "ground_truth": "1651-1722 (range 1651–1722)",
+          "score": 1,
+          "reason": "The model's answer 'ca. 1670' falls within the institutional ground truth range of 1651-1722."
+        },
+        "collection": {
+          "model_answer": null,
+          "ground_truth": "Sta. Maria Zobenigo, Venezia",
+          "score": 0,
+          "reason": "model gave no value",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 2,
+      "n_scored": 3
+    },
+    "aeneas-anchises-troy": {
+      "image_id": "aeneas-anchises-troy",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Gillis van Valckenborch",
+          "ground_truth": [
+            "Suavius, Lambert",
+            "Lambert Suavius"
+          ],
+          "score": 0,
+          "reason": "The model's answer refers to a completely different artist (Gillis van Valckenborch) than the ground truth (Lambert Suavius)."
+        },
+        "title": {
+          "model_answer": "The Burning of Troy",
+          "ground_truth": "Aeneas rescues his father Anchises from the burning Troy",
+          "score": 0,
+          "reason": "The model's answer 'The Burning of Troy' is too generic and omits the primary subject of the painting, which is Aeneas rescuing his father Anchises."
+        },
+        "date": {
+          "model_answer": "c. 1600",
+          "ground_truth": "1550 (range 1550–1550)",
+          "score": 0,
+          "reason": "The model's answer of c. 1600 is 50 years off from the ground truth of 1550, which is outside the acceptable range."
+        },
+        "collection": {
+          "model_answer": null,
+          "ground_truth": "Centraal Museum",
+          "score": 0,
+          "reason": "model gave no value",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 0,
+      "n_scored": 3
+    },
+    "apollo-muses": {
+      "image_id": "apollo-muses",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Hendrick Goltzius",
+          "ground_truth": [
+            "Tintoretto",
+            "Tintoretto, Jacopo"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Hendrick Goltzius' is incorrect and does not match the ground truth artist 'Tintoretto'."
+        },
+        "title": {
+          "model_answer": "The Muses on Mount Helicon",
+          "ground_truth": "Apollo and the Muses.",
+          "score": 1,
+          "reason": "'The Muses on Mount Helicon' is a recognized alternative title/variant for the painting of 'Apollo and the Muses' (often by Claude Lorrain or depicting the same subject matter)."
+        },
+        "date": {
+          "model_answer": "1592",
+          "ground_truth": "1532-1594 (range 1532–1594)",
+          "score": 1,
+          "reason": "The model's answer '1592' falls within the institutional ground truth range of 1532-1594."
+        },
+        "collection": {
+          "model_answer": "Teylers Museum",
+          "ground_truth": "Dr. G.H.A. Clowes, Indianapolis",
+          "score": 0,
+          "reason": "The model's answer 'Teylers Museum' is a completely different institution and location from the ground truth 'Dr. G.H.A. Clowes, Indianapolis' (whose collection is now largely at the Indianapolis Museum of Art).",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 2,
+      "n_scored": 4
+    },
+    "apollo-pan-midas": {
+      "image_id": "apollo-pan-midas",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "title": {
+          "model_answer": "The Judgment of Midas",
+          "ground_truth": "The Competition of Apollo and Pan and the judgment of Midas",
+          "score": 1,
+          "reason": "The model's answer is a widely accepted alternative title and shorthand for the full title."
+        },
+        "date": {
+          "model_answer": "c. 1630",
+          "ground_truth": "c. 1620 (range 1620–1620)",
+          "score": 0,
+          "reason": "The model's answer of c. 1630 is not within a few years of the ground truth date of c. 1620."
+        },
+        "collection": {
+          "model_answer": "State Hermitage Museum",
+          "ground_truth": "Museum Schloss Wilhelmshöhe",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different museum (State Hermitage Museum) than the ground truth (Museum Schloss Wilhelmshöhe).",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 1,
+      "n_scored": 3
+    },
+    "apollo-vulcan-forge": {
+      "image_id": "apollo-vulcan-forge",
+      "status": "parse_error",
+      "elements": {}
+    },
+    "athena-pegasus": {
+      "image_id": "athena-pegasus",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Theodoor van Thulden",
+          "ground_truth": [
+            "Thulden, Theodoor van",
+            "Theodoor van Thulden"
+          ],
+          "score": 1,
+          "reason": "The model's answer matches one of the accepted name variants in the ground truth."
+        },
+        "title": {
+          "model_answer": "Minerva and Pegasus",
+          "ground_truth": "The goddess Pallas Athena and the horse Pegasus",
+          "score": 1,
+          "reason": "'Minerva' is the Roman equivalent of the Greek goddess 'Pallas Athena', making this a correct and common title variant."
+        },
+        "date": {
+          "model_answer": "1654",
+          "ground_truth": "1644 (dated) (range 1644–1644)",
+          "score": 0,
+          "reason": "The model's answer of 1654 is 10 years off from the ground truth of 1644, which is outside the acceptable range."
+        },
+        "collection": {
+          "model_answer": "Royal Museum of Fine Arts Antwerp",
+          "ground_truth": "J. Paul Getty Museum",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different museum (Royal Museum of Fine Arts Antwerp) than the ground truth (J. Paul Getty Museum).",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 2,
+      "n_scored": 4
+    },
+    "balaam-ass": {
+      "image_id": "balaam-ass",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Rembrandt van Rijn",
+          "ground_truth": [
+            "Lastman, Pieter",
+            "Pieter Lastman"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Rembrandt van Rijn' is incorrect; the correct artist is Pieter Lastman."
+        },
+        "title": {
+          "model_answer": "Balaam and the Ass",
+          "ground_truth": "Balaam and his ass",
+          "score": 1,
+          "reason": "The model's answer is a minor variation of the ground truth title, replacing 'his' with 'the'."
+        },
+        "date": {
+          "model_answer": "1626",
+          "ground_truth": "dated 1622 (range 1622–1622)",
+          "score": 1,
+          "reason": "The model's answer of 1626 is within a few years of the ground truth date of 1622."
+        },
+        "collection": {
+          "model_answer": "Musée Cognacq-Jay",
+          "ground_truth": "The Israel Museum",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different museum (Musée Cognacq-Jay in Paris) than the ground truth (The Israel Museum in Jerusalem).",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 2,
+      "n_scored": 4
+    },
+    "bathsheba-letter": {
+      "image_id": "bathsheba-letter",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Jan Brueghel the Younger and Hendrick van Balen",
+          "ground_truth": [
+            "Rubens, Peter Paul [free after]",
+            "Rubens, Peter Paul",
+            "Peter Paul Rubens"
+          ],
+          "score": 0,
+          "reason": "The model's answer attributes the work to Jan Brueghel the Younger and Hendrick van Balen, whereas the ground truth attributes it to Peter Paul Rubens (or free after him)."
+        },
+        "title": {
+          "model_answer": "Bathsheba at her Bath",
+          "ground_truth": "Bathsheba receives a letter from David (2 Samuel 11:4)",
+          "score": 1,
+          "reason": "'Bathsheba at her Bath' is a widely accepted alternative title for paintings depicting this biblical scene."
+        },
+        "date": {
+          "model_answer": "c. 1625-1630",
+          "ground_truth": "after 1635 (range 1635–1635)",
+          "score": 0,
+          "reason": "The model's date range of c. 1625-1630 does not overlap with the ground truth of after 1635."
+        }
+      },
+      "score_sum": 1,
+      "n_scored": 3
+    },
+    "belshazzar-feast": {
+      "image_id": "belshazzar-feast",
+      "status": "scored",
+      "recognized": true,
+      "elements": {},
+      "score_sum": 0,
+      "n_scored": 0
+    },
+    "circe-sorceress": {
+      "image_id": "circe-sorceress",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Giovanni Benedetto Castiglione",
+          "ground_truth": [
+            "Vassallo, Anton Maria",
+            "Anton Maria Vassallo",
+            "Vassallo, Antonio Maria"
+          ],
+          "score": 0,
+          "reason": "The model's answer refers to a different artist (Giovanni Benedetto Castiglione) than the ground truth (Anton Maria Vassallo)."
+        },
+        "title": {
+          "model_answer": "The Sorceress Circe",
+          "ground_truth": "The Sorceress Circe.",
+          "score": 1,
+          "reason": "The model's answer matches the institutional ground truth exactly."
+        },
+        "date": {
+          "model_answer": "c. 1650",
+          "ground_truth": "1577-1657 (range 1577–1657)",
+          "score": 1,
+          "reason": "The model's answer 'c. 1650' falls within the institutional ground truth range of 1577-1657."
+        },
+        "collection": {
+          "model_answer": "J. Paul Getty Museum",
+          "ground_truth": "Uffizi Gallery",
+          "score": 0,
+          "reason": "The model's answer 'J. Paul Getty Museum' is incorrect; the correct collection is the 'Uffizi Gallery'.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 2,
+      "n_scored": 4
+    },
+    "diana-actaeon": {
+      "image_id": "diana-actaeon",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Titian",
+          "ground_truth": [
+            "Titian",
+            "Titiaan",
+            "Tiziano Vecellio"
+          ],
+          "score": 1,
+          "reason": "The model's answer matches one of the accepted name variants in the ground truth."
+        },
+        "title": {
+          "model_answer": "Diana and Actaeon",
+          "ground_truth": "Diana and Actaeon.",
+          "score": 1,
+          "reason": "The model's answer matches the ground truth exactly."
+        },
+        "date": {
+          "model_answer": "1556–1559",
+          "ground_truth": "1559 (range 1559–1559)",
+          "score": 1,
+          "reason": "The model's date range of 1556–1559 overlaps with the ground truth date of 1559."
+        },
+        "collection": {
+          "model_answer": "National Gallery, London and National Galleries of Scotland",
+          "ground_truth": "Earl of Ellesmere, London",
+          "score": 1,
+          "reason": "The model's answer correctly identifies the current museums holding the collection/works formerly belonging to the Earl of Ellesmere (Bridgewater Collection).",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 4,
+      "n_scored": 4
+    },
+    "dido-sacrifice-juno": {
+      "image_id": "dido-sacrifice-juno",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Eustache Le Sueur",
+          "ground_truth": [
+            "Romanelli, Giovanni Francesco",
+            "Giovanni Francesco Romanelli"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Eustache Le Sueur' is a completely different artist from the ground truth 'Giovanni Francesco Romanelli'."
+        },
+        "title": {
+          "model_answer": "Sacrifice to Juno",
+          "ground_truth": "Dido's sacrifice to Juno",
+          "score": 1,
+          "reason": "The model's answer is a highly similar and acceptable title variant of the ground truth."
+        },
+        "date": {
+          "model_answer": "c. 1650",
+          "ground_truth": "1655 (range 1655–1655)",
+          "score": 1,
+          "reason": "'c. 1650' is within a few years of the ground truth of 1655."
+        },
+        "collection": {
+          "model_answer": "Musée du Louvre, Paris",
+          "ground_truth": "Norton Simon Museum",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different museum (Musée du Louvre) than the ground truth (Norton Simon Museum).",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 2,
+      "n_scored": 4
+    },
+    "drunkenness-noah": {
+      "image_id": "drunkenness-noah",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Bernardo Strozzi",
+          "ground_truth": [
+            "Floris, Frans (I) [circle of]",
+            "Floris, Frans (I)",
+            "Frans (I) Floris"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Bernardo Strozzi' is incorrect and does not match the ground truth artist 'Frans Floris (I)' or his circle."
+        },
+        "title": {
+          "model_answer": "The Drunkenness of Noah",
+          "ground_truth": "The drunkenness of Noah",
+          "score": 1,
+          "reason": "The model's answer matches the ground truth exactly, ignoring capitalization and quotation marks."
+        },
+        "date": {
+          "model_answer": "c. 1630",
+          "ground_truth": "c. 1550-1574 (range 1550–1574)",
+          "score": 0,
+          "reason": "The model's answer of c. 1630 is outside the ground truth range of 1550–1574 by several decades."
+        }
+      },
+      "score_sum": 1,
+      "n_scored": 3
+    },
+    "elisha-shunem-woman": {
+      "image_id": "elisha-shunem-woman",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Francisque Millet",
+          "ground_truth": [
+            "Mola, Pier Francesco",
+            "Pier Francesco Mola"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Francisque Millet' refers to a completely different artist than the ground truth 'Pier Francesco Mola'."
+        },
+        "title": {
+          "model_answer": "Landscape with Elijah and the Widow of Zarephath",
+          "ground_truth": "The Prophet Elisha and the Rich Woman of Shunem.",
+          "score": 0,
+          "reason": "The model's answer identifies a different biblical scene (Elijah and the Widow of Zarephath) than the ground truth (Elisha and the Rich Woman of Shunem)."
+        },
+        "date": {
+          "model_answer": "c. 1670-1679",
+          "ground_truth": "1648-1650 (range 1648–1650)",
+          "score": 0,
+          "reason": "The model's date range of c. 1670-1679 does not overlap with the ground truth range of 1648-1650 and is off by about 20 years."
+        },
+        "collection": {
+          "model_answer": "National Gallery, London",
+          "ground_truth": "Ringling Museum, Sarasota",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different museum (National Gallery, London) than the ground truth (Ringling Museum, Sarasota).",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 0,
+      "n_scored": 4
+    },
+    "embassy-hippolyta": {
+      "image_id": "embassy-hippolyta",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Apollonio di Giovanni",
+          "ground_truth": [
+            "Carpaccio, Vittore",
+            "Vittore Carpaccio"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Apollonio di Giovanni' is a completely different artist from the ground truth 'Vittore Carpaccio'."
+        },
+        "title": {
+          "model_answer": "Penthesilea before Priam",
+          "ground_truth": "The Embassy of Hippolyta, Queen of the Amazons, to Theseus, King of Athens.",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different mythological subject and title ('Penthesilea before Priam' vs. 'The Embassy of Hippolyta... to Theseus')."
+        },
+        "date": {
+          "model_answer": "c. 1450-1460",
+          "ground_truth": "1475-1525 (range 1475–1525)",
+          "score": 0,
+          "reason": "The model's date range of c. 1450-1460 does not overlap with the ground truth range of 1475-1525 and is off by more than a few years."
+        },
+        "collection": {
+          "model_answer": null,
+          "ground_truth": "Musée Jacquemart-André",
+          "score": 0,
+          "reason": "model gave no value",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 0,
+      "n_scored": 3
+    },
+    "feast-esther": {
+      "image_id": "feast-esther",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Pietro della Vecchia",
+          "ground_truth": [
+            "Cortona, Pietro da",
+            "Pietro da Cortona"
+          ],
+          "score": 0,
+          "reason": "Pietro della Vecchia is a different artist from Pietro da Cortona."
+        },
+        "title": {
+          "model_answer": "Feast of Esther",
+          "ground_truth": "Feast of Esther.",
+          "score": 1,
+          "reason": "The model's answer matches the institutional ground truth exactly."
+        },
+        "date": {
+          "model_answer": "ca. 1640",
+          "ground_truth": "1622-1678 (range 1622–1678)",
+          "score": 1,
+          "reason": "The model's answer of 'ca. 1640' falls within the institutional ground truth range of 1622-1678."
+        },
+        "collection": {
+          "model_answer": "J. Paul Getty Museum",
+          "ground_truth": "J .Paul Getty Museum, Malibu",
+          "score": 1,
+          "reason": "The model correctly identifies the museum, omitting only the location.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 3,
+      "n_scored": 4
+    },
+    "finding-moses": {
+      "image_id": "finding-moses",
+      "status": "scored",
+      "recognized": true,
+      "elements": {},
+      "score_sum": 0,
+      "n_scored": 0
+    },
+    "flood-deucalion": {
+      "image_id": "flood-deucalion",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Jean-Baptiste Marie Pierre",
+          "ground_truth": [
+            "Carpioni, Giulio",
+            "Giulio Carpioni",
+            "Carpione, Giulio"
+          ],
+          "score": 0,
+          "reason": "The model's answer refers to a completely different artist (Jean-Baptiste Marie Pierre) than the ground truth (Giulio Carpioni)."
+        },
+        "title": {
+          "model_answer": "The Flood of Deucalion",
+          "ground_truth": "A Scene from Greek Mythology: The Flood of the Age of Deucalion.",
+          "score": 1,
+          "reason": "The model's answer is a correct, slightly shortened version of the full title, referring to the same subject."
+        },
+        "date": {
+          "model_answer": "1746",
+          "ground_truth": "1633-1678 (range 1633–1678)",
+          "score": 0,
+          "reason": "The model's answer of 1746 is outside the ground truth range of 1633-1678."
+        },
+        "collection": {
+          "model_answer": "Musée des Beaux-Arts de Nancy",
+          "ground_truth": "Academy of fine Arts, Siena",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different museum in France, whereas the ground truth is in Siena, Italy.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 1,
+      "n_scored": 4
+    },
+    "gathering-manna": {
+      "image_id": "gathering-manna",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Bernardino Luini",
+          "ground_truth": [
+            "Bramantino"
+          ],
+          "score": 0,
+          "reason": "Bernardino Luini is a different artist from Bramantino."
+        },
+        "title": {
+          "model_answer": "The Gathering of Manna",
+          "ground_truth": "The Gathering of Manna.",
+          "score": 1,
+          "reason": "exact match"
+        },
+        "date": {
+          "model_answer": "c. 1520-1523",
+          "ground_truth": "1503-1506 (range 1503–1506)",
+          "score": 0,
+          "reason": "The model's date range of c. 1520-1523 does not overlap with the ground truth range of 1503-1506 and is not within a few years."
+        },
+        "collection": {
+          "model_answer": "Pinacoteca di Brera",
+          "ground_truth": "Samuel H. Kress Foundation, New York",
+          "score": 0,
+          "reason": "The model's answer 'Pinacoteca di Brera' is a completely different museum/collection from the ground truth 'Samuel H. Kress Foundation, New York'.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 1,
+      "n_scored": 4
+    },
+    "hagar-ishmael": {
+      "image_id": "hagar-ishmael",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Carlo Maratta",
+          "ground_truth": [
+            "Cortona, Pietro da",
+            "Pietro da Cortona"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Carlo Maratta' is a different artist from the ground truth 'Pietro da Cortona'."
+        },
+        "title": {
+          "model_answer": "Hagar and Ishmael in the Wilderness",
+          "ground_truth": "Hagar, Ishmael and the Angel in the Wilderness.",
+          "score": 1,
+          "reason": "The model's answer is a common and acceptable title variant for this subject, omitting only the angel which is implied in the scene."
+        },
+        "date": {
+          "model_answer": "c. 1680",
+          "ground_truth": "1637 - 1638 (range 1637–1638)",
+          "score": 0,
+          "reason": "The model's answer of c. 1680 is more than 40 years off from the ground truth range of 1637-1638."
+        },
+        "collection": {
+          "model_answer": "Museo del Prado",
+          "ground_truth": "John and Mable Ringling Museum of Art",
+          "score": 0,
+          "reason": "The model's answer 'Museo del Prado' is a completely different institution from the ground truth 'John and Mable Ringling Museum of Art'.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 1,
+      "n_scored": 4
+    },
+    "isaac-blesses-jacob": {
+      "image_id": "isaac-blesses-jacob",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Govert Flinck",
+          "ground_truth": [
+            "Horst, Gerrit Willemsz.",
+            "Gerrit Willemsz. Horst"
+          ],
+          "score": 0,
+          "reason": "Govert Flinck and Gerrit Willemsz. Horst are two different Dutch Golden Age painters."
+        },
+        "title": {
+          "model_answer": "Isaac Blessing Jacob",
+          "ground_truth": "Isaac blessing Jacob",
+          "score": 1,
+          "reason": "The model's answer matches the ground truth exactly, with only minor differences in capitalization and quotation marks."
+        },
+        "date": {
+          "model_answer": "1638",
+          "ground_truth": "1638 (range 1638–1638)",
+          "score": 1,
+          "reason": "The model's answer matches the ground truth date exactly."
+        },
+        "collection": {
+          "model_answer": "Rijksmuseum, Amsterdam",
+          "ground_truth": "Dulwich Picture Gallery",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different museum (Rijksmuseum, Amsterdam) than the ground truth (Dulwich Picture Gallery).",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 2,
+      "n_scored": 4
+    },
+    "jacob-esau-reconcile": {
+      "image_id": "jacob-esau-reconcile",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Giovanni Maria Bottalla",
+          "ground_truth": [
+            "Cortona, Pietro da",
+            "Pietro da Cortona"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Giovanni Maria Bottalla' is a different artist from the ground truth 'Pietro da Cortona', although Bottalla was a pupil of Cortona."
+        },
+        "title": {
+          "model_answer": "The Meeting of Jacob and Esau",
+          "ground_truth": "Reconciliation of Jacob and Esau.",
+          "score": 1,
+          "reason": "'The Meeting of Jacob and Esau' is a widely accepted title variant for 'Reconciliation of Jacob and Esau' depicting the same biblical event."
+        },
+        "date": {
+          "model_answer": "c. 1640",
+          "ground_truth": "1616-1669 (range 1616–1669)",
+          "score": 1,
+          "reason": "The model's answer 'c. 1640' falls within the institutional ground truth range of 1616-1669."
+        },
+        "collection": {
+          "model_answer": "Capitoline Museums, Rome",
+          "ground_truth": "Palazzo dei Conservatori, Roma",
+          "score": 1,
+          "reason": "The Palazzo dei Conservatori is part of the Capitoline Museums in Rome.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 3,
+      "n_scored": 4
+    },
+    "jason-dragon": {
+      "image_id": "jason-dragon",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Stefano da Ferrara",
+          "ground_truth": [
+            "Roberti, Ercole de'",
+            "Ercole de' Roberti"
+          ],
+          "score": 0,
+          "reason": "'Stefano da Ferrara' is a different artist from 'Ercole de' Roberti', although they are from the same school and period."
+        },
+        "title": {
+          "model_answer": "Jason and the Golden Fleece",
+          "ground_truth": "Episode from the Legend of the Argonauts: Jason Slaying the Sleepless Dragon.",
+          "score": 0,
+          "reason": "The model's answer is too generic and refers to the overall myth rather than the specific episode title designated in the ground truth."
+        },
+        "date": {
+          "model_answer": "c. 1490",
+          "ground_truth": "1460-1496 (range 1460–1496)",
+          "score": 1,
+          "reason": "The model's answer of 'c. 1490' falls within the institutional ground truth range of 1460-1496."
+        },
+        "collection": {
+          "model_answer": null,
+          "ground_truth": "Phoebe Timpson",
+          "score": 0,
+          "reason": "model gave no value",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 1,
+      "n_scored": 3
+    },
+    "jephtha-daughter": {
+      "image_id": "jephtha-daughter",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Frans Francken II",
+          "ground_truth": [
+            "Francken, Hieronymus (III)",
+            "Hieronymus (III) Francken"
+          ],
+          "score": 0,
+          "reason": "The model's answer refers to Frans Francken II, who is a different artist and the father of Hieronymus Francken III."
+        },
+        "title": {
+          "model_answer": "The Meeting of Jephthah and his Daughter",
+          "ground_truth": "Jephtha welcomed by his daughter (Judges 11:29-40)",
+          "score": 1,
+          "reason": "The model's answer is a correct title variant for the same biblical subject."
+        },
+        "date": {
+          "model_answer": "c. 1620",
+          "ground_truth": "1626 - 1661 (range 1626–1661)",
+          "score": 1,
+          "reason": "The model's answer of c. 1620 is within a few years of the start of the ground truth range (1626-1661)."
+        }
+      },
+      "score_sum": 2,
+      "n_scored": 3
+    },
+    "jeremiah-baruch": {
+      "image_id": "jeremiah-baruch",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Washington Allston",
+          "ground_truth": [
+            "Allston, Washington",
+            "Washington Allston"
+          ],
+          "score": 1,
+          "reason": "The model's answer matches one of the accepted name variants in the ground truth."
+        },
+        "title": {
+          "model_answer": "Jeremiah Dictating his Prophecy of the Destruction of Jerusalem to Baruch the Scribe",
+          "ground_truth": "Jeremiah Dictating His Prophecy of the Destruction of Jerusalem to Baruch the Scribe.",
+          "score": 1,
+          "reason": "The model's answer matches the ground truth exactly, with only minor differences in capitalization and quotation marks."
+        },
+        "date": {
+          "model_answer": "1820",
+          "ground_truth": "1799-1843 (range 1799–1843)",
+          "score": 1,
+          "reason": "The model's answer '1820' falls within the institutional ground truth range of 1799-1843."
+        },
+        "collection": {
+          "model_answer": "Yale University Art Gallery",
+          "ground_truth": "Yale University Art Gallery",
+          "score": 1,
+          "reason": "The model's answer matches the institutional ground truth exactly.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 4,
+      "n_scored": 4
+    },
+    "joseph-cup-dream": {
+      "image_id": "joseph-cup-dream",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Jan Cossiers",
+          "ground_truth": [
+            "Carlone, Giovanni Battista",
+            "Giovanni Battista Carlone"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Jan Cossiers' refers to a completely different artist than 'Giovanni Battista Carlone'."
+        },
+        "title": {
+          "model_answer": "The Finding of the Cup in Benjamin's Sack",
+          "ground_truth": "Two Scenes in the Life of Joseph: \"The Discovery of Joseph's Cup in Benjamin's Sack\" and \"Joseph Interpreting Pharaoh's Dream\".",
+          "score": 0,
+          "reason": "The model's answer only identifies one of the two scenes depicted in the painting's title, omitting 'Joseph Interpreting Pharaoh's Dream' entirely."
+        },
+        "date": {
+          "model_answer": "c. 1650",
+          "ground_truth": "1612-1677 (range 1612–1677)",
+          "score": 1,
+          "reason": "The model's answer 'c. 1650' falls within the institutional ground truth range of 1612-1677."
+        },
+        "collection": {
+          "model_answer": "Hermitage Museum, St. Petersburg",
+          "ground_truth": "Finch College, New York",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different institution (Hermitage Museum, St. Petersburg) than the ground truth (Finch College, New York).",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 1,
+      "n_scored": 4
+    },
+    "judah-tamar": {
+      "image_id": "judah-tamar",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Jan Swart van Groningen",
+          "ground_truth": [
+            "Hemessen, Jan Sanders van",
+            "Jan Sanders van Hemessen"
+          ],
+          "score": 0,
+          "reason": "The model's answer refers to a different artist (Jan Swart van Groningen) than the ground truth (Jan Sanders van Hemessen)."
+        },
+        "title": {
+          "model_answer": "Judah and Tamar",
+          "ground_truth": "Judah's love-affair with Tamar; he gives her his signet-ring (Genesis 38:18)",
+          "score": 1,
+          "reason": "The model's answer 'Judah and Tamar' is a standard and correct concise title for the biblical scene described in the ground truth."
+        },
+        "date": {
+          "model_answer": "ca. 1530 - 1540",
+          "ground_truth": "second or third quarter 16th century (range 1526–1574)",
+          "score": 1,
+          "reason": "The model's date range of ca. 1530-1540 falls entirely within the institutional ground truth range of 1526–1574."
+        },
+        "collection": {
+          "model_answer": "Rijksmuseum, Amsterdam",
+          "ground_truth": "Private collection",
+          "score": 0,
+          "reason": "The model's answer 'Rijksmuseum, Amsterdam' is a public museum, which contradicts the ground truth of 'Private collection'.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 2,
+      "n_scored": 4
+    },
+    "judgement-midas": {
+      "image_id": "judgement-midas",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Cima da Conegliano",
+          "ground_truth": [
+            "Cima da Conegliano, Giovanni Battista",
+            "Giovanni Battista Cima da Conegliano"
+          ],
+          "score": 1,
+          "reason": "The model's answer is a widely accepted name variant of the artist."
+        },
+        "title": {
+          "model_answer": "The Judgment of Midas",
+          "ground_truth": "The Judgement of Midas.",
+          "score": 1,
+          "reason": "The model's answer is correct, using a standard spelling variant ('Judgment' instead of 'Judgement') of the ground truth title."
+        },
+        "date": {
+          "model_answer": "c. 1507-1509",
+          "ground_truth": "1459-1518 (range 1459–1518)",
+          "score": 1,
+          "reason": "The model's date range of c. 1507-1509 falls entirely within the institutional ground truth range of 1459-1518."
+        },
+        "collection": {
+          "model_answer": "Statens Museum for Kunst",
+          "ground_truth": "Pinacoteca di Parma, Parma",
+          "score": 0,
+          "reason": "The model's answer 'Statens Museum for Kunst' is a completely different museum located in Copenhagen, Denmark, whereas the ground truth is the Pinacoteca di Parma in Italy.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 3,
+      "n_scored": 4
+    },
+    "judgement-solomon": {
+      "image_id": "judgement-solomon",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Jusepe de Ribera",
+          "ground_truth": [
+            "Cresti, Domenico",
+            "Domenico Cresti",
+            "Passignano, Domenico"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Jusepe de Ribera' is a completely different artist from the ground truth 'Domenico Cresti' (Passignano)."
+        },
+        "title": {
+          "model_answer": "The Judgment of Solomon",
+          "ground_truth": "Judgement of Solomon.",
+          "score": 1,
+          "reason": "The model's answer is correct, with only minor differences in spelling ('Judgment' vs 'Judgement') and the inclusion of the leading article 'The'."
+        },
+        "date": {
+          "model_answer": "c. 1609-1610",
+          "ground_truth": "1578-1638 (range 1578–1638)",
+          "score": 1,
+          "reason": "The model's date range of c. 1609-1610 falls entirely within the institutional ground truth range of 1578-1638."
+        },
+        "collection": {
+          "model_answer": "Galleria Borghese",
+          "ground_truth": "Gallerie Borghese, Roma",
+          "score": 1,
+          "reason": "The model's answer 'Galleria Borghese' is a correct and standard name variant for the ground truth 'Gallerie Borghese, Roma'.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 3,
+      "n_scored": 4
+    },
+    "jupiter-mercury": {
+      "image_id": "jupiter-mercury",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Dosso Dossi",
+          "ground_truth": [
+            "Dossi, Dosso",
+            "Dosso Dossi"
+          ],
+          "score": 1,
+          "reason": "The model's answer matches one of the accepted name variants in the ground truth."
+        },
+        "title": {
+          "model_answer": "Jupiter, Mercury and Virtue",
+          "ground_truth": "Jupiter and Mercury.",
+          "score": 1,
+          "reason": "The model's answer is a more complete and widely recognized title for the same painting by Dosso Dossi."
+        },
+        "date": {
+          "model_answer": "c. 1524",
+          "ground_truth": "1499-1542 (range 1499–1542)",
+          "score": 1,
+          "reason": "The model's answer 'c. 1524' falls within the institutional ground truth range of 1499-1542."
+        },
+        "collection": {
+          "model_answer": "Wawel Royal Castle, Kraków",
+          "ground_truth": "Kunsthistorisches Museum Wien",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different museum in Kraków, Poland, whereas the ground truth is the Kunsthistorisches Museum in Vienna, Austria.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 3,
+      "n_scored": 4
+    },
+    "lot-daughters": {
+      "image_id": "lot-daughters",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Guercino (Giovanni Francesco Barbieri)",
+          "ground_truth": [
+            "Guercino",
+            "Guercino (Barbieri, Giovanni Francesco) (after)",
+            "Guercino (Barbieri, Giovanni Francesco)"
+          ],
+          "score": 1,
+          "reason": "The model's answer is a correct variant of the artist's name, matching the ground truth."
+        },
+        "title": {
+          "model_answer": "Lot and his Daughters",
+          "ground_truth": "Lot and His Daughters.",
+          "score": 1,
+          "reason": "The model's answer matches the ground truth exactly, with only minor differences in capitalization and quotation marks."
+        },
+        "date": {
+          "model_answer": "1650",
+          "ground_truth": "1611-1666 (range 1611–1666)",
+          "score": 1,
+          "reason": "The model's answer '1650' falls within the institutional ground truth range of 1611-1666."
+        },
+        "collection": {
+          "model_answer": "Musée du Louvre, Paris",
+          "ground_truth": "Toledo Museum of Art, Toledo",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different museum (Musée du Louvre, Paris) than the ground truth (Toledo Museum of Art, Toledo).",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 3,
+      "n_scored": 4
+    },
+    "marriage-cupid-psyche": {
+      "image_id": "marriage-cupid-psyche",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "title": {
+          "model_answer": "The Marriage of Cupid and Psyche",
+          "ground_truth": "Marriage of Cupid and Psyche",
+          "score": 1,
+          "reason": "The model's answer is identical to the ground truth, with only the addition of the leading article 'The'."
+        },
+        "date": {
+          "model_answer": "c. 1645",
+          "ground_truth": "19th century (range 1800–1899)",
+          "score": 0,
+          "reason": "The model's date of c. 1645 does not overlap with the 19th-century ground truth range of 1800–1899."
+        },
+        "collection": {
+          "model_answer": "Musée du Louvre",
+          "ground_truth": "Private collection",
+          "score": 0,
+          "reason": "The model's answer 'Musée du Louvre' is a public museum, which contradicts the ground truth of 'Private collection'.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 1,
+      "n_scored": 3
+    },
+    "meeting-dido-aeneas": {
+      "image_id": "meeting-dido-aeneas",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Peter Paul Rubens",
+          "ground_truth": [
+            "Coignet, Michiel (II)",
+            "Michiel (II) Coignet"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Peter Paul Rubens' is incorrect; the correct artist is 'Michiel (II) Coignet'."
+        },
+        "title": {
+          "model_answer": "The Meeting of Dido and Aeneas",
+          "ground_truth": "The meeting of Dido and Aeneas",
+          "score": 1,
+          "reason": "The model's answer matches the ground truth exactly, with only minor differences in capitalization and quotation marks."
+        },
+        "date": {
+          "model_answer": "c. 1630",
+          "ground_truth": "1648 (dated) (range 1648–1648)",
+          "score": 0,
+          "reason": "The model's answer of c. 1630 is not within a few years of the ground truth date of 1648."
+        }
+      },
+      "score_sum": 1,
+      "n_scored": 3
+    },
+    "moses-crown-pharaoh": {
+      "image_id": "moses-crown-pharaoh",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Giovanni Battista Tiepolo",
+          "ground_truth": [
+            "Tiepolo, Giovanni Battista",
+            "Giovanni Battista Tiepolo"
+          ],
+          "score": 1,
+          "reason": "The model's answer matches the institutional ground truth exactly."
+        },
+        "title": {
+          "model_answer": "The Presentation in the Temple",
+          "ground_truth": "The Child Moses Trampling on the Crown of the Pharoahs.",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different biblical subject ('The Presentation in the Temple' vs. 'The Child Moses Trampling on the Crown of the Pharoahs')."
+        },
+        "date": {
+          "model_answer": "c. 1735-1740",
+          "ground_truth": "1716-1770 (range 1716–1770)",
+          "score": 1,
+          "reason": "The model's date range of c. 1735-1740 is entirely within the institutional ground truth range of 1716-1770."
+        },
+        "collection": {
+          "model_answer": "Gemäldegalerie Alte Meister, Dresden",
+          "ground_truth": "Amherst College, Amherst",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different institution in Dresden, Germany, whereas the ground truth is Amherst College in Massachusetts.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 2,
+      "n_scored": 4
+    },
+    "naaman-syrian": {
+      "image_id": "naaman-syrian",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Lucas van Leyden",
+          "ground_truth": [
+            "Engelbrechtszoon, Cornelis",
+            "Cornelis Engelbrechtszoon",
+            "Engebrechtsz., Cornelis",
+            "Engebrechtsz., Cornelius"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Lucas van Leyden' is a different artist, although he was a pupil of Cornelis Engelbrechtszoon."
+        },
+        "title": {
+          "model_answer": "Triptych with the Baptism of Christ",
+          "ground_truth": "The Story of the Syrian Captain Naaman.",
+          "score": 0,
+          "reason": "The model's answer refers to a different title/subject ('Triptych with the Baptism of Christ') than the ground truth ('The Story of the Syrian Captain Naaman')."
+        },
+        "date": {
+          "model_answer": "1521",
+          "ground_truth": "1488-1533 (range 1488–1533)",
+          "score": 1,
+          "reason": "The model's answer '1521' falls within the institutional ground truth range of 1488-1533."
+        },
+        "collection": {
+          "model_answer": "Museo Nacional Thyssen-Bornemisza, Madrid",
+          "ground_truth": "Kunsthistorisches Museum Wien",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different museum (Museo Nacional Thyssen-Bornemisza in Madrid) than the ground truth (Kunsthistorisches Museum Wien in Vienna).",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 1,
+      "n_scored": 4
+    },
+    "nausicaa-ulysses": {
+      "image_id": "nausicaa-ulysses",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Peter Paul Rubens",
+          "ground_truth": [
+            "Lastman, Pieter",
+            "Pieter Lastman"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Peter Paul Rubens' is a completely different artist from the ground truth 'Pieter Lastman'."
+        },
+        "title": {
+          "model_answer": "The Finding of Erichthonius",
+          "ground_truth": "The meeting of Nausicaa and Ulysses",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different mythological subject than the ground truth."
+        },
+        "date": {
+          "model_answer": "ca. 1632-1633",
+          "ground_truth": "dated 1619 (range 1619–1619)",
+          "score": 0,
+          "reason": "The model's date of ca. 1632-1633 does not overlap with the ground truth date of 1619 and is off by more than a few years."
+        },
+        "collection": {
+          "model_answer": "Allen Memorial Art Museum",
+          "ground_truth": "Alte Pinakothek",
+          "score": 0,
+          "reason": "The model's answer 'Allen Memorial Art Museum' is a completely different institution from the ground truth 'Alte Pinakothek'.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 0,
+      "n_scored": 4
+    },
+    "potiphar-wife": {
+      "image_id": "potiphar-wife",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Giovanni Bilivert",
+          "ground_truth": [
+            "Bilivert, Giovanni",
+            "Giovanni Bilivert"
+          ],
+          "score": 1,
+          "reason": "The model's answer matches the institutional ground truth exactly."
+        },
+        "title": {
+          "model_answer": "The Chastity of Joseph",
+          "ground_truth": "Josephs Keuschheit",
+          "score": 1,
+          "reason": "The model's answer is a correct English translation of the German ground truth title."
+        },
+        "collection": {
+          "model_answer": "Galleria Nazionale d'Arte Antica, Palazzo Barberini",
+          "ground_truth": "Galleria Nazionale d'arte Antica",
+          "score": 1,
+          "reason": "The model's answer correctly identifies the institution and specifies the location (Palace Barberini) where the collection is housed.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 3,
+      "n_scored": 3
+    },
+    "prodigal-son-brothel": {
+      "image_id": "prodigal-son-brothel",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Jan Miel",
+          "ground_truth": [
+            "Bredael, Peeter van",
+            "Peeter van Bredael"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Jan Miel' is a completely different artist from the ground truth 'Peeter van Bredael'."
+        },
+        "title": {
+          "model_answer": "The Interrupted Serenade",
+          "ground_truth": "The Prodigal Son is being chased from the brotherl after spending all his money (Luke 15:13)",
+          "score": 0,
+          "reason": "The model's answer 'The Interrupted Serenade' is completely different from the ground truth title 'The Prodigal Son is being chased from the brotherl after spending all his money (Luke 15:13)'."
+        },
+        "date": {
+          "model_answer": "c. 1640",
+          "ground_truth": "after 1658 (range 1658–1658)",
+          "score": 0,
+          "reason": "The model's answer of 'c. 1640' is too far from the ground truth of 'after 1658'."
+        }
+      },
+      "score_sum": 0,
+      "n_scored": 3
+    },
+    "prometheus-chained-vulcan": {
+      "image_id": "prometheus-chained-vulcan",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Dirck van Baburen",
+          "ground_truth": [
+            "Baburen, Dirck van",
+            "Dirck van Baburen"
+          ],
+          "score": 1,
+          "reason": "The model's answer matches the ground truth name variant exactly."
+        },
+        "title": {
+          "model_answer": "Prometheus Being Chained by Vulcan",
+          "ground_truth": "Prometheus chained by Vulcan",
+          "score": 1,
+          "reason": "The model's answer is a very close variation of the ground truth title, adding only the word 'Being' which does not change the meaning."
+        },
+        "date": {
+          "model_answer": "1623",
+          "ground_truth": "1623 (range 1623–1623)",
+          "score": 1,
+          "reason": "The model's answer matches the ground truth exactly."
+        },
+        "collection": {
+          "model_answer": "Rijksmuseum",
+          "ground_truth": "Rijksmuseum",
+          "score": 1,
+          "reason": "The model's answer matches the institutional ground truth exactly.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 4,
+      "n_scored": 4
+    },
+    "rape-deianira": {
+      "image_id": "rape-deianira",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Antonio del Pollaiuolo",
+          "ground_truth": [
+            "Pollaiolo, Antonio",
+            "Antonio Pollaiolo",
+            "Pollaiolo, Antonio del",
+            "Pollaiuolo, Antonio"
+          ],
+          "score": 1,
+          "reason": "The model's answer is a correct spelling variant of the artist's name."
+        },
+        "title": {
+          "model_answer": "Hercules and Deianira",
+          "ground_truth": "The Rape of Deianira.",
+          "score": 1,
+          "reason": "The model's answer 'Hercules and Deianira' is a widely accepted alternative title for the painting depicting the Rape of Deianira."
+        },
+        "date": {
+          "model_answer": "c. 1470",
+          "ground_truth": "1473 (range 1473–1473)",
+          "score": 1,
+          "reason": "The model's answer of 'c. 1470' is within a few years of the ground truth date of 1473."
+        },
+        "collection": {
+          "model_answer": "Yale University Art Gallery",
+          "ground_truth": "Yale University Art Gallery",
+          "score": 1,
+          "reason": "The model's answer matches the institutional ground truth exactly.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 4,
+      "n_scored": 4
+    },
+    "sacrifice-iphigenia": {
+      "image_id": "sacrifice-iphigenia",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Pieter Lastman",
+          "ground_truth": [
+            "Wet, Jacob de (I)",
+            "Jacob de (I) Wet"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Pieter Lastman' is a different artist than the ground truth 'Jacob de Wet (I)'."
+        },
+        "title": {
+          "model_answer": "The Sacrifice of Iphigenia",
+          "ground_truth": "The sacrifice of Iphigenia",
+          "score": 1,
+          "reason": "The model's answer matches the ground truth exactly, ignoring capitalization and quotation marks."
+        },
+        "date": {
+          "model_answer": "1614",
+          "ground_truth": "1635 - 1672 (range 1635–1672)",
+          "score": 0,
+          "reason": "The model's answer of 1614 is outside the ground truth range of 1635-1672 by more than a few years."
+        },
+        "collection": {
+          "model_answer": "Rijksmuseum, Amsterdam",
+          "ground_truth": "Mautner-Markhof",
+          "score": 0,
+          "reason": "The model's answer 'Rijksmuseum, Amsterdam' does not match the ground truth collection 'Mautner-Markhof', which is an Austrian private collection.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 1,
+      "n_scored": 4
+    },
+    "sacrifice-jephthah": {
+      "image_id": "sacrifice-jephthah",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Jean-Honoré Fragonard",
+          "ground_truth": [
+            "Mazzoni, Sebastiano",
+            "Sebastiano Mazzoni"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Jean-Honoré Fragonard' is incorrect and does not match the ground truth artist 'Sebastiano Mazzoni'."
+        },
+        "title": {
+          "model_answer": "Coresus Sacrificing Himself to Save Callirhoe",
+          "ground_truth": "Sacrifice of Jephthah.",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different mythological subject ('Coresus Sacrificing Himself to Save Callirhoe') than the biblical subject in the ground truth ('Sacrifice of Jephthah')."
+        },
+        "date": {
+          "model_answer": "1765",
+          "ground_truth": "1631-1678 (range 1631–1678)",
+          "score": 0,
+          "reason": "The model's answer of 1765 is far outside the ground truth range of 1631-1678."
+        },
+        "collection": {
+          "model_answer": "Musée du Louvre",
+          "ground_truth": "William Rockhill Nelson Gallery of Art, Kansas City",
+          "score": 0,
+          "reason": "The model's answer 'Musée du Louvre' is a completely different institution from the ground truth 'William Rockhill Nelson Gallery of Art, Kansas City'.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 0,
+      "n_scored": 4
+    },
+    "sacrifice-venus-temple": {
+      "image_id": "sacrifice-venus-temple",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Peter Paul Rubens",
+          "ground_truth": [
+            "Rubens, Peter Paul",
+            "Peter Paul Rubens"
+          ],
+          "score": 1,
+          "reason": "The model's answer matches the institutional ground truth exactly."
+        },
+        "title": {
+          "model_answer": "The Feast of Venus",
+          "ground_truth": "Sacrifice to Venus in a temple",
+          "score": 0,
+          "reason": "The model's answer 'The Feast of Venus' refers to a different subject/painting than 'Sacrifice to Venus in a temple'."
+        },
+        "date": {
+          "model_answer": "c. 1636-1637",
+          "ground_truth": "c. 1630 (range 1630–1630)",
+          "score": 0,
+          "reason": "The model's date of c. 1636-1637 is 6 to 7 years off from the ground truth of c. 1630, which is outside the acceptable range of a few years."
+        },
+        "collection": {
+          "model_answer": "Kunsthistorisches Museum, Vienna",
+          "ground_truth": "Courtauld Gallery",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different museum (Kunsthistorisches Museum, Vienna) than the ground truth (Courtauld Gallery).",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 1,
+      "n_scored": 4
+    },
+    "samson-pillars": {
+      "image_id": "samson-pillars",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Valerio Castello",
+          "ground_truth": [
+            "Rubens, Peter Paul [manner of/after]",
+            "Rubens, Peter Paul",
+            "Peter Paul Rubens"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Valerio Castello' is a completely different artist from the ground truth 'Peter Paul Rubens'."
+        },
+        "title": {
+          "model_answer": "Samson Destroying the Temple",
+          "ground_truth": "Samson breaks the pillars; the temple of Dagon collapses, killing all that are in it (Judges 16:29-31)",
+          "score": 1,
+          "reason": "The model's answer is a concise and widely accepted alternative title for the depicted biblical scene."
+        },
+        "date": {
+          "model_answer": "c. 1650",
+          "ground_truth": "first half 17th century (range 1600–1650)",
+          "score": 1,
+          "reason": "The model's answer 'c. 1650' overlaps with the end of the institutional ground truth range of 1600–1650."
+        },
+        "collection": {
+          "model_answer": "Hermitage Museum, St. Petersburg",
+          "ground_truth": "J. Paul Getty Museum",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different museum (Hermitage Museum) than the ground truth (J. Paul Getty Museum).",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 2,
+      "n_scored": 4
+    },
+    "saul-witch-endor": {
+      "image_id": "saul-witch-endor",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Jan de Beer",
+          "ground_truth": [
+            "Cornelisz van Oostsanen, Jacob",
+            "Jacob Cornelisz van Oostsanen",
+            "Cornelisz, Jacob",
+            "Cornelisz. van Oostsanen, Jacob"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Jan de Beer' is a completely different artist from the ground truth 'Jacob Cornelisz van Oostsanen'."
+        },
+        "title": {
+          "model_answer": "The Sorceress",
+          "ground_truth": "Saul Coming to Consult the Witch of Endor.",
+          "score": 0,
+          "reason": "The model's answer 'The Sorceress' is too generic and does not match the specific title 'Saul Coming to Consult the Witch of Endor'."
+        },
+        "date": {
+          "model_answer": "1506",
+          "ground_truth": "1500 (range 1500–1500)",
+          "score": 1,
+          "reason": "The model's answer of 1506 is within a few years of the ground truth date of 1500."
+        },
+        "collection": {
+          "model_answer": "British Museum",
+          "ground_truth": "Rijksmuseum",
+          "score": 0,
+          "reason": "The model's answer 'British Museum' is a different institution than the ground truth 'Rijksmuseum'.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 1,
+      "n_scored": 4
+    },
+    "sennacherib-angel": {
+      "image_id": "sennacherib-angel",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Tanzio da Varallo",
+          "ground_truth": [
+            "Tanzio da Varallo"
+          ],
+          "score": 1,
+          "reason": "The model's answer is an exact match to the institutional ground truth."
+        },
+        "title": {
+          "model_answer": "The Defeat of Sennacherib",
+          "ground_truth": "The Forces of Sennacherib put to Rout by the Angel.",
+          "score": 1,
+          "reason": "The model's answer is a widely accepted alternative title for this artwork."
+        },
+        "date": {
+          "model_answer": "ca. 1627-1629",
+          "ground_truth": "1574-1635 (range 1574–1635)",
+          "score": 1,
+          "reason": "The model's date range of ca. 1627-1629 is entirely within the institutional ground truth range of 1574-1635."
+        },
+        "collection": {
+          "model_answer": "Museo Civico, Novara",
+          "ground_truth": "http://www.wikidata.org/entity/Q55172300",
+          "score": 1,
+          "reason": "The model's answer 'Museo Civico, Novara' refers to the municipal museum complex of Novara, which includes the Galleria d'arte moderna Paolo e Adele Giannoni (Q55172300).",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 4,
+      "n_scored": 4
+    },
+    "taking-athens-minos": {
+      "image_id": "taking-athens-minos",
+      "status": "scored",
+      "recognized": false,
+      "elements": {
+        "artist": {
+          "model_answer": null,
+          "ground_truth": [
+            "Master of the Campana Cassoni"
+          ],
+          "score": 0,
+          "reason": "model gave no value"
+        },
+        "title": {
+          "model_answer": null,
+          "ground_truth": "The Taking of Athens by Minos.",
+          "score": 0,
+          "reason": "model gave no value"
+        },
+        "date": {
+          "model_answer": null,
+          "ground_truth": "1515-1519 (range 1515–1519)",
+          "score": 0,
+          "reason": "model gave no value"
+        },
+        "collection": {
+          "model_answer": null,
+          "ground_truth": "Musee du Petit Palais, Avignon",
+          "score": 0,
+          "reason": "model gave no value",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 0,
+      "n_scored": 0
+    },
+    "tobit-tobias": {
+      "image_id": "tobit-tobias",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Matthias Stom",
+          "ground_truth": [
+            "Preti, Mattia",
+            "Mattia Preti"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Matthias Stom' is a different artist than the ground truth 'Mattia Preti'."
+        },
+        "title": {
+          "model_answer": "The Departure of Tobias",
+          "ground_truth": "Tobit Blessing Tobias.",
+          "score": 0,
+          "reason": "The model's answer 'The Departure of Tobias' describes a different iconographical scene/action than the ground truth 'Tobit Blessing Tobias'."
+        },
+        "date": {
+          "model_answer": "c. 1640",
+          "ground_truth": "1633-1699 (range 1633–1699)",
+          "score": 1,
+          "reason": "The model's answer 'c. 1640' falls within the institutional ground truth range of 1633-1699."
+        },
+        "collection": {
+          "model_answer": null,
+          "ground_truth": "Montreal Museum of Fine Arts",
+          "score": 0,
+          "reason": "model gave no value",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 1,
+      "n_scored": 3
+    },
+    "triumph-bacchus": {
+      "image_id": "triumph-bacchus",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Frans Francken the Younger",
+          "ground_truth": [
+            "Mont, Deodat van der",
+            "Deodat van der Mont"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Frans Francken the Younger' is a different artist from the ground truth 'Deodat van der Mont'."
+        },
+        "title": {
+          "model_answer": "The Triumph of Bacchus",
+          "ground_truth": "The triumph of Bacchus",
+          "score": 1,
+          "reason": "The model's answer matches the ground truth title exactly, ignoring minor capitalization and quotation marks."
+        },
+        "date": {
+          "model_answer": "c. 1620",
+          "ground_truth": "first half 17th century (range 1600–1649)",
+          "score": 1,
+          "reason": "The model's answer of c. 1620 falls within the institutional ground truth range of 1600–1649."
+        }
+      },
+      "score_sum": 2,
+      "n_scored": 3
+    },
+    "triumph-mars": {
+      "image_id": "triumph-mars",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Willem van Nieulandt II",
+          "ground_truth": [
+            "Nieulandt, Guilliam van (II)",
+            "Guilliam van (II) Nieulandt"
+          ],
+          "score": 1,
+          "reason": "'Willem van Nieulandt II' is a well-known variant of 'Guilliam van Nieulandt (II)'."
+        },
+        "title": {
+          "model_answer": "The Triumph of Scipio Africanus",
+          "ground_truth": "The triumph of Mars: an Allegory of War",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different subject (Scipio Africanus instead of Mars/War)."
+        },
+        "date": {
+          "model_answer": "1615",
+          "ground_truth": "1627 (dated) (range 1627–1627)",
+          "score": 0,
+          "reason": "The model's answer of 1615 is not within a few years of the ground truth date of 1627."
+        },
+        "collection": {
+          "model_answer": "Rijksmuseum, Amsterdam",
+          "ground_truth": "Portovano, Enrico baron",
+          "score": 1,
+          "reason": "The painting (Portrait of a Man, called Enrico Portovano by Paris Bordone) is currently in the collection of the Rijksmuseum, Amsterdam, which is acceptable as the current holding institution.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 2,
+      "n_scored": 4
+    },
+    "wedding-peleus-thetis": {
+      "image_id": "wedding-peleus-thetis",
+      "status": "scored",
+      "recognized": true,
+      "elements": {
+        "artist": {
+          "model_answer": "Frans Floris",
+          "ground_truth": [
+            "Cornelisz. van Haarlem, Cornelis",
+            "Cornelis Cornelisz. van Haarlem"
+          ],
+          "score": 0,
+          "reason": "The model's answer 'Frans Floris' is a different artist from the ground truth 'Cornelis Cornelisz. van Haarlem'."
+        },
+        "title": {
+          "model_answer": "The Feast of the Gods",
+          "ground_truth": "The wedding of Peleus and Thetis",
+          "score": 1,
+          "reason": "'The Feast of the Gods' is a widely accepted alternative title and description for depictions of the wedding of Peleus and Thetis."
+        },
+        "date": {
+          "model_answer": "1550",
+          "ground_truth": "1592-1593 (range 1592–1593)",
+          "score": 0,
+          "reason": "The model's answer of 1550 is not within a reasonable range of the ground truth of 1592-1593."
+        },
+        "collection": {
+          "model_answer": "Royal Museum of Fine Arts Antwerp",
+          "ground_truth": "Frans Hals Museum",
+          "score": 0,
+          "reason": "The model's answer refers to a completely different museum in a different city and country than the ground truth.",
+          "low_confidence": true
+        }
+      },
+      "score_sum": 1,
+      "n_scored": 4
+    }
+  }
+}
