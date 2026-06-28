@@ -17,6 +17,9 @@ python3 -m venv .venv && source .venv/bin/activate && pip install -r requirement
 
 # Run the probe battery (keys from .env — see .env.example; --dry-run to preview)
 .venv/bin/python run_probes.py --models gemini:gemini-2.5-pro harvard:gpt-4o --dry-run
+
+# Build the static human-evaluation site into docs/ (offline; no API calls)
+.venv/bin/python build_eval_site.py
 ```
 
 Other downloader flags: `--all-canvases` (every canvas of a manifest, not just the first), `--out` (output dir, default `data/images`), `--log` (default `data/download_log.json`).
@@ -24,6 +27,10 @@ Other downloader flags: `--all-canvases` (every canvas of a manifest, not just t
 `run_probes.py` flags: `--probes A B_plain B_framed B_forced B_enriched C`, `--images <id ...>`, `--workers` (default 4, one model×image unit per worker), `--delay` (default 2s, per-provider across all workers), `--max-edge` (default 2048), `--force`, `--reports-only` (rebuild markdown reports, no API calls). Model specs are `provider:model` with providers `gemini` and `harvard` (HUIT OpenAI gateway; base URL overridable via `HARVARD_API_BASE`). Outputs: `results/raw/<model_slug>/<image_id>/<probe>.json` (one stateless session per file, **gitignored**; existing files are skipped so runs resume) and `results/reports/<image_id>.md` (full-transcript per-image report with expert-score checkboxes, **tracked in git**, regenerated from raw JSONs whenever a unit finishes). The runner enforces the probe-battery constraints itself (B_enriched ordering + TODO guard, sequential Probe C turns, `global_system_instruction` no-web-search system message on every session) — do not bypass them.
 
 There are no tests or linters.
+
+## Evaluation site (`docs/`, GitHub Pages)
+
+`build_eval_site.py` aggregates ground truth (`data/ground_truth_manual.tsv`), the manifest, and each model's **Probe A** `A.json` into committed static artifacts under `docs/`: **one self-contained HTML page per image** (`docs/<image_id>.html`, all data inlined — no `fetch`, so it works under `file://` and on Pages), a contact-sheet `docs/index.html`, and `docs/probe_a_verdicts_prefilled.csv` (one row per image×model×field, `verdict` prefilled `correct`). Pages are wired by a sticky nav header (prev / next / jump dropdown). Shared styling is the authored, static `docs/style.css`. The site is a **viewer only**: ground-truth metadata left, each model's parsed Probe A fields (title/artist/date/collection) right; it records nothing — verdicts are edited in a Google Sheet imported from the CSV. Scope is Probe A only by design. The build runs offline (stdlib only, no API/network); rerun it after new probe results (it deletes the obsolete `data.json`/`app.js` from the earlier single-page build). See `docs/README.md` for Pages setup and the CSV→Sheet workflow. Reuses `iiif_base()`'s thumbnail logic (mirrored from `run_probes.py`).
 
 ## Data flow
 
