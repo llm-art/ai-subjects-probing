@@ -67,6 +67,30 @@ def load_tsv(path):
 _DOWNLOAD_LOG = None
 
 
+_DIRECT_IMAGE_EXT_RE = re.compile(r"\.(jpe?g|png|tiff?|gif|webp)$", re.IGNORECASE)
+_IIIF_REQUEST_RE = re.compile(r"/[^/]+/[^/]+/\d+/default\.\w+$")
+
+
+def direct_image_url(image_id):
+    """Return the plain file URL if this image was downloaded directly (no
+    IIIF service — e.g. Wikimedia Commons originals), else None. An IIIF
+    image-request URL also ends in an image extension, so it must be
+    excluded explicitly rather than relying on the extension alone."""
+    global _DOWNLOAD_LOG
+    if _DOWNLOAD_LOG is None:
+        try:
+            with open(DOWNLOAD_LOG_PATH, encoding="utf-8") as f:
+                _DOWNLOAD_LOG = json.load(f)
+        except (OSError, json.JSONDecodeError):
+            _DOWNLOAD_LOG = {}
+    entry = _DOWNLOAD_LOG.get(image_id, {})
+    for d in entry.get("downloads", []):
+        url = d.get("resolved_url", "")
+        if _DIRECT_IMAGE_EXT_RE.search(url) and not _IIIF_REQUEST_RE.search(url):
+            return url
+    return None
+
+
 def iiif_base(image_id, row):
     """IIIF Image API service base. Prefer the canonical resolved URL from
     download_log.json (handles e.g. RKD's /iiif/ -> /iiif/2/ redirect); fall
@@ -85,7 +109,7 @@ def iiif_base(image_id, row):
         if m:
             return m.group(1)
     url = (row.get("iiif_url") or "").strip()
-    if url and url != "MANUAL_REQUIRED":
+    if url and url != "MANUAL_REQUIRED" and not _DIRECT_IMAGE_EXT_RE.search(url):
         return re.sub(r"/info\.json$", "", url)
     return None
 
@@ -427,7 +451,13 @@ def build(out_dir, model_slugs, generated_utc):
             continue  # only include images that have at least one Probe A run
 
         gt_row = ground_truth.get(image_id, {})
-        base = iiif_base(image_id, row)
+        direct_url = direct_image_url(image_id)
+        if direct_url:
+            thumb_url = full_url = direct_url
+        else:
+            base = iiif_base(image_id, row)
+            thumb_url = f"{base}/full/!800,800/0/default.jpg" if base else ""
+            full_url = f"{base}/full/max/0/default.jpg" if base else ""
         images.append(
             {
                 "id": image_id,
@@ -436,8 +466,8 @@ def build(out_dir, model_slugs, generated_utc):
                 "institution": row.get("institution", ""),
                 "tier": row.get("tier", ""),
                 "source_url": row.get("source_url", ""),
-                "thumb_url": f"{base}/full/!800,800/0/default.jpg" if base else "",
-                "full_url": f"{base}/full/max/0/default.jpg" if base else "",
+                "thumb_url": thumb_url,
+                "full_url": full_url,
                 "ground_truth": {f: (gt_row.get(f) or "").strip() for f in FIELDS},
                 "models": models,
             }
