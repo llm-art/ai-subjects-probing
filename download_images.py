@@ -35,7 +35,10 @@ from tqdm import tqdm
 
 Image.MAX_IMAGE_PIXELS = None  # museum scans can exceed PIL's default bomb limit
 
-HEADERS = {"User-Agent": "ai-subjects-probing/0.1 (research; IIIF full-res downloader)"}
+HEADERS = {
+    "User-Agent": "ai-subjects-probing/0.1 (https://github.com/gspinaci/ai-subjects-probing; "
+    "gspinaci@itatti.harvard.edu) IIIF full-res downloader"
+}
 TIMEOUT = 60
 RETRIES = 3
 
